@@ -1,6 +1,8 @@
-window.$ = window.jQuery = require('jquery');
-require('bootstrap/dist/js/bootstrap.bundle.js');
-require('jquery.easing/jquery.easing.js');
+import jquery from 'jquery';
+window.$ = jquery;
+
+import 'bootstrap/dist/js/bootstrap.bundle.js';
+import 'jquery.easing/jquery.easing.js';
 
 (function ($) {
     "use strict"; // Start of use strict
