@@ -21,7 +21,7 @@ class BrandController extends Controller
      */
     public function create()
     {
-        //
+        return view('admin.brands.create');
     }
 
     /**
@@ -29,7 +29,16 @@ class BrandController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        request()->validate([
+            'name' => 'required',
+        ]);
+
+        Brand::create([
+            'name' => $request->name,
+            'is_active' => $request->is_active,
+        ]);
+
+        return redirect()->route('admin.brands.index');
     }
 
     /**
