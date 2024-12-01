@@ -3,6 +3,8 @@ window.$ = jquery;
 
 import 'bootstrap/dist/js/bootstrap.bundle.js';
 import 'jquery.easing/jquery.easing.js';
+import Chart from 'chart.js/auto';
+window.Chart = Chart;
 
 (function ($) {
     "use strict"; // Start of use strict
@@ -59,6 +61,4 @@ import 'jquery.easing/jquery.easing.js';
         e.preventDefault();
     });
 
-})(jQuery); // End of use strict
-
-require('chart.js/dist/Chart.js');
+})($); // End of use strict
