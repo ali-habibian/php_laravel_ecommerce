@@ -1,3 +1,6 @@
+// Import Fontawesome
+@import "~@fortawesome/fontawesome-free/css/all.min.css";
+
 // Import Custom SB Admin 2 Variables (Overrides Default Bootstrap Variables)
 @import "variables.scss";
 
@@ -37,10 +40,10 @@ body {
     //   line-height: 1.6;
 }
 
-#registerCheckBox::before{
+#registerCheckBox::before {
     right: -1.5rem;
 }
 
-#registerCheckBox::after{
+#registerCheckBox::after {
     right: -1.5rem;
 }
