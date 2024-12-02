@@ -6,6 +6,9 @@ import 'jquery.easing/jquery.easing.js';
 import Chart from 'chart.js/auto';
 window.Chart = Chart;
 
+import Swal from 'sweetalert2';
+window.Swal = Swal;
+
 (function ($) {
     "use strict"; // Start of use strict
 

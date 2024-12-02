@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Admin;
 
+use AliHabibian\Sweetalert2Laravel\SwalLaAlert;
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use Illuminate\Http\Request;
@@ -13,7 +14,7 @@ class BrandController extends Controller
      */
     public function index()
     {
-        //
+        return view('admin.brands.index');
     }
 
     /**
@@ -38,7 +39,7 @@ class BrandController extends Controller
             'is_active' => $request->is_active,
         ]);
 
-        return redirect()->route('admin.brands.index');
+        return redirect()->route('admin.brands.index')->with('success', 'برند با موفقیت ایجاد شد.');
     }
 
     /**

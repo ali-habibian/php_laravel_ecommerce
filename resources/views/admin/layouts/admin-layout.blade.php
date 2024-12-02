@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="fa" dir="rtl">
 
@@ -63,7 +62,21 @@
 <!-- Scroll to Top Button-->
 @include('admin.sections.scroll_top')
 
+<!-- SweetAlert2 -->
+@if(session('success'))
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            Swal.fire({
+                icon: 'success',
+                title: 'موفق!',
+                text: '{{ session('success') }}'
+            });
+        });
+    </script>
+@endif
+
 <!-- Page Level Scripts-->
+}
 @stack('scripts')
 
 </body>
