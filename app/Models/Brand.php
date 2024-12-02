@@ -11,6 +11,11 @@ class Brand extends Model
     protected $table = 'brands';
     protected $guarded = [];
 
+    public function getIsActiveAttribute($is_active): string
+    {
+        return $is_active ? 'فعال' : 'غیرفعال';
+    }
+
     /**
      * Return the sluggable configuration array for this model.
      *
