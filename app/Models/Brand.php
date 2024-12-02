@@ -4,15 +4,24 @@ namespace App\Models;
 
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Brand extends Model
 {
-    use Sluggable, softDeletes;
+    use Sluggable;
     protected $table = 'brands';
     protected $guarded = [];
 
-    public function getIsActiveAttribute($is_active): string
+
+    /**
+     * Accessor for the "is_active" attribute.
+     *
+     * Converts the boolean value of the "is_active" attribute
+     * into a human-readable Persian string.
+     *
+     * @param bool $is_active The boolean value of the "is_active" attribute.
+     * @return string Returns 'فعال' if true, otherwise 'غیرفعال'.
+     */
+    public function getIsActiveAttribute(bool $is_active): string
     {
         return $is_active ? 'فعال' : 'غیرفعال';
     }
