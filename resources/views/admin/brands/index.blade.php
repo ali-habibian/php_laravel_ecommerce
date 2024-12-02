@@ -15,7 +15,9 @@
                     ایجاد برند
                 </a>
             </div>
+            <!-- End Topbar -->
 
+            <!-- Brands Table -->
             <table class="table table-bordered table-striped text-center">
                 <thead>
                 <tr>
@@ -36,11 +38,14 @@
                                 {{ $brand->is_active }}
                             </span>
                         </td>
-                        <td>#</td>
+                        <td>
+                            <a class="btn btn-sm btn-outline-success" href="{{ route('admin.brands.show', ['brand' => $brand]) }}">نمایش</a>
+                        </td>
                     </tr>
                 @endforeach
                 </tbody>
             </table>
+            <!-- End Brands Table -->
 
         </div>
 
