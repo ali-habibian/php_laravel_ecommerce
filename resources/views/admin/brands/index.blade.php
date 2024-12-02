@@ -24,7 +24,7 @@
                     <th>#</th>
                     <th>نام</th>
                     <th>وضعیت</th>
-                    <th>عملیات</th>
+                    <th class="col-md-3">عملیات</th>
                 </tr>
                 </thead>
 
@@ -38,8 +38,9 @@
                                 {{ $brand->is_active }}
                             </span>
                         </td>
-                        <td>
+                        <td class="col-md-3">
                             <a class="btn btn-sm btn-outline-success" href="{{ route('admin.brands.show', ['brand' => $brand]) }}">نمایش</a>
+                            <a class="btn btn-sm btn-outline-info mr-3" href="{{ route('admin.brands.edit', ['brand' => $brand]) }}">ویرایش</a>
                         </td>
                     </tr>
                 @endforeach

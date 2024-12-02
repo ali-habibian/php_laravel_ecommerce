@@ -55,7 +55,7 @@ class BrandController extends Controller
      */
     public function edit(Brand $brand)
     {
-        //
+        return view('admin.brands.edit', compact('brand'));
     }
 
     /**
@@ -63,7 +63,16 @@ class BrandController extends Controller
      */
     public function update(Request $request, Brand $brand)
     {
-        //
+        request()->validate([
+            'name' => 'required',
+        ]);
+
+        $brand->update([
+            'name' => $request->name,
+            'is_active' => $request->is_active,
+        ]);
+
+        return redirect()->route('admin.brands.index')->with('success', 'برند با موفقیت ویرایش شد.');
     }
 
     /**
