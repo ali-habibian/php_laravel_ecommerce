@@ -5,7 +5,7 @@
         <div class="sidebar-brand-icon rotate-n-15">
             <i class="fas fa-laugh-wink"></i>
         </div>
-        <div class="sidebar-brand-text mx-3">WebProg.ir</div>
+        <div class="sidebar-brand-text mx-3">Ali Ecommerce</div>
     </a>
 
     <!-- Divider -->
