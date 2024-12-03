@@ -41,7 +41,7 @@
                         <td class="col-md-3">
                             <a class="btn btn-sm btn-outline-success" href="{{ route('admin.brands.show', ['brand' => $brand]) }}">نمایش</a>
                             <a class="btn btn-sm btn-outline-info mr-3" href="{{ route('admin.brands.edit', ['brand' => $brand]) }}">ویرایش</a>
-                            <button class="btn btn-sm btn-outline-danger delete-button" data-id="{{ $brand->id }}">حذف</button>
+                            <button class="btn btn-sm btn-outline-danger delete-button mr-3" data-id="{{ $brand->id }}">حذف</button>
                         </td>
                     </tr>
                 @endforeach

@@ -34,8 +34,8 @@
                         <td>{{ $attribute->name }}</td>
                         <td class="col-md-3">
                             <a class="btn btn-sm btn-outline-success" href="{{ route('admin.attributes.show', ['attribute' => $attribute]) }}">نمایش</a>
-{{--                            <a class="btn btn-sm btn-outline-info mr-3" href="{{ route('admin.brands.edit', ['brand' => $brand]) }}">ویرایش</a>--}}
-                            <button class="btn btn-sm btn-outline-danger delete-button" data-id="{{ $attribute->id }}">حذف</button>
+                            <a class="btn btn-sm btn-outline-info mr-3" href="{{ route('admin.attributes.edit', ['attribute' => $attribute]) }}">ویرایش</a>
+                            <button class="btn btn-sm btn-outline-danger delete-button mr-3" data-id="{{ $attribute->id }}">حذف</button>
                         </td>
                     </tr>
                 @endforeach

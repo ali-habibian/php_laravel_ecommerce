@@ -40,12 +40,20 @@ class AttributeController extends Controller
 
     public function edit(Attribute $attribute)
     {
-
+        return view('admin.attributes.edit', compact('attribute'));
     }
 
     public function update(Request $request, Attribute $attribute)
     {
+        $request->validate([
+            'name' => 'required',
+        ]);
 
+        $attribute->update([
+            'name' => $request->name,
+        ]);
+
+        return redirect()->route('admin.attributes.index')->with('success', 'ویژگی با موفقیت ویرایش شد.');
     }
 
     public function destroy(Attribute $attribute)
