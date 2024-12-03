@@ -3,8 +3,11 @@ window.$ = jquery;
 
 import 'bootstrap/dist/js/bootstrap.bundle.js';
 import 'jquery.easing/jquery.easing.js';
+
 import Chart from 'chart.js/auto';
 window.Chart = Chart;
+
+import 'bootstrap-select';
 
 import Swal from 'sweetalert2';
 window.Swal = Swal;
