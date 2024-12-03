@@ -35,7 +35,7 @@ class AttributeController extends Controller
 
     public function show(Attribute $attribute)
     {
-
+        return view('admin.attributes.show', compact('attribute'));
     }
 
     public function edit(Attribute $attribute)
