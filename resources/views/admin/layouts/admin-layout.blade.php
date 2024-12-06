@@ -75,6 +75,18 @@
     </script>
 @endif
 
+@if(session('error'))
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            Swal.fire({
+                icon: 'error',
+                title: 'خطا!',
+                text: '{{ session('error') }}'
+            });
+        });
+    </script>
+@endif
+
 <!-- Page Level Scripts-->
 }
 @stack('scripts')

@@ -1,5 +1,7 @@
-import jquery from 'jquery';
-window.$ = jquery;
+import $ from 'jquery';
+
+window.$ = $;
+window.jQuery = $;
 
 import 'bootstrap/dist/js/bootstrap.bundle.js';
 import 'jquery.easing/jquery.easing.js';
@@ -8,6 +10,7 @@ import Chart from 'chart.js/auto';
 window.Chart = Chart;
 
 import 'bootstrap-select';
+import 'bootstrap-select/dist/js/i18n/defaults-fa_IR.min.js';
 
 import Swal from 'sweetalert2';
 window.Swal = Swal;
