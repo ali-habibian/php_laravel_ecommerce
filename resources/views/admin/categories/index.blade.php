@@ -24,7 +24,6 @@
                     <th>#</th>
                     <th>نام</th>
                     <th>والد</th>
-                    <th>توضیحات</th>
                     <th>وضعیت</th>
                     <th class="col-md-3">عملیات</th>
                 </tr>
@@ -36,7 +35,6 @@
                         <td>{{ $categories->firstItem() + $key }}</td>
                         <td>{{ $category->name }}</td>
                         <td>{{ $category->parentName() }}</td>
-                        <td>{{ $category->description }}</td>
                         <td>
                             <span
                                 class="{{ $category->getRawOriginal('is_active') ? 'text-success' : 'text-danger' }}">

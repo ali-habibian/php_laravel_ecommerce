@@ -5,6 +5,7 @@ namespace App\Models;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Category extends Model
@@ -74,7 +75,6 @@ class Category extends Model
     }
 
 
-
     /**
      * Gets the name of the parent category.
      *
@@ -92,4 +92,16 @@ class Category extends Model
         return $parentCategory ? $parentCategory->name : null;
     }
 
+    /**
+     * Define a many-to-many relationship with the Attribute model.
+     *
+     * This method establishes a many-to-many relationship between the current model (Category)
+     * and the Attribute model. The relationship is managed through an intermediate table named 'attribute_category'.
+     *
+     * @return BelongsToMany A BelongsToMany relationship object representing the many-to-many relationship.
+     */
+    public function attributeList(): BelongsToMany
+    {
+        return $this->belongsToMany(Attribute::class, 'attribute_category');
+    }
 }

@@ -49,7 +49,7 @@ body {
     right: -1.5rem;
 }
 
- Bootstrap Paginate RTL
+Bootstrap Paginate RTL
 .page-item:first-child .page-link {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
@@ -97,6 +97,10 @@ body {
     text-align: right;
 }
 
-.bootstrap-select.show-tick .dropdown-menu li a span.text{
+.bootstrap-select.show-tick .dropdown-menu li a span.text {
     margin-right: 10px;
+}
+
+.div-disabled {
+    background-color: #eaecf4;
 }
