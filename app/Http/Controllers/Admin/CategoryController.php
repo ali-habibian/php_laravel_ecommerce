@@ -16,7 +16,9 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        $categories = Category::latest()->paginate(10);
+
+        return view('admin.categories.index', compact('categories'));
     }
 
     /**
@@ -73,6 +75,8 @@ class CategoryController extends Controller
 
             return redirect()->back()->with('error', 'مشکلی در ایجاد دسته بندی به وجود آمده است');
         }
+
+        return redirect()->route('admin.categories.index')->with('success', 'دسته بندی با موفقیت ایجاد شد');
     }
 
     /**
