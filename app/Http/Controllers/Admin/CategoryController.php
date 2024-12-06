@@ -159,8 +159,27 @@ class CategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Category $category)
     {
-        //
+        try {
+            DB::beginTransaction();
+
+            $category->attributeList()->detach();
+            $category->delete();
+
+            DB::commit();
+        } catch (Exception $e) {
+            report($e);
+            DB::rollBack();
+
+            if ($category->children()->get()->count() > 0) {
+                return redirect()->back()->with('error', 'دسته بندی دارای زیر دسته بندی است و نمی تواند حذف شود');
+            }
+
+            return redirect()->back()->with('error', 'مشکلی در حذف دسته بندی به وجود آمده است');
+        }
+
+
+        return redirect()->route('admin.categories.index')->with('success', 'دسته بندی با موفقیت حذف شد');
     }
 }
