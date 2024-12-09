@@ -180,4 +180,27 @@ class CategoryController extends Controller
 
         return redirect()->route('admin.categories.index')->with('success', 'دسته بندی با موفقیت حذف شد');
     }
+
+    /**
+     * Retrieve category attributes and variation attribute
+     *
+     * This method fetches attributes associated with a given category, separating them into
+     * regular attributes and a variation attribute based on the 'is_variation' pivot field.
+     *
+     * @param Category $category The category for which to retrieve attributes.
+     * @return array An associative array containing 'attributes' key with a collection of non-variation attributes,
+     *               and 'variation' key with the first variation attribute if it exists.
+     */
+    public function getCategoryAttributes(Category $category)
+    {
+        // Fetch all non-variation attributes
+        $attributes = $category->attributeList()->wherePivot('is_variation', '=', false)->get();
+
+        // Fetch the first variation attribute
+        $variation = $category->attributeList()->wherePivot('is_variation', '=', true)->first();
+
+        // Return the attributes and variation attribute as an array
+        return ['attributes' => $attributes, 'variation' => $variation];
+    }
+
 }

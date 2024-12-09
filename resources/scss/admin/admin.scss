@@ -66,7 +66,7 @@ Bootstrap Paginate RTL
     border-bottom-left-radius: 0.35rem;
 }
 
-// Bootstrap Select RTL & Customize
+// ------------- Bootstrap Select RTL & Customize -------------
 .filter-option-inner-inner {
     text-align: right;
 }
@@ -104,3 +104,28 @@ Bootstrap Paginate RTL
 .div-disabled {
     background-color: #eaecf4;
 }
+
+.custom-file-label::after {
+    content: 'فایل';
+    right: unset;
+    left: 0;
+    border-left: unset;
+    border-right: inherit;
+    border-radius: 0.35rem 0 0 0.35rem;
+}
+// -------------- End Bootstrap Select RTL & Customize -------------
+
+// ------------------------ Repeater Styles ------------------------
+.form-container {
+    padding: 10px;
+    background-color: #f8f9fa;
+    border-radius: 5px;
+    border: 1px solid #dee2e6;
+}
+
+.add-row {
+    display: block;
+    margin: 0 auto;
+    padding: 5px 15px;
+}
+// ------------------------ End Repeater Styles ------------------------
