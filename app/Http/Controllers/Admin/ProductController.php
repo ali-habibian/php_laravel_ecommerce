@@ -13,6 +13,7 @@ use App\Models\Tag;
 use App\Services\UploadService;
 use DB;
 use Exception;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 
@@ -47,10 +48,14 @@ class ProductController extends Controller
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Store a newly created product in storage.
+     *
+     * @param Request $request The request instance containing user input data.
+     * @return RedirectResponse
      */
     public function store(Request $request)
     {
+        // Validate the incoming request data according to specified rules.
         $request->validate([
             'name' => 'required|string|max:255',
             'brand_id' => 'required|integer|exists:brands,id',
@@ -74,15 +79,18 @@ class ProductController extends Controller
             'delivery_amount_per_product' => 'nullable|integer|min:0'
         ]);
 
+        // Start a database transaction to ensure data integrity.
         try {
             DB::beginTransaction();
 
+            // Handle primary image and additional images upload.
             $primaryImageFile = $request->file('primary_image');
             $imageFiles = $request->file('images');
 
             $primaryImageUploadedPath = $this->uploadService->uploadFile($primaryImageFile, config('uploads.product_images_path'), 'img_');
             $imagesUploadedPaths = $this->uploadService->uploadFiles($imageFiles, config('uploads.product_images_path'), 'img_');
 
+            // Create a new product instance and save it to the database.
             $product = Product::create([
                 'name' => $request->name,
                 'brand_id' => $request->brand_id,
@@ -94,6 +102,7 @@ class ProductController extends Controller
                 'delivery_amount_per_product' => $request->delivery_amount_per_product
             ]);
 
+            // Create entries for additional images associated with the product.
             foreach ($imagesUploadedPaths as $imageUploadedPath) {
                 ProductImage::create([
                     'product_id' => $product->id,
@@ -101,6 +110,7 @@ class ProductController extends Controller
                 ]);
             }
 
+            // Create product attributes.
             foreach ($request->attribute_ids as $key => $value) {
                 ProductAttribute::create([
                     'product_id' => $product->id,
@@ -109,8 +119,9 @@ class ProductController extends Controller
                 ]);
             }
 
+            // Create product variations.
             $counter = count($request->variation_values['value']);
-            $category = Category::findOrFail($request->category_id);
+            $category = Category::with('attributeList')->findOrFail($request->category_id);
             $variationAttributeId = $category->attributeList()->where('is_variation', true)->first()->id;
 
             for ($i = 0; $i < $counter; $i++) {
@@ -124,14 +135,19 @@ class ProductController extends Controller
                 ]);
             }
 
+            // Sync the tags associated with the product.
             $product->tags()->sync($request->tag_ids);
 
+            // Commit the database transaction.
             DB::commit();
         } catch (Exception $e) {
-            Log::error($e);
-            return redirect()->back()->with('error', 'مشکلی در ایجاد محصول رخ داده است');
+            // Rollback the transaction if an exception occurs and log the error.
+            DB::rollBack();
+            Log::error('Error creating product: ' . $e->getMessage(), ['trace' => $e->getTrace()]);
+            return redirect()->back()->with('error', 'مشکلی در ایجاد محصول رخ داده است. لطفاً دوباره سعی کنید.');
         }
 
+        // Redirect to the product index page with a success message.
         return redirect()->route('admin.products.index')->with('success', 'محصول با موفقیت ایجاد شد');
     }
 
