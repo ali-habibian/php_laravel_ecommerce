@@ -1,6 +1,6 @@
 @extends('admin.layouts.admin-layout')
 
-@section('title', 'لیست دسته بندی ها')
+@section('title', 'لیست محصولات')
 
 @section('content')
     <div class="row">
@@ -9,58 +9,79 @@
 
             <!-- Topbar -->
             <div class="d-flex justify-content-between mb-4">
-                <h5 class="font-weight-bold">لیست دسته بندی ها ({{ $categories->total() }})</h5>
-                <a class="btn btn-sm btn-outline-primary" href="{{ route('admin.categories.create') }}">
+                <h5 class="font-weight-bold">لیست محصولات ({{ $products->total() }})</h5>
+                <a class="btn btn-sm btn-outline-primary" href="{{ route('admin.products.create') }}">
                     <i class="fa fa-plus"></i>
-                    ایجاد دسته بندی
+                    ایجاد محصول
                 </a>
             </div>
             <!-- End Topbar -->
 
-            <!-- Categories Table -->
+            <!-- Products Table -->
             <table class="table table-bordered table-striped text-center">
                 <thead>
                 <tr>
                     <th>#</th>
                     <th>نام</th>
-                    <th>والد</th>
+                    <th>نام برند</th>
+                    <th>نام دسته بندی</th>
                     <th>وضعیت</th>
                     <th class="col-md-3">عملیات</th>
                 </tr>
                 </thead>
 
                 <tbody>
-                @foreach($categories as $key => $category)
+                @foreach($products as $key => $product)
                     <tr>
-                        <td>{{ $categories->firstItem() + $key }}</td>
-                        <td>{{ $category->name }}</td>
-                        <td>{{ $category->parentName() }}</td>
+                        <td>{{ $products->firstItem() + $key }}</td>
+                        <td>
+                            <a href="{{ route('admin.products.show', $product) }}">{{ $product->name }}</a>
+                        </td>
+                        <td>
+                            <a href="{{ route('admin.brands.show', $product->brand) }}">{{ $product->brand->name }}</a>
+                        </td>
+                        <td>
+                            <a href="{{ route('admin.categories.show', $product->category) }}">{{ $product->category->name }}</a>
+                        </td>
                         <td>
                             <span
-                                class="{{ $category->getRawOriginal('is_active') ? 'text-success' : 'text-danger' }}">
-                                {{ $category->is_active }}
+                                class="{{ $product->getRawOriginal('is_active') ? 'text-success' : 'text-danger' }}">
+                                {{ $product->is_active }}
                             </span>
                         </td>
                         <td class="col-md-3">
-                            <a class="btn btn-sm btn-outline-success"
-                               href="{{ route('admin.categories.show', ['category' => $category]) }}">نمایش</a>
-                            <a class="btn btn-sm btn-outline-info mr-3"
-                               href="{{ route('admin.categories.edit', ['category' => $category]) }}">ویرایش</a>
-                            <button class="btn btn-sm btn-outline-danger delete-button mr-3"
-                                    data-id="{{ $category->id }}">حذف
-                            </button>
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-sm btn-outline-primary dropdown-toggle"
+                                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">عملیات
+                                </button>
+
+                                <div class="dropdown-menu">
+                                    <a class="dropdown-item text-right"
+                                       href="{{ route('admin.products.edit', $product) }}">ویرایش محصول</a>
+
+                                    <a class="dropdown-item text-right"
+                                       href="#">ویرایش تصاویر</a>
+
+                                    <a class="dropdown-item text-right"
+                                       href="#">ویرایش دسته بندی و ویژگی ها</a>
+
+                                    <hr>
+                                    <a class="dropdown-item text-right delete-button text-danger"
+                                       data-id="{{ $product->id }}"
+                                       href="#">حذف</a>
+                                </div>
+                            </div>
                         </td>
                     </tr>
                 @endforeach
                 </tbody>
             </table>
-            <!-- End Categories Table -->
+            <!-- End Products Table -->
 
             <div class="d-flex justify-content-center mt-5">
-                {{ $categories->render() }}
+                {{ $products->render() }}
             </div>
         </div>
-
     </div>
 @endsection
 

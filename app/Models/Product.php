@@ -15,6 +15,21 @@ class Product extends Model
     protected $table = 'products';
     protected $guarded = [];
 
+    /**
+     * Get the string representation of the active status.
+     *
+     * This method converts a boolean value representing the active status into a human-readable string.
+     * It returns 'فعال' if the status is true, otherwise it returns 'غیرفعال'.
+     *
+     * @param bool $is_active The boolean value of the active status.
+     * @return string The string representation of the active status.
+     */
+    public function getIsActiveAttribute(bool $is_active): string
+    {
+        return $is_active ? 'فعال' : 'غیرفعال';
+    }
+
+
     public function sluggable(): array
     {
         return [

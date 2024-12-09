@@ -32,7 +32,11 @@ class ProductController extends Controller
      */
     public function index()
     {
-        //
+        $products = Product::with('brand', 'category', 'tags', 'productAttributes', 'productVariations')
+            ->latest()
+            ->paginate(10);
+
+        return view('admin.products.index', compact('products'));
     }
 
     /**
