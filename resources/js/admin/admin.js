@@ -15,6 +15,8 @@ import 'bootstrap-select/dist/js/i18n/defaults-fa_IR.min.js';
 import Swal from 'sweetalert2';
 window.Swal = Swal;
 
+import '@majidh1/jalalidatepicker';
+
 (function ($) {
     "use strict"; // Start of use strict
 
