@@ -158,12 +158,13 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Product $product)
     {
-        $product = Product::findOrFail($id);
-        echo $product->brand->name . '<br>';
-        echo $product->category->name . '<br>';
-        echo $product->productImages;
+        $productAttributes = $product->productAttributes()->with('attribute')->get();
+        $productVariations = $product->productVariations()->with('attribute')->get();
+        $productImages = $product->productImages;
+
+        return view('admin.products.show', compact('product', 'productAttributes', 'productVariations', 'productImages'));
     }
 
     /**
