@@ -2,6 +2,21 @@
 
 @section('title', 'نمایش محصول')
 
+@push('styles')
+    <style>
+        /* Remove underline from the links */
+        .tag-link {
+            text-decoration: none; /* Remove underline */
+        }
+
+        /* Change color on hover */
+        .tag-link:hover {
+            color: #fff; /* White text color on hover */
+            background-color: #17a2b8; /* A slightly darker blue */
+        }
+    </style>
+@endpush
+
 @section('content')
     <div class="row">
 
@@ -45,6 +60,17 @@
                 <div class="form-group col-md-12">
                     <label>توضیحات</label>
                     <textarea class="form-control" disabled rows="3">{{ $product->description }}</textarea>
+                </div>
+
+                <div class="form-group col-md-3">
+                    <label for="tags">تگ ها:</label>
+                    <div id="tags">
+                        @foreach($productTags as $tag)
+                            <a href="{{ route('admin.tags.show', $tag) }}" class="badge badge-info mt-2 tag-link">
+                                {{ $tag->name }}
+                            </a>
+                        @endforeach
+                    </div>
                 </div>
 
                 {{-- Delivery cost section --}}

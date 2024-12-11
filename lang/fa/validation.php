@@ -173,6 +173,14 @@ return [
         'variation_values.sku.*' => 'شناسه محصول (SKU)',
         'delivery_amount' => 'هزینه ارسال',
         'delivery_amount_per_product' => 'هزینه ارسال به ازای هر محصول',
+        'attribute_values' => 'مقادیر ویژگی',
+        'attribute_values.*' => 'مقدار ویژگی',
+        'variation_values.*.price' => 'قیمت متغیر',
+        'variation_values.*.quantity' => 'تعداد متغیر',
+        'variation_values.*.sku' => 'شناسه انبار متغیر',
+        'variation_values.*.sale_price' => 'قیمت تخفیفی متغیر',
+        'variation_values.*.date_on_sale_from' => 'تاریخ شروع تخفیف',
+        'variation_values.*.date_on_sale_to' => 'تاریخ پایان تخفیف',
     ],
 
 ];

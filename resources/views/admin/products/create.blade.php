@@ -55,7 +55,7 @@
 
                     <div class="form-group col-md-12">
                         <label for="description">توضیحات</label>
-                        <textarea class="form-control" id="description"
+                        <textarea class="form-control" id="description" rows="3"
                                   name="description">{{ old('description') }}</textarea>
                     </div>
 

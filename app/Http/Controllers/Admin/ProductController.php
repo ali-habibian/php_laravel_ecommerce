@@ -163,24 +163,100 @@ class ProductController extends Controller
         $productAttributes = $product->productAttributes()->with('attribute')->get();
         $productVariations = $product->productVariations()->with('attribute')->get();
         $productImages = $product->productImages;
+        $productTags = $product->tags;
 
-        return view('admin.products.show', compact('product', 'productAttributes', 'productVariations', 'productImages'));
+        return view('admin.products.show', compact('product', 'productAttributes', 'productVariations', 'productImages', 'productTags'));
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Product $product)
     {
-        //
+        $brands = Brand::all();
+        $tags = Tag::all();
+        $categories = Category::whereNotNull('parent_id')->get();
+        $productAttributes = $product->productAttributes()->with('attribute')->get();
+        $productVariations = $product->productVariations()->with('attribute')->get();
+        $productTagIds = $product->tags()->pluck('id')->toArray();
+
+        return view('admin.products.edit', compact(
+            'product',
+            'brands',
+            'tags',
+            'categories',
+            'productAttributes',
+            'productVariations',
+            'productTagIds'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Product $product)
     {
-        //
+        // Validate the incoming request data according to specified rules.
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'brand_id' => 'required|integer|exists:brands,id',
+            'is_active' => 'required|boolean',
+            'tag_ids' => 'required|array',
+            'tag_ids.*' => 'required|integer|exists:tags,id',
+            'description' => 'required|string',
+            'attribute_values' => 'required|array',
+            'attribute_values.*' => 'required|string',
+            'variation_values' => 'required|array',
+            'variation_values.*' => 'required',
+            'variation_values.*.price' => 'required|integer|min:0',
+            'variation_values.*.quantity' => 'required|integer|min:0',
+            'variation_values.*.sku' => 'nullable|string',
+            'variation_values.*.sale_price' => 'nullable|integer|min:0',
+            'variation_values.*.date_on_sale_from' => 'nullable|date',
+            'variation_values.*.date_on_sale_to' => 'nullable|date',
+            'delivery_amount' => 'nullable|integer|min:0',
+            'delivery_amount_per_product' => 'nullable|integer|min:0'
+        ]);
+
+        // Start a database transaction to ensure data integrity.
+        try {
+            DB::beginTransaction();
+
+            // Update the product and save it to the database.
+            $product->update([
+                'name' => $request->name,
+                'brand_id' => $request->brand_id,
+                'description' => $request->description,
+                'is_active' => $request->is_active,
+                'delivery_amount' => $request->delivery_amount,
+                'delivery_amount_per_product' => $request->delivery_amount_per_product
+            ]);
+
+            // Update product attributes.
+            $this->updateProductAttributes($request->attribute_values);
+
+            // Update product variations.
+            $result = $this->updateProductVariations($request->variation_values);
+            if (!$result) {
+                throw new Exception(code: 700);
+            }
+
+            // Sync the tags associated with the product.
+            $product->tags()->sync($request->tag_ids);
+
+            // Commit the database transaction.
+            DB::commit();
+        } catch (Exception $e) {
+            // Rollback the transaction if an exception occurs and log the error.
+            DB::rollBack();
+            Log::error('Error creating product: ' . $e->getMessage(), ['trace' => $e->getTrace()]);
+            if ($e->getCode() === 700) {
+                return redirect()->back()->with('error', 'تاریخ شروع و پایان باید هر دو پر شوند یا هر دو خالی باشند.');
+            }
+            return redirect()->back()->with('error', 'مشکلی در ایجاد محصول رخ داده است. لطفاً دوباره سعی کنید.');
+        }
+
+        // Redirect to the product index page with a success message.
+        return redirect()->route('admin.products.index')->with('success', 'محصول با موفقیت ایجاد شد');
     }
 
     /**
@@ -190,4 +266,71 @@ class ProductController extends Controller
     {
         //
     }
+
+    /**
+     * Update product attributes.
+     *
+     * This method receives an array of attribute IDs and their corresponding values,
+     * iterates over the array, and updates the value of each product attribute in the database.
+     * If a product attribute with the given ID is not found, it throws a ModelNotFoundException.
+     *
+     * @param array $attributeIds An associative array where keys are attribute IDs and values are the new attribute values.
+     */
+    private function updateProductAttributes(array $attributeIds)
+    {
+        foreach ($attributeIds as $key => $value) {
+            $productAttribute = ProductAttribute::findOrFail($key);
+
+            $productAttribute->update([
+                'value' => $value
+            ]);
+        }
+    }
+
+
+    /**
+     * Update product variations
+     *
+     * This method updates the price, quantity, SKU, sale price, and sale dates for product variations.
+     * It accepts an array of variation information, iterates over each variation, and updates its details.
+     * If either the sale start date or the sale end date is null but not both, it returns false indicating invalid sale date settings.
+     * The `convertShamsiToGregorian` function is used to convert the sale start and end dates from Shamsi (Iranian) calendar to Gregorian calendar.
+     * Returns true if the update is successful, otherwise may return false.
+     *
+     * @param array $variationValues Array containing variation information, where keys are variation IDs and values are arrays with detailed information
+     * @return bool Boolean indicating whether the update operation was successful
+     * @throws Exception Throws an exception if the date parsing fails.
+     */
+    private function updateProductVariations(array $variationValues)
+    {
+        // Iterate over each variation
+        foreach ($variationValues as $key => $value) {
+            // Retrieve the specified product variation
+            $productVariation = ProductVariation::findOrFail($key);
+
+            // Check if sale date settings are valid
+            if (($value['date_on_sale_from'] !== null && $value['date_on_sale_to'] === null) || ($value['date_on_sale_from'] === null && $value['date_on_sale_to'] !== null)) {
+                return false;
+            }
+
+            // Convert sale start date from Shamsi to Gregorian
+            $shamsiStartDate = convertShamsiToGregorian($value['date_on_sale_from']);
+            // Convert sale end date from Shamsi to Gregorian
+            $shamsEndDate = convertShamsiToGregorian($value['date_on_sale_to']);
+
+            // Update the product variation details
+            $productVariation->update([
+                'price' => $value['price'],
+                'quantity' => $value['quantity'],
+                'sku' => $value['sku'],
+                'sale_price' => $value['sale_price'],
+                'date_on_sale_from' => $shamsiStartDate,
+                'date_on_sale_to' => $shamsEndDate
+            ]);
+        }
+
+        // Return true if all updates were successful
+        return true;
+    }
+
 }
