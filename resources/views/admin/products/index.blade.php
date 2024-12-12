@@ -60,7 +60,7 @@
                                        href="{{ route('admin.products.edit', $product) }}">ویرایش محصول</a>
 
                                     <a class="dropdown-item text-right"
-                                       href="#">ویرایش تصاویر</a>
+                                       href="{{ route('admin.products.images.edit', $product) }}">ویرایش تصاویر</a>
 
                                     <a class="dropdown-item text-right"
                                        href="#">ویرایش دسته بندی و ویژگی ها</a>

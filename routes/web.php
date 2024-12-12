@@ -18,5 +18,15 @@ Route::prefix('admin-panel/management')->name('admin.')->group(function () {
     Route::resource('tags', TagController::class);
     Route::resource('products', ProductController::class);
 
+    // Get category attributes
     Route::get('/category-attributes/{category}', [CategoryController::class, 'getCategoryAttributes'])->name('category.attributes');
+
+    // Edit product images
+    Route::get('/products/{product}/images/edit', [ProductController::class, 'editProductImages'])->name('products.images.edit');
+    // Delete product image
+    Route::delete('/products/{product}/images/delete', [ProductController::class, 'destroyProductImage'])->name('products.images.destroy');
+    // Set one of other images as primary image
+    Route::put('/products/{product}/images/set-primary', [ProductController::class, 'setAsProductPrimaryImage'])->name('products.images.set-primary');
+    // Add new images to product
+    Route::post('/products/{product}/images/add', [ProductController::class, 'addNewProductImages'])->name('products.images.add');
 });
