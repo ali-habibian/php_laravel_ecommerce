@@ -76,9 +76,9 @@ class BannerController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Banner $banner)
     {
-        //
+        return view('admin.banners.show', compact('banner'));
     }
 
     /**
