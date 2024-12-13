@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Banner;
+use App\Models\Product;
 use App\Services\FileService;
 use Illuminate\Http\Request;
 
@@ -83,17 +84,53 @@ class BannerController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Banner $banner)
     {
-        //
+        return view('admin.banners.edit', compact('banner'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Banner $banner)
     {
-        //
+        $request->validate([
+            'title' => 'required|string',
+            'priority' => 'nullable|integer',
+            'is_active' => 'required|boolean',
+            'type' => 'required|string',
+            'button_text' => 'nullable|string',
+            'button_link' => 'nullable|string',
+            'button_icon' => 'nullable|string',
+            'description' => 'nullable|string',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        if ($request->hasFile('image')) {
+            $previousImage = $banner->image;
+            $image = $this->fileService->uploadFile($request->file('image'), config('uploads.banner_image_path'), 'img_');
+            if ($image) {
+                $this->fileService->deleteFile($previousImage);
+                $banner->update([
+                    'image' => $image,
+                ]);
+            } else {
+                return redirect()->back()->with('error', 'مشکلی در آپلود تصویر رخ داده است، لطف دوباره سعی کنید.');
+            }
+        }
+
+        $banner->update([
+            'title' => $request->title,
+            'priority' => $request->priority,
+            'is_active' => $request->is_active,
+            'type' => $request->type,
+            'button_text' => $request->button_text,
+            'button_link' => $request->button_link,
+            'button_icon' => $request->button_icon,
+            'description' => $request->description,
+        ]);
+
+        return redirect()->route('admin.banners.index')->with('success', 'بنر با موفقیت ویرایش شد.');
     }
 
     /**
