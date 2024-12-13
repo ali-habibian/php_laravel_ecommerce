@@ -7,6 +7,8 @@ use App\Models\Banner;
 use App\Models\Product;
 use App\Services\FileService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Log;
 
 class BannerController extends Controller
 {
@@ -136,8 +138,37 @@ class BannerController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Banner $banner)
     {
-        //
+        // Validate the banner object
+        if (!$banner->exists) {
+            return redirect()->route('admin.banners.index')->with('error', 'بنر مورد نظر یافت نشد.');
+        }
+
+        try {
+            DB::beginTransaction();
+
+            $deleteResult = $banner->delete();
+
+            if ($deleteResult) {
+                $this->fileService->deleteFile($banner->image);
+
+                DB::commit();
+
+                return redirect()->route('admin.banners.index')->with('success', 'بنر با موفقیت حذف شد.');
+            } else {
+                // Rollback the transaction if the delete operation fails
+                DB::rollBack();
+
+                return redirect()->route('admin.banners.index')->with('error', 'مشکلی در حذف بنر رخ داده است، لطف دوباره سعی کنید.');
+            }
+        } catch (\Exception $e) {
+            // Rollback the transaction in case of any exception
+            DB::rollBack();
+            Log::error('Error deleting banner: ' . $e->getMessage());
+
+            return redirect()->route('admin.banners.index')->with('error', 'مشکلی در حذف بنر رخ داده است، لطف دوباره سعی کنید.');
+        }
     }
+
 }

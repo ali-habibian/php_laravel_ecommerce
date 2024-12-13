@@ -2,6 +2,19 @@
 
 @section('title', 'لیست بنرها')
 
+@push('styles')
+    <style>
+        .truncate-description {
+            max-width:300px;
+            text-align: right;
+            white-space: nowrap;
+            text-overflow:ellipsis;
+            overflow: hidden;
+            word-wrap: break-word;
+        }
+    </style>
+@endpush
+
 @section('content')
     <div class="row">
 
@@ -47,7 +60,7 @@
                                    href="{{ asset($banner->image) }}">{{explode('/', $banner->image)[array_key_last(explode('/', $banner->image))]}}</a>
                             </td>
                             <td>{{ $banner->title }}</td>
-                            <td>{{ $banner->description }}</td>
+                            <td class="truncate-description">{{ $banner->description }}</td>
                             <td>{{ $banner->priority }}</td>
                             <td>
                                 <span
