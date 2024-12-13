@@ -7,12 +7,14 @@ import 'bootstrap/dist/js/bootstrap.bundle.js';
 import 'jquery.easing/jquery.easing.js';
 
 import Chart from 'chart.js/auto';
+
 window.Chart = Chart;
 
 import 'bootstrap-select';
 import 'bootstrap-select/dist/js/i18n/defaults-fa_IR.min.js';
 
 import Swal from 'sweetalert2';
+
 window.Swal = Swal;
 
 import '@majidh1/jalalidatepicker';
@@ -30,18 +32,16 @@ import '@majidh1/jalalidatepicker';
     });
 
     // Close any open menu accordions when window is resized below 768px
-    $(window).resize(function () {
-        if ($(window).width() < 768) {
-            $('.sidebar .collapse').collapse('hide');
-        }
+    if ($(window).width() < 768) {
+        $('.sidebar .collapse').collapse('hide');
+    }
 
-        // Toggle the side navigation when window is resized below 480px
-        if ($(window).width() < 480 && !$(".sidebar").hasClass("toggled")) {
-            $("body").addClass("sidebar-toggled");
-            $(".sidebar").addClass("toggled");
-            $('.sidebar .collapse').collapse('hide');
-        }
-    });
+    // Toggle the side navigation when window is resized below 480px
+    if ($(window).width() < 480 && !$(".sidebar").hasClass("toggled")) {
+        $("body").addClass("sidebar-toggled");
+        $(".sidebar").addClass("toggled");
+        $('.sidebar .collapse').collapse('hide');
+    }
 
     // Prevent the content wrapper from scrolling when the fixed side navigation hovered over
     $('body.fixed-nav .sidebar').on('mousewheel DOMMouseScroll wheel', function (e) {

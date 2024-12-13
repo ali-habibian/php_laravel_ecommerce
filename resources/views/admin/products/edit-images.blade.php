@@ -5,7 +5,7 @@
 @section('content')
     <div class="row">
 
-        <div class="col-xl-12 col-md-12 mb-4 p-md-5 bg-white">
+        <div class="col-xl-12 col-md-12 mb-4 p-4 bg-white">
 
             <div class="mb-4">
                 <h5 class="font-weight-bold">ویرایش تصاویر: {{ $product->name }}</h5>

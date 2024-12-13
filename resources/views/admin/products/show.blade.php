@@ -20,7 +20,7 @@
 @section('content')
     <div class="row">
 
-        <div class="col-xl-12 col-md-12 mb-4 p-md-5 bg-white">
+        <div class="col-xl-12 col-md-12 mb-4 p-4 bg-white">
 
             <!-- Topbar -->
             <div class="mb-4">
