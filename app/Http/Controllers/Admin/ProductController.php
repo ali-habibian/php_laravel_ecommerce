@@ -399,6 +399,73 @@ class ProductController extends Controller
         return redirect()->back()->with('success', 'تصاویر با موفقیت اضافه شدند.');
     }
 
+    public function editProductCategoryAndAttributes(Product $product)
+    {
+        $categories = Category::whereNotNull('parent_id')->get();
+
+        return view('admin.products.edit-category-attributes', compact('product', 'categories'));
+    }
+
+    public function updateProductCategoryAndAttributes(Request $request, Product $product)
+    {
+        $request->validate([
+            'category_id' => 'required|integer|exists:categories,id',
+            'attribute_ids' => 'required|array',
+            'attribute_ids.*' => 'required|string',
+            'variation_values' => 'required|array',
+            'variation_values.*.*' => 'required',
+            'variation_values.value.*' => 'string',
+            'variation_values.price.*' => 'integer|min:0',
+            'variation_values.quantity.*' => 'integer|min:0',
+            'variation_values.sku.*' => 'integer',
+        ]);
+
+        try {
+            DB::beginTransaction();
+            $product->update([
+                'category_id' => $request->category_id,
+            ]);
+
+            // Update product attributes.
+            foreach ($request->attribute_ids as $key => $value) {
+                ProductAttribute::where('product_id', $product->id)->where('attribute_id', $key)->delete();
+
+                ProductAttribute::create([
+                    'product_id' => $product->id,
+                    'attribute_id' => $key,
+                    'value' => $value,
+                ]);
+            }
+
+            // Update product variations.
+            ProductVariation::where('product_id', $product->id)->delete();
+            $counter = count($request->variation_values['value']);
+            $category = Category::with('attributeList')->findOrFail($request->category_id);
+            $variationAttributeId = $category->attributeList()->where('is_variation', true)->first()->id;
+
+            for ($i = 0; $i < $counter; $i++) {
+                ProductVariation::create([
+                    'product_id' => $product->id,
+                    'attribute_id' => $variationAttributeId,
+                    'value' => $request->variation_values['value'][$i],
+                    'price' => $request->variation_values['price'][$i],
+                    'quantity' => $request->variation_values['quantity'][$i],
+                    'sku' => $request->variation_values['sku'][$i]
+                ]);
+            }
+
+            DB::commit();
+        } catch (Exception $e) {
+            // Rollback the transaction if an exception occurs and log the error.
+            DB::rollBack();
+            Log::error('Error creating product: ' . $e->getMessage(), ['trace' => $e->getTrace()]);
+            return redirect()->back()->with('error', 'مشکلی در ویرایش دسته بندی و ویژگی های محصول رخ داده است. لطفاً دوباره سعی کنید.');
+        }
+
+        // Redirect to the product index page with a success message.
+        return redirect()->route('admin.products.index')->with('success', 'دسته بندی و ویژگی های محصول با موفقیت ویرایش شد');
+    }
+
     /**
      * Validate the request for new product images.
      *

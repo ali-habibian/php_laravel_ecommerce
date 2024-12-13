@@ -63,7 +63,7 @@
                                        href="{{ route('admin.products.images.edit', $product) }}">ویرایش تصاویر</a>
 
                                     <a class="dropdown-item text-right"
-                                       href="#">ویرایش دسته بندی و ویژگی ها</a>
+                                       href="{{ route('admin.products.edit.category-attributes', $product) }}">ویرایش دسته بندی و ویژگی ها</a>
 
                                     <hr>
                                     <a class="dropdown-item text-right delete-button text-danger"

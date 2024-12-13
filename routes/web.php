@@ -21,7 +21,7 @@ Route::prefix('admin-panel/management')->name('admin.')->group(function () {
     // Get category attributes
     Route::get('/category-attributes/{category}', [CategoryController::class, 'getCategoryAttributes'])->name('category.attributes');
 
-    // Edit product images
+    // ---------------- Edit product images ----------------
     Route::get('/products/{product}/images/edit', [ProductController::class, 'editProductImages'])->name('products.images.edit');
     // Delete product image
     Route::delete('/products/{product}/images/delete', [ProductController::class, 'destroyProductImage'])->name('products.images.destroy');
@@ -29,4 +29,8 @@ Route::prefix('admin-panel/management')->name('admin.')->group(function () {
     Route::put('/products/{product}/images/set-primary', [ProductController::class, 'setAsProductPrimaryImage'])->name('products.images.set-primary');
     // Add new images to product
     Route::post('/products/{product}/images/add', [ProductController::class, 'addNewProductImages'])->name('products.images.add');
+
+    // ---------------- Edit product category and attributes ----------------
+    Route::get('/products/{product}/edit/category-attributes', [ProductController::class, 'editProductCategoryAndAttributes'])->name('products.edit.category-attributes');
+    Route::put('/products/{product}/update/category-attributes', [ProductController::class, 'updateProductCategoryAndAttributes'])->name('products.update.category-attributes');
 });
