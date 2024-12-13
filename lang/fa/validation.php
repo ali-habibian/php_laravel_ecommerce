@@ -181,6 +181,8 @@ return [
         'variation_values.*.sale_price' => 'قیمت تخفیفی متغیر',
         'variation_values.*.date_on_sale_from' => 'تاریخ شروع تخفیف',
         'variation_values.*.date_on_sale_to' => 'تاریخ پایان تخفیف',
+        'type' => 'نوع بنر',
+        'image' => 'تصویر',
     ],
 
 ];

@@ -3,16 +3,27 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\Banner;
+use App\Services\FileService;
 use Illuminate\Http\Request;
 
 class BannerController extends Controller
 {
+    protected FileService $fileService;
+
+    public function __construct(FileService $fileService)
+    {
+        $this->fileService = $fileService;
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        $banners = Banner::latest()->paginate(10);
+
+        return view('admin.banners.index', compact('banners'));
     }
 
     /**
@@ -28,7 +39,37 @@ class BannerController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'title' => 'nullable|string',
+            'priority' => 'nullable|integer',
+            'is_active' => 'required|boolean',
+            'type' => 'required|string',
+            'button_text' => 'nullable|string',
+            'button_link' => 'nullable|string',
+            'button_icon' => 'nullable|string',
+            'description' => 'nullable|string',
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        $image = $this->fileService->uploadFile($request->file('image'), config('uploads.banner_image_path'), 'img_');
+
+        if ($image) {
+            Banner::create([
+                'title' => $request->title,
+                'priority' => $request->priority,
+                'is_active' => $request->is_active,
+                'type' => $request->type,
+                'button_text' => $request->button_text,
+                'button_link' => $request->button_link,
+                'button_icon' => $request->button_icon,
+                'description' => $request->description,
+                'image' => $image,
+            ]);
+        } else {
+            return redirect()->back()->with('error', 'مشکلی در آپلود تصویر رخ داده است، لطف دوباره سعی کنید.');
+        }
+
+        return redirect()->route('admin.banners.index')->with('success', 'بنر با موفقیت اضافه شد.');
     }
 
     /**
