@@ -25,9 +25,16 @@
                     <thead>
                     <tr>
                         <th>#</th>
-                        <th>نام</th>
+                        <th>تصویر</th>
+                        <th>عنوان</th>
+                        <th>متن</th>
+                        <th>اولویت</th>
                         <th>وضعیت</th>
-                        <th class="col-md-3">عملیات</th>
+                        <th>نوع</th>
+                        <th>متن دکمه</th>
+                        <th>لینک دکمه</th>
+                        <th>آیکون دکمه</th>
+                        <th>عملیات</th>
                     </tr>
                     </thead>
 
@@ -35,13 +42,24 @@
                     @foreach($banners as $key => $banner)
                         <tr>
                             <td>{{ $banners->firstItem() + $key }}</td>
-                            <td>{{ $banner->title }}</td>
                             <td>
-                            <span class="{{ $banner->getRawOriginal('is_active') ? 'text-success' : 'text-danger' }}">
-                                {{ $banner->is_active }}
-                            </span>
+                                <a target="_blank"
+                                   href="{{ asset($banner->image) }}">{{explode('/', $banner->image)[array_key_last(explode('/', $banner->image))]}}</a>
                             </td>
-                            <td class="col-md-3">
+                            <td>{{ $banner->title }}</td>
+                            <td>{{ $banner->description }}</td>
+                            <td>{{ $banner->priority }}</td>
+                            <td>
+                                <span
+                                    class="{{ $banner->getRawOriginal('is_active') ? 'text-success' : 'text-danger' }}">
+                                    {{ $banner->is_active }}
+                                </span>
+                            </td>
+                            <td>{{ $banner->type }}</td>
+                            <td>{{ $banner->button_text }}</td>
+                            <td>{{ $banner->button_link }}</td>
+                            <td>{{ $banner->button_icon }}</td>
+                            <td>
                                 <div class="btn-group">
                                     <button type="button" class="btn btn-sm btn-outline-primary dropdown-toggle"
                                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">عملیات

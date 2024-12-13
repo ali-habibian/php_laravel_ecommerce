@@ -29,7 +29,7 @@
                         <th>نام برند</th>
                         <th>نام دسته بندی</th>
                         <th>وضعیت</th>
-                        <th class="col-md-3">عملیات</th>
+                        <th>عملیات</th>
                     </tr>
                     </thead>
 
@@ -52,7 +52,7 @@
                                 {{ $product->is_active }}
                             </span>
                             </td>
-                            <td class="col-md-3">
+                            <td>
                                 <div class="btn-group">
                                     <button type="button" class="btn btn-sm btn-outline-primary dropdown-toggle"
                                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">عملیات

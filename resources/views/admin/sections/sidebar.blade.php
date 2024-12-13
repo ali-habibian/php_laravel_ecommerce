@@ -18,6 +18,7 @@
             <span> داشبورد </span></a>
     </li>
 
+    <!--------------------------------- Store section --------------------------------->
     <!-- Divider -->
     <hr class="sidebar-divider">
 
@@ -33,7 +34,7 @@
             <span> برندها </span></a>
     </li>
 
-    <!-- Nav Item - Pages Collapse Menu -->
+    <!-- Nav Item - Products Collapse Menu -->
     <li class="nav-item">
         <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseProducts" aria-expanded="true"
            aria-controls="collapseProducts">
@@ -49,6 +50,24 @@
             </div>
         </div>
     </li>
+    <!--------------------------------- End store section --------------------------------->
+
+    <!--------------------------------- Settings section --------------------------------->
+    <!-- Divider -->
+    <hr class="sidebar-divider">
+
+    <!-- Heading -->
+    <div class="sidebar-heading">
+        تنظیمات
+    </div>
+
+    <!-- Nav Item - Brands -->
+    <li class="nav-item">
+        <a class="nav-link" href="{{ route('admin.banners.index') }}">
+            <i class="fas fa-image"></i>
+            <span> بنرها </span></a>
+    </li>
+    <!--------------------------------- End settings section --------------------------------->
 
     <!-- Divider -->
     <hr class="sidebar-divider d-none d-md-block">

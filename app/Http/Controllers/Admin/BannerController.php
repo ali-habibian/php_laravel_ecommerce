@@ -40,7 +40,7 @@ class BannerController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'title' => 'nullable|string',
+            'title' => 'required|string',
             'priority' => 'nullable|integer',
             'is_active' => 'required|boolean',
             'type' => 'required|string',

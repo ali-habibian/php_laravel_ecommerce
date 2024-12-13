@@ -26,7 +26,7 @@
                     <tr>
                         <th>#</th>
                         <th>نام</th>
-                        <th class="col-md-3">عملیات</th>
+                        <th>عملیات</th>
                     </tr>
                     </thead>
 
@@ -35,7 +35,7 @@
                         <tr>
                             <td>{{ $tags->firstItem() + $key }}</td>
                             <td>{{ $tag->name }}</td>
-                            <td class="col-md-3">
+                            <td>
                                 <div class="btn-group">
                                     <button type="button" class="btn btn-sm btn-outline-primary dropdown-toggle"
                                             data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">عملیات
