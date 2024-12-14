@@ -21,7 +21,17 @@
 <body>
 <div class="wrapper">
 
+    {{-- Header --}}
+    @include('home.sections.header')
+
+    {{-- Mobile Off Canvas --}}
+    @include('home.sections.mobile-off-canvas')
+
+    {{-- Content --}}
     @yield('content')
+
+    {{-- Footer --}}
+    @include('home.sections.footer')
 
 </div>
 
