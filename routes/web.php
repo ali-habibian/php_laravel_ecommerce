@@ -6,12 +6,14 @@ use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\TagController;
+use App\Http\Controllers\Home\HomeController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/admin-panel/dashboard', function () {
     return view('admin.dashboard');
 })->name('admin.dashboard');
 
+// Admin Routs
 Route::prefix('admin-panel/management')->name('admin.')->group(function () {
     Route::resource('brands', BrandController::class);
     Route::resource('attributes', AttributeController::class);
@@ -36,3 +38,6 @@ Route::prefix('admin-panel/management')->name('admin.')->group(function () {
     Route::get('/products/{product}/edit/category-attributes', [ProductController::class, 'editProductCategoryAndAttributes'])->name('products.edit.category-attributes');
     Route::put('/products/{product}/update/category-attributes', [ProductController::class, 'updateProductCategoryAndAttributes'])->name('products.update.category-attributes');
 });
+
+// Home Routs
+Route::get('/', [HomeController::class, 'index']);
