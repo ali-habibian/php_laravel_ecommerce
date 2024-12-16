@@ -16,6 +16,16 @@ class HomeController extends Controller
             ->orderBy('priority')
             ->get();
 
-        return view('home.index', compact('sliders'));
+        $indexTopBanners = Banner::where('type', BannerTypes::INDEX_TOP)
+            ->where('is_active', true)
+            ->orderBy('priority')
+            ->get();
+
+        $indexBottomBanners = Banner::where('type', BannerTypes::INDEX_BOTTOM)
+            ->where('is_active', true)
+            ->orderBy('priority')
+            ->get();
+
+        return view('home.index', compact('sliders', 'indexTopBanners', 'indexBottomBanners'));
     }
 }
