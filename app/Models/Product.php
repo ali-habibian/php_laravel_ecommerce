@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Cviebrock\EloquentSluggable\Sluggable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -14,6 +15,7 @@ class Product extends Model
 
     protected $table = 'products';
     protected $guarded = [];
+    protected $appends = ['quantity_check', 'sale_check', 'min_price'];
 
     /**
      * Get the string representation of the active status.
@@ -29,6 +31,28 @@ class Product extends Model
         return $is_active ? 'فعال' : 'غیرفعال';
     }
 
+    public function getQuantityCheckAttribute()
+    {
+        return $this->productVariations()->where('quantity', '>', 0)->first() ?? false;
+    }
+
+    public function getSaleCheckAttribute()
+    {
+        return $this->productVariations()
+            ->where('quantity', '>', 0)
+            ->where('sale_price', '!=', null)
+            ->where('date_on_sale_from', '<=', Carbon::now())
+            ->where('date_on_sale_to', '>', Carbon::now())
+            ->orderBy('sale_price')
+            ->first() ?? false;
+    }
+
+    public function getMinPriceAttribute()
+    {
+        return $this->productVariations()
+            ->orderBy('price')
+            ->first() ?? false;
+    }
 
     public function sluggable(): array
     {
