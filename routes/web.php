@@ -41,3 +41,4 @@ Route::prefix('admin-panel/management')->name('admin.')->group(function () {
 
 // Home Routs
 Route::get('/', [HomeController::class, 'index']);
+Route::get('/product-modal', [HomeController::class, 'showProductModal'])->name('showProductModal');

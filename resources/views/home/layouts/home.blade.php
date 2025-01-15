@@ -43,7 +43,7 @@
 
 {{--@include('sweet::alert')--}}
 
-@yield('script')
+@stack('scripts')
 
 </body>
 
