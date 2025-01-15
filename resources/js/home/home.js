@@ -5,6 +5,9 @@ import 'bootstrap/dist/js/bootstrap.bundle.js';
 import Swal from 'sweetalert2';
 window.Swal = Swal;
 
+// Import rating-star-icons
+import '../home/files/rating.js';
+
 (function ($) {
     "use strict";
 

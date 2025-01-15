@@ -173,20 +173,10 @@
                                                     @endif
                                                 </div>
                                                 <div class="ht-product-ratting-wrap">
-                                                    <span class="ht-product-ratting">
-                                                        <span class="ht-product-user-ratting" style="width: 100%;">
-                                                            <i class="sli sli-star"></i>
-                                                            <i class="sli sli-star"></i>
-                                                            <i class="sli sli-star"></i>
-                                                            <i class="sli sli-star"></i>
-                                                            <i class="sli sli-star"></i>
-                                                        </span>
-                                                        <i class="sli sli-star"></i>
-                                                        <i class="sli sli-star"></i>
-                                                        <i class="sli sli-star"></i>
-                                                        <i class="sli sli-star"></i>
-                                                        <i class="sli sli-star"></i>
-                                                    </span>
+                                                    <div data-rating-stars="5"
+                                                         data-rating-readonly="true"
+                                                         data-rating-value="{{ ceil($product->productRates->avg('rate')) }}">
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
@@ -684,7 +674,11 @@
     @foreach($parentCategories as $parentCategory)
         @foreach($parentCategory->uniqueProducts as $product)
             <!-- Modal -->
-            <div class="modal fade product-detail-modal" id="productDetailModal-{{$product->id}}" tabindex="-1" role="dialog" aria-hidden="true"
+            <div class="modal fade product-detail-modal"
+                 id="productDetailModal-{{$product->id}}"
+                 tabindex="-1"
+                 role="dialog"
+                 aria-hidden="true"
                  data-active-variation="{{ $product->quantity_check ? ($product->sale_check ? $product->sale_check->id : $product->min_price->id) : '' }}">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
@@ -725,11 +719,10 @@
                                         </div>
                                         <div class="pro-details-rating-wrap">
                                             <div class="pro-details-rating">
-                                                <i class="sli sli-star yellow"></i>
-                                                <i class="sli sli-star yellow"></i>
-                                                <i class="sli sli-star yellow"></i>
-                                                <i class="sli sli-star"></i>
-                                                <i class="sli sli-star"></i>
+                                                <div data-rating-stars="5"
+                                                     data-rating-readonly="true"
+                                                     data-rating-value="{{ ceil($product->productRates->avg('rate')) }}">
+                                                </div>
                                             </div>
                                             <span>3 دیدگاه</span>
                                         </div>
@@ -821,7 +814,8 @@
                                     <div class="quickview-wrap mt-15">
                                         <div class="quickview-slide-active owl-carousel nav nav-style-2" role="tablist">
                                             <a class="active" data-toggle="tab" href="#pro-{{ $product->id }}">
-                                                <img src="{{ asset($product->primary_image) }}" alt="{{ $product->name }}"/>
+                                                <img src="{{ asset($product->primary_image) }}"
+                                                     alt="{{ $product->name }}"/>
                                             </a>
                                             @foreach($product->productImages as $image)
                                                 <a data-toggle="tab" href="#pro-image{{ $image->id }}">
@@ -857,18 +851,18 @@
             element.classList.add('active-variation');
         }
 
-        function setActiveVariation(product){
+        function setActiveVariation(product) {
             // Remove 'active-variation' class from all links
             document.querySelectorAll('.variation-btn').forEach(link => {
                 link.classList.remove('active-variation');
             });
 
             let activeVariationId;
-            if(product.quantity_check){
-                if(product.sale_check){
+            if (product.quantity_check) {
+                if (product.sale_check) {
                     activeVariationId = product.sale_check.id;
                     setVariationPriceAndQuantity(product.sale_check, product.id);
-                }else{
+                } else {
                     activeVariationId = product.min_price.id;
                     setVariationPriceAndQuantity(product.min_price, product.id);
                 }

@@ -92,4 +92,9 @@ class Product extends Model
     {
         return $this->belongsToMany(Tag::class);
     }
+
+    public function productRates(): HasMany
+    {
+        return $this->hasMany(ProductRate::class);
+    }
 }
