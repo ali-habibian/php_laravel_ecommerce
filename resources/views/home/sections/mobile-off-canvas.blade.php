@@ -20,10 +20,10 @@
                 <nav>
                     <ul class="mobile-menu text-right">
                         <li class="menu-item-has-children">
-                            <a href="index.html"> صفحه ای اصلی </a>
+                            <a href="{{ route('home.index') }}"> صفحه ای اصلی </a>
                         </li>
                         <li class="menu-item-has-children">
-                            <a href="shop.html">فروشگاه</a>
+                            <a href=javascript:void(0);>فروشگاه</a>
 
                             @php
                                 $parentCategories = \App\Models\Category::whereNull('parent_id')->get();
@@ -33,10 +33,10 @@
                                 @foreach($parentCategories as $parentCategory)
                                     @php $subCategories = $parentCategory->children; @endphp
                                     <li class="menu-item-has-children">
-                                        <a href="#">{{ $parentCategory->name }}</a>
+                                        <a href="{{ route('home.categories.show', $parentCategory->slug) }}">{{ $parentCategory->name }}</a>
                                         <ul class="dropdown">
                                            @foreach($subCategories as $subCategory)
-                                                <li><a href="#"> {{ $subCategory->name }} </a></li>
+                                                <li><a href="{{ route('home.categories.show', $subCategory->slug) }}"> {{ $subCategory->name }} </a></li>
                                            @endforeach
                                         </ul>
                                     </li>

@@ -1,6 +1,6 @@
 @extends('home.layouts.home')
 
-@section('title', 'فروشگاه اینترنتی')
+@section('title', 'دیجی شاپ | خانه')
 
 @section('content')
     {{-- Slider --}}

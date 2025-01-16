@@ -21,7 +21,7 @@
                                 <li><a href="contact-us.html"> تماس با ما </a></li>
 
                                 <li class="angle-shape">
-                                    <a href="shop.html"> فروشگاه </a>
+                                    <a href="javascript:void(0)"> فروشگاه </a>
 
                                     @php
                                         $parentCategories = \App\Models\Category::whereNull('parent_id')->get();
@@ -31,11 +31,11 @@
                                         @foreach($parentCategories as $parentCategory)
                                             @php $subCategories = $parentCategory->children; @endphp
                                             <li>
-                                                <a class="menu-title" href="#">{{ $parentCategory->name }}</a>
+                                                <a class="menu-title" href="{{ route('home.categories.show', $parentCategory->slug) }}">{{ $parentCategory->name }}</a>
 
                                                 <ul>
                                                     @foreach($subCategories as $subCategory)
-                                                            <li><a href="#">{{ $subCategory->name }}</a> </li>
+                                                            <li><a href="{{ route('home.categories.show', $subCategory->slug) }}">{{ $subCategory->name }}</a> </li>
                                                     @endforeach
                                                 </ul>
                                             </li>

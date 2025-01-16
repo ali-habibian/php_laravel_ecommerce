@@ -7,13 +7,14 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Home\HomeController;
+use App\Http\Controllers\Home\CategoryController as HomeCategoryController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/admin-panel/dashboard', function () {
     return view('admin.dashboard');
 })->name('admin.dashboard');
 
-// Admin Routs
+// ---------------- Admin Routs ----------------
 Route::prefix('admin-panel/management')->name('admin.')->group(function () {
     Route::resource('brands', BrandController::class);
     Route::resource('attributes', AttributeController::class);
@@ -38,7 +39,11 @@ Route::prefix('admin-panel/management')->name('admin.')->group(function () {
     Route::get('/products/{product}/edit/category-attributes', [ProductController::class, 'editProductCategoryAndAttributes'])->name('products.edit.category-attributes');
     Route::put('/products/{product}/update/category-attributes', [ProductController::class, 'updateProductCategoryAndAttributes'])->name('products.update.category-attributes');
 });
+// ---------------- End Admin Routs ----------------
 
-// Home Routs
-Route::get('/', [HomeController::class, 'index']);
+// ---------------- Home Routs ----------------
+Route::get('/', [HomeController::class, 'index'])->name('home.index');
 Route::get('/product-modal', [HomeController::class, 'showProductModal'])->name('showProductModal');
+
+Route::get('/categories/{category:slug}', [HomeCategoryController::class, 'show'])->name('home.categories.show');
+// ---------------- End Home Routs ----------------
