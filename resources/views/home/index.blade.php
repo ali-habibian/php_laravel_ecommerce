@@ -905,7 +905,6 @@
         }
 
     </script>
-
 @endpush
 
 @push('style')

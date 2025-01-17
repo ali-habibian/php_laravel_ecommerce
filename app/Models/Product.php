@@ -97,4 +97,35 @@ class Product extends Model
     {
         return $this->hasMany(ProductRate::class);
     }
+
+    public function scopeFilter($query)
+    {
+        if (request()->has('attribute')) {
+            foreach (request()->attribute as $attribute) {
+                $query->whereHas('productAttributes', function ($query) use ($attribute) {
+                    foreach (explode('_', $attribute) as $index => $attributeValue) {
+                        if ($index == 0) {
+                            $query->where('value', $attributeValue);
+                        } else {
+                            $query->orWhere('value', $attributeValue);
+                        }
+                    }
+                });
+            }
+        }
+
+        if (request()->has('variation')) {
+            $query->whereHas('productVariations', function ($query) {
+                foreach (explode('_', request()->variation) as $index => $variationValue) {
+                    if ($index == 0) {
+                        $query->where('value', $variationValue);
+                    } else {
+                        $query->orWhere('value', $variationValue);
+                    }
+                }
+            });
+        }
+
+        return $query;
+    }
 }
