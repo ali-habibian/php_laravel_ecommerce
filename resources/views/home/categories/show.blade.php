@@ -37,103 +37,61 @@
                   </form>
                 </div>
               </div>
-              <div class="sidebar-widget">
+
+                {{-- Parent category name and its children --}}
+                <div class="sidebar-widget">
                 <h4 class="pro-sidebar-title"> دسته بندی </h4>
                 <div class="sidebar-widget-list mt-30">
                   <ul>
                     <li>
-                      مردانه
+                      {{ $category->parent->name }}
                     </li>
-                    <li>
-                      <a href="#">
-                        پیراهن
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        تی شرت
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        پالتو
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        لباس راحتی
-                      </a>
-                    </li>
-                    <li>
-                      <a href="#">
-                        لباس راحتی
-                      </a>
-                    </li>
+                      @foreach($category->parent->children as $childCategory)
+                          <li>
+                            <a href="{{ route('home.categories.show', $childCategory) }}"
+                               style="{{ ($childCategory->id === $category->id) ? 'color: #ff3535;' : '' }}">
+                              {{ $childCategory->name }}
+                            </a>
+                          </li>
+                      @endforeach
                   </ul>
                 </div>
               </div>
               <hr>
 
-              <div class="sidebar-widget mt-30">
-                <h4 class="pro-sidebar-title">رنگ </h4>
+                {{-- Attributes --}}
+                @foreach($attributes as $attribute)
+                  <div class="sidebar-widget mt-30">
+                    <h4 class="pro-sidebar-title">{{ $attribute->name }} </h4>
+                    <div class="sidebar-widget-list mt-20">
+                      <ul>
+                        @foreach($attribute->values as $value)
+                          <li>
+                            <div class="sidebar-widget-list-left">
+                              <input type="checkbox" value=""> <a href="#">{{$value->value}} </a>
+                              <span class="checkmark"></span>
+                            </div>
+                          </li>
+                        @endforeach
+                      </ul>
+                    </div>
+                  </div>
+                  <hr>
+                @endforeach
+
+                {{-- Variation --}}
+                <div class="sidebar-widget mt-30">
+                <h4 class="pro-sidebar-title">{{$variation->name}} </h4>
                 <div class="sidebar-widget-list mt-20">
                   <ul>
-                    <li>
+                    @foreach($variation->variationValues as $variationValue)
+                      <li>
                       <div class="sidebar-widget-list-left">
-                        <input type="checkbox" value=""> <a href="#">سبز </a>
+                        <input type="checkbox" value=""> <a href="#">{{ $variationValue->value }} </a>
                         <span class="checkmark"></span>
                       </div>
                     </li>
-                    <li>
-                      <div class="sidebar-widget-list-left">
-                        <input type="checkbox" value=""> <a href="#">کرم </a>
-                        <span class="checkmark"></span>
-                      </div>
-                    </li>
-                    <li>
-                      <div class="sidebar-widget-list-left">
-                        <input type="checkbox" value=""> <a href="#">آبی </a>
-                        <span class="checkmark"></span>
-                      </div>
-                    </li>
-                    <li>
-                      <div class="sidebar-widget-list-left">
-                        <input type="checkbox" value=""> <a href="#">مشکی </a>
-                        <span class="checkmark"></span>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-              <hr>
-              <div class="sidebar-widget mt-30">
-                <h4 class="pro-sidebar-title">سایز </h4>
-                <div class="sidebar-widget-list mt-20">
-                  <ul>
-                    <li>
-                      <div class="sidebar-widget-list-left">
-                        <input type="checkbox" value=""> <a href="#">XL </a>
-                        <span class="checkmark"></span>
-                      </div>
-                    </li>
-                    <li>
-                      <div class="sidebar-widget-list-left">
-                        <input type="checkbox" value=""> <a href="#">L </a>
-                        <span class="checkmark"></span>
-                      </div>
-                    </li>
-                    <li>
-                      <div class="sidebar-widget-list-left">
-                        <input type="checkbox" value=""> <a href="#">SM </a>
-                        <span class="checkmark"></span>
-                      </div>
-                    </li>
-                    <li>
-                      <div class="sidebar-widget-list-left">
-                        <input type="checkbox" value=""> <a href="#">XXL </a>
-                        <span class="checkmark"></span>
-                      </div>
-                    </li>
+                    @endforeach
                   </ul>
                 </div>
               </div>
@@ -171,7 +129,7 @@
                       <div class="ht-product-inner">
                         <div class="ht-product-image-wrap">
                           <a href="product-details.html" class="ht-product-image">
-                            <img src="assets/img/product/product-1.svg" alt="Universal Product Style" />
+                            <img src="assets/img/product/product-1.svg" alt="Universal Product Style"/>
                           </a>
                           <div class="ht-product-action">
                             <ul>
@@ -242,7 +200,7 @@
                       <div class="ht-product-inner">
                         <div class="ht-product-image-wrap">
                           <a href="product-details.html" class="ht-product-image">
-                            <img src="assets/img/product/product-2.svg" alt="Universal Product Style" />
+                            <img src="assets/img/product/product-2.svg" alt="Universal Product Style"/>
                           </a>
                           <div class="ht-product-action">
                             <ul>
@@ -312,7 +270,7 @@
                       <div class="ht-product-inner">
                         <div class="ht-product-image-wrap">
                           <a href="product-details.html" class="ht-product-image">
-                            <img src="assets/img/product/product-3.svg" alt="Universal Product Style" />
+                            <img src="assets/img/product/product-3.svg" alt="Universal Product Style"/>
                           </a>
                           <div class="ht-product-action">
                             <ul>
@@ -386,7 +344,7 @@
                       <div class="ht-product-inner">
                         <div class="ht-product-image-wrap">
                           <a href="product-details.html" class="ht-product-image">
-                            <img src="assets/img/product/product-4.svg" alt="Universal Product Style" />
+                            <img src="assets/img/product/product-4.svg" alt="Universal Product Style"/>
                           </a>
                           <div class="ht-product-action">
                             <ul>
@@ -455,7 +413,7 @@
                       <div class="ht-product-inner">
                         <div class="ht-product-image-wrap">
                           <a href="product-details.html" class="ht-product-image">
-                            <img src="assets/img/product/product-2.svg" alt="Universal Product Style" />
+                            <img src="assets/img/product/product-2.svg" alt="Universal Product Style"/>
                           </a>
                           <div class="ht-product-action">
                             <ul>
@@ -524,7 +482,7 @@
                       <div class="ht-product-inner">
                         <div class="ht-product-image-wrap">
                           <a href="product-details.html" class="ht-product-image">
-                            <img src="assets/img/product/product-1.svg" alt="Universal Product Style" />
+                            <img src="assets/img/product/product-1.svg" alt="Universal Product Style"/>
                           </a>
                           <div class="ht-product-action">
                             <ul>
@@ -595,7 +553,7 @@
                       <div class="ht-product-inner">
                         <div class="ht-product-image-wrap">
                           <a href="product-details.html" class="ht-product-image">
-                            <img src="assets/img/product/product-2.svg" alt="Universal Product Style" />
+                            <img src="assets/img/product/product-2.svg" alt="Universal Product Style"/>
                           </a>
                           <div class="ht-product-action">
                             <ul>
@@ -665,7 +623,7 @@
                       <div class="ht-product-inner">
                         <div class="ht-product-image-wrap">
                           <a href="product-details.html" class="ht-product-image">
-                            <img src="assets/img/product/product-3.svg" alt="Universal Product Style" />
+                            <img src="assets/img/product/product-3.svg" alt="Universal Product Style"/>
                           </a>
                           <div class="ht-product-action">
                             <ul>
@@ -739,7 +697,7 @@
                       <div class="ht-product-inner">
                         <div class="ht-product-image-wrap">
                           <a href="product-details.html" class="ht-product-image">
-                            <img src="assets/img/product/product-2.svg" alt="Universal Product Style" />
+                            <img src="assets/img/product/product-2.svg" alt="Universal Product Style"/>
                           </a>
                           <div class="ht-product-action">
                             <ul>
@@ -884,7 +842,7 @@
                   </div>
                   <div class="pro-details-quality">
                     <div class="cart-plus-minus">
-                      <input class="cart-plus-minus-box" type="text" name="qtybutton" value="2" />
+                      <input class="cart-plus-minus-box" type="text" name="qtybutton" value="2"/>
                     </div>
                     <div class="pro-details-cart">
                       <a href="#">افزودن به سبد خرید</a>
@@ -916,16 +874,16 @@
               <div class="col-md-5 col-sm-12 col-xs-12">
                 <div class="tab-content quickview-big-img">
                   <div id="pro-1" class="tab-pane fade show active">
-                    <img src="assets/img/product/quickview-l1.svg" alt="" />
+                    <img src="assets/img/product/quickview-l1.svg" alt=""/>
                   </div>
                   <div id="pro-2" class="tab-pane fade">
-                    <img src="assets/img/product/quickview-l2.svg" alt="" />
+                    <img src="assets/img/product/quickview-l2.svg" alt=""/>
                   </div>
                   <div id="pro-3" class="tab-pane fade">
-                    <img src="assets/img/product/quickview-l3.svg" alt="" />
+                    <img src="assets/img/product/quickview-l3.svg" alt=""/>
                   </div>
                   <div id="pro-4" class="tab-pane fade">
-                    <img src="assets/img/product/quickview-l2.svg" alt="" />
+                    <img src="assets/img/product/quickview-l2.svg" alt=""/>
                   </div>
                 </div>
                   <!-- Thumbnail Large Image End -->
@@ -933,10 +891,10 @@
                 <div class="quickview-wrap mt-15">
                   <div class="quickview-slide-active owl-carousel nav nav-style-2" role="tablist">
                     <a class="active" data-toggle="tab" href="#pro-1"><img src="assets/img/product/quickview-s1.svg"
-                                                                           alt="" /></a>
-                    <a data-toggle="tab" href="#pro-2"><img src="assets/img/product/quickview-s2.svg" alt="" /></a>
-                    <a data-toggle="tab" href="#pro-3"><img src="assets/img/product/quickview-s3.svg" alt="" /></a>
-                    <a data-toggle="tab" href="#pro-4"><img src="assets/img/product/quickview-s2.svg" alt="" /></a>
+                                                                           alt=""/></a>
+                    <a data-toggle="tab" href="#pro-2"><img src="assets/img/product/quickview-s2.svg" alt=""/></a>
+                    <a data-toggle="tab" href="#pro-3"><img src="assets/img/product/quickview-s3.svg" alt=""/></a>
+                    <a data-toggle="tab" href="#pro-4"><img src="assets/img/product/quickview-s2.svg" alt=""/></a>
                   </div>
                 </div>
               </div>

@@ -4,6 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Attribute extends Model
 {
@@ -24,4 +26,13 @@ class Attribute extends Model
         return $this->belongsToMany(Category::class, 'attribute_category');
     }
 
+    public function values(): HasMany
+    {
+        return $this->hasMany(ProductAttribute::class)->select('attribute_id', 'value')->distinct();
+    }
+
+    public function variationValues(): HasMany
+    {
+        return $this->hasMany(ProductVariation::class)->select('attribute_id', 'value')->distinct();
+    }
 }

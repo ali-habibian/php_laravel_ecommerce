@@ -49,7 +49,7 @@
 
                         <div class="col-md-12">
                             <hr>
-                            <p>افزودن قیمت و موجودی برای ویژگی متغیر <span class="font-weight-bold"
+                            <p>افزودن قیمت و موجودی برای ویژگی متغیر <b>{{ $product->productVariations()->first()->attribute->name }}</b> <span class="font-weight-bold"
                                                                            id="variationNameSpan"></span>: </p>
                         </div>
 
