@@ -19,7 +19,8 @@
       </div>
     </div>
 
-    <div class="shop-area pt-95 pb-100">
+    <form id="filterForm" method="GET" action="{{ url()->current() }}">
+      <div class="shop-area pt-95 pb-100">
       <div class="container">
         <div class="row flex-row-reverse text-right">
 
@@ -38,63 +39,77 @@
                 </div>
               </div>
 
-                {{-- Parent category name and its children --}}
-                <div class="sidebar-widget">
-                <h4 class="pro-sidebar-title"> دسته بندی </h4>
-                <div class="sidebar-widget-list mt-30">
-                  <ul>
-                    <li>
-                      {{ $category->parent->name }}
-                    </li>
-                      @foreach($category->parent->children as $childCategory)
-                          <li>
-                            <a href="{{ route('home.categories.show', $childCategory) }}"
-                               style="{{ ($childCategory->id === $category->id) ? 'color: #ff3535;' : '' }}">
-                              {{ $childCategory->name }}
-                            </a>
-                          </li>
-                      @endforeach
-                  </ul>
-                </div>
-              </div>
-              <hr>
-
-                {{-- Attributes --}}
-                @foreach($attributes as $attribute)
-                  <div class="sidebar-widget mt-30">
-                    <h4 class="pro-sidebar-title">{{ $attribute->name }} </h4>
-                    <div class="sidebar-widget-list mt-20">
-                      <ul>
-                        @foreach($attribute->values as $value)
-                          <li>
-                            <div class="sidebar-widget-list-left">
-                              <input type="checkbox" value=""> <a href="#">{{$value->value}} </a>
-                              <span class="checkmark"></span>
-                            </div>
-                          </li>
-                        @endforeach
-                      </ul>
-                    </div>
-                  </div>
-                  <hr>
-                @endforeach
-
-                {{-- Variation --}}
-                <div class="sidebar-widget mt-30">
-                <h4 class="pro-sidebar-title">{{$variation->name}} </h4>
-                <div class="sidebar-widget-list mt-20">
-                  <ul>
-                    @foreach($variation->variationValues as $variationValue)
+                  {{-- Parent category name and its children --}}
+                  <div class="sidebar-widget">
+                  <h4 class="pro-sidebar-title"> دسته بندی </h4>
+                  <div class="sidebar-widget-list mt-30">
+                    <ul>
                       <li>
-                      <div class="sidebar-widget-list-left">
-                        <input type="checkbox" value=""> <a href="#">{{ $variationValue->value }} </a>
-                        <span class="checkmark"></span>
-                      </div>
-                    </li>
-                    @endforeach
-                  </ul>
+                        {{ $category->parent->name }}
+                      </li>
+                        @foreach($category->parent->children as $childCategory)
+                            <li>
+                              <a href="{{ route('home.categories.show', $childCategory) }}"
+                                 style="{{ ($childCategory->id === $category->id) ? 'color: #ff3535;' : '' }}">
+                                {{ $childCategory->name }}
+                              </a>
+                            </li>
+                        @endforeach
+                    </ul>
+                  </div>
                 </div>
-              </div>
+                <hr>
+
+                  {{-- Attributes --}}
+                  @foreach($attributes as $attribute)
+                      <div class="sidebar-widget mt-30">
+                      <h4 class="pro-sidebar-title">{{ $attribute->name }} </h4>
+                      <div class="sidebar-widget-list mt-20">
+                        <ul>
+                          @foreach($attribute->values as $value)
+                                <li>
+                              <div class="sidebar-widget-list-left">
+                                <input type="checkbox"
+                                       class="attribute-{{ $attribute->id }}"
+                                       value="{{$value->value}}"
+                                       onchange="doFilter()"
+                                        {{ (request()->has('attribute.'.$attribute->id) && in_array($value->value, explode('_', request()->attribute[$attribute->id]))) ? 'checked' : '' }}>
+                                <a href=javascript:void(0)>{{$value->value}} </a>
+                                <span class="checkmark"></span>
+                              </div>
+                            </li>
+                            @endforeach
+                        </ul>
+                      </div>
+                    </div>
+                    <input type="hidden" name="attribute[{{ $attribute->id }}]" id="filterAttribute-{{ $attribute->id }}">
+                      <hr>
+                  @endforeach
+
+                  {{-- Variation --}}
+                  <div class="sidebar-widget mt-30">
+                  <h4 class="pro-sidebar-title">{{$variation->name}} </h4>
+                  <div class="sidebar-widget-list mt-20">
+                    <ul>
+                      @foreach($variation->variationValues as $variationValue)
+                            <li>
+                        <div class="sidebar-widget-list-left">
+                          <input type="checkbox"
+                                 class="variation"
+                                 value="{{ $variationValue->value }}"
+                                 onchange="doFilter()"
+                                  {{ (request()->has('variation') && in_array($variationValue->value, explode('_', request('variation')))) ? 'checked' : '' }}>
+                          <a href=javascript:void(0)>{{ $variationValue->value }} </a>
+                          <span class="checkmark"></span>
+                        </div>
+                      </li>
+                        @endforeach
+                    </ul>
+                  </div>
+
+                    <input type="hidden" name="variation" id="filterVariation">
+
+                </div>
 
             </div>
           </div>
@@ -762,7 +777,7 @@
                   </div>
                 </div>
 
-              </div>
+                </div>
 
               <div class="pro-pagination-style text-center mt-30">
                 <ul class="d-flex justify-content-center">
@@ -779,6 +794,8 @@
         </div>
       </div>
     </div>
+
+    </form>
 
     <!-- Modal -->
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog">
@@ -908,7 +925,36 @@
 @endsection
 
 @push('scripts')
+    <script>
+       function doFilter() {
+         let attributes = @json($attributes);
+         attributes.map(attribute => {
+           let attributeValues = $(`.attribute-${attribute.id}:checked`).map(function () {
+             return $(this).val();
+           }).get().join('_');
 
+           let filterAttribute = $(`#filterAttribute-${attribute.id}`);
+           if (attributeValues === '') {
+             filterAttribute.prop('disabled', true)
+           }else {
+             filterAttribute.val(attributeValues)
+           }
+         });
+
+         let variation = $('.variation:checked').map(function () {
+           return $(this).val();
+         }).get().join('_');
+
+         let filterVariation = $('#filterVariation');
+         if (variation === '') {
+           filterVariation.prop('disabled', true)
+         }else {
+           filterVariation.val(variation)
+         }
+
+           $('#filterForm').submit();
+       }
+  </script>
 @endpush
 
 @push('style')
