@@ -14,7 +14,7 @@ class CategoryController extends Controller
         $attributes = $category->attributeList()->where('is_filterable', true)->with('values')->get();
         $variation = $category->attributeList()->where('is_variation', true)->with('variationValues')->first();
 
-        $products = $category->products()->filter()->get();
+        $products = $category->products()->filter()->search()->get();
 
         return view('home.categories.show', compact('category', 'attributes', 'variation', 'products'));
     }

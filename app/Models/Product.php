@@ -170,4 +170,26 @@ class Product extends Model
 
         return $query;
     }
+
+    public function scopeSearch($query)
+    {
+        $keyword = trim(request()->search);
+
+        if (request()->has('search') && $keyword != null){
+            // Normalize spaces and split the keyword into individual words
+            $keyword = preg_replace('/\s+/', ' ', trim($keyword));
+
+            // Split the keyword into individual words
+            $words = explode(' ', $keyword);
+
+            // Add a WHERE clause for each word
+            $query->where(function ($q) use ($words) {
+                foreach ($words as $word) {
+                    $q->where('name', 'like', '%' . $word . '%');
+                }
+            });
+        }
+
+        return $query;
+    }
 }
