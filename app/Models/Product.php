@@ -126,6 +126,48 @@ class Product extends Model
             });
         }
 
+        if (request()->has('sortBy')) {
+            $sortBy = request()->sortBy;
+            switch ($sortBy) {
+                case 'maxPrice':
+                    $query->orderByDesc(
+                        ProductVariation::select('price')
+                            ->whereColumn('product_variations.product_id', 'products.id')
+                            ->orderBy('sale_price', 'desc')
+                            ->limit(1)
+                    );
+                    break;
+                case 'minPrice':
+                    $query->orderBy(
+                        ProductVariation::select('price')
+                            ->whereColumn('product_variations.product_id', 'products.id')
+                            ->orderBy('sale_price')
+                            ->limit(1)
+                    );
+                    break;
+                case 'rate':
+                    $query->orderByDesc(
+                        ProductRate::selectRaw('AVG(rate)')
+                            ->whereColumn('product_rates.product_id', 'products.id')
+                    );
+                    break;
+                case 'latest':
+                    $query->latest();
+                    break;
+                case 'oldest':
+                    $query->oldest();
+                    break;
+                case 'mostViewed':
+                    // Implement logic for most viewed if needed
+                    break;
+                case 'mostSold':
+                    // Implement logic for most sold if needed
+                    break;
+                default:
+                    break;
+            }
+        }
+
         return $query;
     }
 }

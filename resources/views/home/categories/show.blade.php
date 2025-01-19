@@ -128,6 +128,9 @@
                       <option value="oldest"
                               {{ (request()->has('sortBy') && request()->sortBy == 'oldest') ? 'selected' : '' }}> قدیمی ترین
                       </option>
+                      <option value="rate"
+                              {{ (request()->has('sortBy') && request()->sortBy == 'rate') ? 'selected' : '' }}> بیشترین امتیاز
+                      </option>
                     </select>
                   </div>
                 </div>
@@ -141,73 +144,6 @@
                     @foreach($products as $product)
                       <div class="col-xl-4 col-md-6 col-lg-6 col-sm-6">
                         <!--Product Start-->
-                        {{--<div class="ht-product ht-product-action-on-hover ht-product-category-right-bottom mb-30">
-                          <div class="ht-product-inner">
-                            <div class="ht-product-image-wrap">
-                              <a href="product-details.html" class="ht-product-image">
-                                <img src="assets/img/product/product-1.svg" alt="Universal Product Style"/>
-                              </a>
-                              <div class="ht-product-action">
-                                <ul>
-                                  <li>
-                                    <a href="#" data-toggle="modal" data-target="#exampleModal"><i
-                                                class="sli sli-magnifier"></i><span class="ht-product-action-tooltip"> مشاهده سریع
-                                      </span></a>
-                                  </li>
-                                  <li>
-                                    <a href="#"><i class="sli sli-heart"></i><span class="ht-product-action-tooltip">
-                                        افزودن به علاقه مندی ها </span></a>
-                                  </li>
-                                  <li>
-                                    <a href="#"><i class="sli sli-refresh"></i><span class="ht-product-action-tooltip">
-                                        مقایسه </span></a>
-                                  </li>
-                                  <li>
-                                    <a href="#"><i class="sli sli-bag"></i><span class="ht-product-action-tooltip"> افزودن
-                                        به سبد خرید </span></a>
-                                  </li>
-                                </ul>
-                              </div>
-                            </div>
-                            <div class="ht-product-content">
-                              <div class="ht-product-content-inner">
-                                <div class="ht-product-categories">
-                                  <a href="#">لورم</a>
-                                </div>
-                                <h4 class="ht-product-title text-right">
-                                  <a href="product-details.html"> لورم ایپسوم </a>
-                                </h4>
-                                <div class="ht-product-price">
-                                  <span class="new">
-                                    55,000
-                                    تومان
-                                  </span>
-                                  <span class="old">
-                                    75,000
-                                    تومان
-                                  </span>
-                                </div>
-                                <div class="ht-product-ratting-wrap">
-                                  <span class="ht-product-ratting">
-                                    <span class="ht-product-user-ratting" style="width: 100%;">
-                                      <i class="sli sli-star"></i>
-                                      <i class="sli sli-star"></i>
-                                      <i class="sli sli-star"></i>
-                                      <i class="sli sli-star"></i>
-                                      <i class="sli sli-star"></i>
-                                    </span>
-                                    <i class="sli sli-star"></i>
-                                    <i class="sli sli-star"></i>
-                                    <i class="sli sli-star"></i>
-                                    <i class="sli sli-star"></i>
-                                    <i class="sli sli-star"></i>
-                                  </span>
-                                </div>
-                              </div>
-
-                            </div>
-                          </div>
-                        </div>--}}
                         <div class="ht-product ht-product-action-on-hover ht-product-category-right-bottom mb-30">
                             <div class="ht-product-inner">
                                 <div class="ht-product-image-wrap">
