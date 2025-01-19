@@ -230,12 +230,8 @@
                   </div>
 
                 <div class="pro-pagination-style text-center mt-30">
-                  <ul class="d-flex justify-content-center">
-                    <li><a class="prev" href="#"><i class="sli sli-arrow-left"></i></a></li>
-                    <li><a class="active" href="#">1</a></li>
-                    <li><a href="#">2</a></li>
-                    <li><a class="next" href="#"><i class="sli sli-arrow-right"></i></a></li>
-                  </ul>
+                  {{-- withQueryString() makes parameters in url not to be removed when changing page --}}
+                  {{ $products->withQueryString()->links() }}
                 </div>
 
               </div>
