@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Home\HomeController;
 use App\Http\Controllers\Home\CategoryController as HomeCategoryController;
+use App\Http\Controllers\Home\ProductController as HomeProductController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/admin-panel/dashboard', function () {
@@ -46,4 +47,6 @@ Route::get('/', [HomeController::class, 'index'])->name('home.index');
 Route::get('/product-modal', [HomeController::class, 'showProductModal'])->name('showProductModal');
 
 Route::get('/categories/{category:slug}', [HomeCategoryController::class, 'show'])->name('home.categories.show');
+
+Route::get('/products/{product:slug}', [HomeProductController::class, 'show'])->name('home.products.show');
 // ---------------- End Home Routs ----------------

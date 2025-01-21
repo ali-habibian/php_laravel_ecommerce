@@ -12,5 +12,6 @@ class BannerTypes
     public const SLIDER = 'slider';
     public const INDEX_BOTTOM = 'index_bottom';
     public const INDEX_TOP = 'index_top';
+    public const PRODUCT_DETAIL_PAGE = 'product_detail_page';
 }
 

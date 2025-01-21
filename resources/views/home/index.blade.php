@@ -101,7 +101,7 @@
                                 <div class="ht-product ht-product-action-on-hover ht-product-category-right-bottom mb-30">
                                     <div class="ht-product-inner">
                                         <div class="ht-product-image-wrap">
-                                            <a href="product-details.html" class="ht-product-image">
+                                            <a href="{{ route('home.products.show', $product->slug) }}" class="ht-product-image">
                                                 <img src="{{ asset($product->primary_image) }}"
                                                      alt="{{ $product->name }}"/>
                                             </a>
@@ -145,7 +145,7 @@
                                                     <a href="#">{{ $product->category->name }}</a>
                                                 </div>
                                                 <h4 class="ht-product-title text-right">
-                                                    <a href="product-details.html"> {{ $product->name }} </a>
+                                                    <a href="{{ route('home.products.show', $product->slug) }}"> {{ $product->name }} </a>
                                                 </h4>
                                                 <div class="ht-product-price">
                                                     @if($product->quantity_check)
@@ -678,8 +678,7 @@
                  id="productDetailModal-{{$product->id}}"
                  tabindex="-1"
                  role="dialog"
-                 aria-hidden="true"
-                 data-active-variation="{{ $product->quantity_check ? ($product->sale_check ? $product->sale_check->id : $product->min_price->id) : '' }}">
+                 aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -740,23 +739,22 @@
 
                                         @if($product->quantity_check)
                                             <div class="pro-details-size-color text-right">
-                                            <div class="pro-details-size">
-                                                <span>{{ App\Models\Attribute::find($product->productVariations()->first()->attribute_id)->name }}</span>
-                                                <div class="pro-details-size-content">
-                                                    <ul>
-                                                        @foreach($product->productVariations()->where('quantity', '>', 0)->get() as $variation)
-                                                            <li>
-                                                                <a class="variation-link-{{ $variation->id }} variation-btn"
-                                                                   href="javascript:void(0)"
-                                                                   onclick="getVariationInfo({{ json_encode($variation->only(['id', 'quantity', 'is_sale', 'sale_price', 'price'])) }}, {{ $product->id }}, this)">
-                                                                    {{ $variation->value }}
-                                                                </a>
-                                                            </li>
-                                                        @endforeach
-                                                    </ul>
+                                                <div class="pro-details-size">
+                                                    <span>{{ App\Models\Attribute::find($product->productVariations()->first()->attribute_id)->name }}</span>
+                                                    <div class="pro-details-size-content">
+                                                        <ul>
+                                                            @foreach($product->productVariations()->where('quantity', '>', 0)->get() as $variation)
+                                                                <li>
+                                                                    <a class="variation-link-{{ $variation->id }} variation-btn"
+                                                                       href="javascript:void(0)"
+                                                                       onclick="getVariationInfo({{ json_encode($variation->only(['id', 'quantity', 'is_sale', 'sale_price', 'price'])) }}, {{ $product->id }}, this)">
+                                                                        {{ $variation->value }}
+                                                                    </a>
+                                                                </li>
+                                                            @endforeach
+                                                        </ul>
+                                                    </div>
                                                 </div>
-                                            </div>
-
                                             </div>
                                             <div class="pro-details-quality">
                                                 <div class="cart-plus-minus">
