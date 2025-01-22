@@ -12,6 +12,7 @@
         "php": "^8.2",
         "cviebrock/eloquent-sluggable": "^11.0",
         "hekmatinasser/verta": "^8.4",
+        "laravel/fortify": "^1.25",
         "laravel/framework": "^11.31",
         "laravel/tinker": "^2.9"
     },
