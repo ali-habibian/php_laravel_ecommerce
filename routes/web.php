@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\TagController;
+use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Home\HomeController;
 use App\Http\Controllers\Home\CategoryController as HomeCategoryController;
 use App\Http\Controllers\Home\ProductController as HomeProductController;
@@ -50,3 +51,8 @@ Route::get('/categories/{category:slug}', [HomeCategoryController::class, 'show'
 
 Route::get('/products/{product:slug}', [HomeProductController::class, 'show'])->name('home.products.show');
 // ---------------- End Home Routs ----------------
+
+// Social auth routs
+Route::get('/auth/redirect/{provider}', [AuthController::class, 'redirectToProvider'])->name('auth.redirect');
+// callback url
+Route::get('/auth/callback/{provider}', [AuthController::class, 'handleProviderCallback'])->name('auth.callback') ;

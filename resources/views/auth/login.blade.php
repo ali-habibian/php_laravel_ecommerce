@@ -57,7 +57,7 @@
 {{--                                                    <a href="{{ route('password.request') }}"> فراموشی رمز عبور ! </a> TODO - implement password request page --}}
                                                 </div>
                                                 <button type="submit">ورود</button>
-                                                <a href="index.html" class="btn btn-google btn-block mt-4">
+                                                <a href="{{ route('auth.redirect', 'google') }}" class="btn btn-google btn-block mt-4">
                                                     <i class="fab fa-google"></i>
                                                     ورود با حساب گوگل
                                                 </a>

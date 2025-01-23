@@ -58,7 +58,7 @@
 
                                             <div class="button-box">
                                                 <button type="submit">ثبت نام</button>
-                                                <a href="index.html" class="btn btn-google btn-block mt-4">
+                                                <a href="{{ route('auth.redirect', 'google') }}" class="btn btn-google btn-block mt-4">
                                                     <i class="fab fa-google"></i>
                                                     ایجاد اکانت با گوگل
                                                 </a>
