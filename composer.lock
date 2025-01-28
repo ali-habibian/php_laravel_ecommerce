@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "39ed90b198ce6335f7665212e130492f",
+    "content-hash": "7241a733850c92deebad1edaf0cfe9d4",
     "packages": [
         {
             "name": "bacon/bacon-qr-code",
@@ -895,6 +895,118 @@
                 }
             ],
             "time": "2023-10-12T05:21:21+00:00"
+        },
+        {
+            "name": "ghasedaksms/ghasedaksms-laravel",
+            "version": "v1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ghasedakapi/ghasedaksms-laravel.git",
+                "reference": "345242073764021970cd6815cc531638e053cd84"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ghasedakapi/ghasedaksms-laravel/zipball/345242073764021970cd6815cc531638e053cd84",
+                "reference": "345242073764021970cd6815cc531638e053cd84",
+                "shasum": ""
+            },
+            "require": {
+                "ghasedaksms/php": ">=v1.0.4",
+                "illuminate/support": "10.* | 11.*",
+                "php": "^8.2"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^v9.1.2",
+                "phpunit/phpunit": "^11.3.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "aliases": {
+                        "Ghasedaksms": "GhasedaksmsFacade"
+                    },
+                    "providers": [
+                        "Ghasedaksms\\GhasedaksmsLaravel\\GhasedaksmsLaravelServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Ghasedaksms\\GhasedaksmsLaravel\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "mrt",
+                    "email": "mortezaei76@gmail.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "laravel package for use ghasedaksms api services",
+            "homepage": "https://github.com/ghasedaksms/ghasedaksms-laravel",
+            "keywords": [
+                "ghasedaksms",
+                "ghasedaksms-laravel"
+            ],
+            "support": {
+                "issues": "https://github.com/ghasedakapi/ghasedaksms-laravel/issues",
+                "source": "https://github.com/ghasedakapi/ghasedaksms-laravel/tree/v1.0.2"
+            },
+            "time": "2024-08-13T07:21:00+00:00"
+        },
+        {
+            "name": "ghasedaksms/php",
+            "version": "v1.0.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/ghasedakapi/ghasedaksms-php.git",
+                "reference": "84a39783ecd18702c8118e39953f4feccf353611"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/ghasedakapi/ghasedaksms-php/zipball/84a39783ecd18702c8118e39953f4feccf353611",
+                "reference": "84a39783ecd18702c8118e39953f4feccf353611",
+                "shasum": ""
+            },
+            "require": {
+                "ext-curl": "*",
+                "ext-json": "*",
+                "php": ">=8.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Ghasedak\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "mrt",
+                    "email": "mortezaei76@gmail.com"
+                }
+            ],
+            "description": "a package for use ghasedaksms api services in php programming",
+            "keywords": [
+                "Ghasedak",
+                "ghasedaksms",
+                "notification",
+                "sms",
+                "sms-api",
+                "sms-gateway"
+            ],
+            "support": {
+                "issues": "https://github.com/ghasedakapi/ghasedaksms-php/issues",
+                "source": "https://github.com/ghasedakapi/ghasedaksms-php/tree/v1.0.5"
+            },
+            "time": "2024-11-27T09:28:25+00:00"
         },
         {
             "name": "graham-campbell/result-type",

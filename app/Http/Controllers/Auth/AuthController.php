@@ -68,4 +68,9 @@ class AuthController extends Controller
         // Redirect user to the index page with a success message.
         return redirect()->route('home.index')->with('success', 'شما با موفقیت وارد شدید');
     }
+
+//    public function loginWithSms (){
+//        $user = \App\Models\User::find(4);
+//        $user->notify(new \App\Notifications\SendOtpToUser('1234'));
+//    }
 }
