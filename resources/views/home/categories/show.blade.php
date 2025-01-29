@@ -304,7 +304,11 @@
                                                      data-rating-value="{{ ceil($product->productRates->avg('rate')) }}">
                                                 </div>
                                             </div>
-                                            <span>3 دیدگاه</span>
+                                            @if($product->approvedComments()->count() > 0)
+                                                <span>{{ $product->approvedComments()->count() }} دیدگاه</span>
+                                            @else
+                                                <span>بدون دیدگاه</span>
+                                            @endif
                                         </div>
                                         <p class="text-right">
                                             {{ $product->description }}

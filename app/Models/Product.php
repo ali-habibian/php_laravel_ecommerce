@@ -103,6 +103,11 @@ class Product extends Model
         return $this->hasMany(Comment::class);
     }
 
+    public function approvedComments(): HasMany
+    {
+        return $this->comments()->where('approved', true);
+    }
+
     public function scopeFilter($query)
     {
         if (request()->has('attribute')) {
