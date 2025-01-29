@@ -1,7 +1,7 @@
 <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion pr-0" id="accordionSidebar">
 
     <!-- Sidebar - Brand -->
-    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index.html">
+    <a class="sidebar-brand d-flex align-items-center justify-content-center" href="{{ route('admin.dashboard') }}">
         <div class="sidebar-brand-icon rotate-n-15">
             <i class="fas fa-laugh-wink"></i>
         </div>
@@ -47,6 +47,7 @@
                 <a class="collapse-item" href="{{ route('admin.categories.index') }}">دسته بندی ها</a>
                 <a class="collapse-item" href="{{ route('admin.attributes.index') }}">ویژگی ها</a>
                 <a class="collapse-item" href="{{ route('admin.tags.index') }}">تگ ها</a>
+                <a class="collapse-item" href="{{ route('admin.comments.index') }}">دیدگاه ها</a>
             </div>
         </div>
     </li>

@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>فروشگاه - @yield('title')</title>
+    <title>مدیریت فروشگاه - @yield('title')</title>
 
     <!-- styles/scripts -->
     @vite(['resources/js/admin/admin.js', 'resources/scss/admin/admin.scss'])

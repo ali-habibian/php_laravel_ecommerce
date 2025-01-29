@@ -43,6 +43,8 @@ Route::prefix('admin-panel/management')->name('admin.')->group(function () {
     // ---------------- Edit product category and attributes ----------------
     Route::get('/products/{product}/edit/category-attributes', [ProductController::class, 'editProductCategoryAndAttributes'])->name('products.edit.category-attributes');
     Route::put('/products/{product}/update/category-attributes', [ProductController::class, 'updateProductCategoryAndAttributes'])->name('products.update.category-attributes');
+
+    Route::get('comments/{comment}/change-approval-status', [CommentController::class, 'changeApprovalStatus'])->name('comments.change-approval-status');
 });
 // ---------------- End Admin Routs ----------------
 
