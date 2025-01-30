@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>@yield('title')</title>
+    <title>دیجی شاپ |  @yield('title')</title>
 
     <!-- Custom styles for this template-->
     @vite('resources/scss/home/home.scss')

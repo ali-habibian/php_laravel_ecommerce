@@ -1,7 +1,7 @@
 @extends('home.layouts.home')
 
 @php
-    $title = "دیجی شاپ | ".$product->name;
+    $title = $product->name;
 @endphp
 
 @section('title', $title)

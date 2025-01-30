@@ -1,7 +1,7 @@
 @extends('home.layouts.home')
 
 @php
-    $title = "دیجی شاپ | ".$category->name. " ". $category->parentName();
+    $title = $category->name. " ". $category->parentName();
 @endphp
 @section('title', $title)
 
