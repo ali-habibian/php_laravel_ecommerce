@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Home;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
+use App\Models\User;
 use DB;
 use Exception;
 use Illuminate\Http\Request;
@@ -17,6 +18,12 @@ class CommentController extends Controller
     public function index()
     {
         //
+    }
+
+    public function userCommentsIndex(User $user)
+    {
+        $comments = $user->comments()->with('product')->get();
+        return view('home.user.profile.comments', compact('user', 'comments'));
     }
 
     /**

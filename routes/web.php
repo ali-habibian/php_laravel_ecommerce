@@ -12,6 +12,7 @@ use App\Http\Controllers\Home\HomeController;
 use App\Http\Controllers\Home\CategoryController as HomeCategoryController;
 use App\Http\Controllers\Home\ProductController as HomeProductController;
 use App\Http\Controllers\Home\CommentController as HomeCommentController;
+use App\Http\Controllers\Home\UserProfileController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/admin-panel/dashboard', function () {
@@ -58,6 +59,13 @@ Route::get('/products/{product:slug}', [HomeProductController::class, 'show'])->
 
 Route::post('/comments/{product}', [HomeCommentController::class, 'store'])->name('home.comments.store');
 // ---------------- End Home Routs ----------------
+
+// ---------------- User Profile Routs ----------------
+Route::prefix('profile')->name('home.profile.')->group(function () {
+    Route::get('/', [UserProfileController::class, 'index'])->name('index');
+    Route::get('/comments/{user}', [HomeCommentController::class, 'userCommentsIndex'])->name('comments.index');
+});
+// ---------------- End User Profile Routs ----------------
 
 // Social auth routs
 Route::get('/auth/redirect/{provider}', [AuthController::class, 'redirectToProvider'])->name('auth.redirect');

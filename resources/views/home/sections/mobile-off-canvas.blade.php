@@ -57,11 +57,17 @@
         <div class="mobile-curr-lang-wrap">
             <div class="single-mobile-curr-lang">
                 <ul class="text-right">
-                    <li class="my-3"><a href="{{ route('login') }}"> ورود </a></li>
-                    <li class="my-3">
-                        <a href="{{ route('register') }}"> ایجاد حساب </a>
-                    </li>
-                    <li class="my-3"><a href="my-account.html"> پروفایل </a></li>
+                    @auth
+                        <li class="my-3"><a href="{{ route('home.profile.index') }}">پروفایل</a></li>
+                        {{-- logut form --}}
+                        <form id="logput_form" action="{{ route('logout') }}" method="post">
+                                            @csrf
+                            <li class="my-3"><a href="javascript:$('#logput_form').submit();">خروج</a></li>
+                                        </form>
+                    @else
+                        <li class="my-3"><a href="{{ route('login') }}">ورود</a></li>
+                        <li class="my-3"><a href="{{ route('register') }}">ایجاد حساب</a></li>
+                    @endauth
                 </ul>
             </div>
         </div>

@@ -130,7 +130,7 @@
                             <div class="setting-content">
                                 <ul class="text-right">
                                     @auth
-                                        <li><a href="my-account.html">پروفایل</a></li>
+                                        <li><a href="{{ route('home.profile.index') }}">پروفایل</a></li>
                                         {{-- logut form --}}
                                         <form id="logput_form" action="{{ route('logout') }}" method="post">
                                             @csrf
@@ -140,8 +140,6 @@
                                         <li><a href="{{ route('login') }}">ورود</a></li>
                                         <li><a href="{{ route('register') }}">ایجاد حساب</a></li>
                                     @endauth
-
-
                                 </ul>
                             </div>
                         </div>
