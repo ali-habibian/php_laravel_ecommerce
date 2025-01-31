@@ -184,7 +184,7 @@
                                                 @endauth
                                             </li>
                                             <li>
-                                                <a href="#">
+                                                <a href="{{ route('home.compare.add.product', $product) }}">
                                                     <i class="sli sli-refresh"></i>
                                                     <span class="ht-product-action-tooltip"> مقایسه </span>
                                                 </a>
@@ -385,8 +385,8 @@
                                                     @endauth
                                                 </div>
                                                 <div class="pro-details-compare">
-                                                    <a title="Add To Compare"
-                                                       href="#"><i class="sli sli-refresh"></i></a>
+                                                    <a title="مقایسه"
+                                                       href="{{ route('home.compare.add.product', $product) }}"><i class="sli sli-refresh"></i></a>
                                                 </div>
                                             </div>
                                       @endif
