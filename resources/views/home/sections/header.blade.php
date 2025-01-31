@@ -20,6 +20,8 @@
 
                                 <li><a href="contact-us.html"> تماس با ما </a></li>
 
+                                <li><a href="{{ route('home.compare.index') }}"> مقایسه محصولات </a></li>
+
                                 <li class="angle-shape">
                                     <a href="javascript:void(0)"> فروشگاه </a>
 
@@ -172,8 +174,8 @@
             <div class="row align-items-center">
                 <div class="col-6">
                     <div class="mobile-logo">
-                        <a href="index.html">
-                            <h4 class="font-weight-bold">WebProg.ir</h4>
+                        <a href="{{ route('home.index') }}">
+                            <h4 class="font-weight-bold">Ali.Ecommerce</h4>
                         </a>
                     </div>
                 </div>

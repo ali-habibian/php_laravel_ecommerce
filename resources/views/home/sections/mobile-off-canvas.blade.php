@@ -20,7 +20,7 @@
                 <nav>
                     <ul class="mobile-menu text-right">
                         <li class="menu-item-has-children">
-                            <a href="{{ route('home.index') }}"> صفحه ای اصلی </a>
+                            <a href="{{ route('home.index') }}"> صفحه اصلی </a>
                         </li>
                         <li class="menu-item-has-children">
                             <a href=javascript:void(0);>فروشگاه</a>
@@ -43,6 +43,8 @@
                                 @endforeach
                             </ul>
                         </li>
+
+                        <li><a href="{{ route('home.compare.index') }}"> مقایسه محصولات </a></li>
 
                         <li><a href="contact-us.html">تماس با ما</a></li>
 

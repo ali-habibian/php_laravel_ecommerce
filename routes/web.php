@@ -63,7 +63,9 @@ Route::prefix('/')->name('home.')->group(function () {
 
     Route::get('/wishlist/toggle/{product}', [WishListController::class, 'toggle'])->name('wishlist.toggle');
 
+    Route::get('/compare', [CompareController::class, 'index'])->name('compare.index');
     Route::get('/compare/add/{product}', [CompareController::class, 'addProductToCompare'])->name('compare.add.product');
+    Route::get('/compare/remove/{productId}', [CompareController::class, 'removeProductFromCompare'])->name('compare.remove.product');
 });
 //Route::get('/product-modal', [HomeController::class, 'showProductModal'])->name('showProductModal');
 // ---------------- End Home Routs ----------------
