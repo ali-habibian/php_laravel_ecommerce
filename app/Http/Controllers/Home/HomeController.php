@@ -53,9 +53,9 @@ class HomeController extends Controller
         return view('home.index', compact('sliders', 'indexTopBanners', 'indexBottomBanners', 'parentCategories'));
     }
 
-    public function showProductModal(Request $request)
-    {
-        $modalProduct = Product::findOrFail($request->input('product_id'));
-        return view('home.index', compact('modalProduct'));
-    }
+//    public function showProductModal(Request $request)
+//    {
+//        $modalProduct = Product::findOrFail($request->input('product_id'));
+//        return view('home.index', compact('modalProduct'));
+//    }
 }

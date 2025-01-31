@@ -108,6 +108,19 @@ class Product extends Model
         return $this->comments()->where('approved', true);
     }
 
+    /**
+     * Check if this product exists in user wish list.
+     *
+     *
+     * @param User $user
+     *
+     * @return bool Returns true if this product exists in user wish list; otherwise, returns false.
+     */
+    public function existsInUserWishList(User $user): bool
+    {
+        return $this->hasMany(WishList::class)->where('user_id', $user->id)->exists();
+    }
+
     public function scopeFilter($query)
     {
         if (request()->has('attribute')) {
@@ -185,7 +198,7 @@ class Product extends Model
     {
         $keyword = trim(request()->search);
 
-        if (request()->has('search') && $keyword != null){
+        if (request()->has('search') && $keyword != null) {
             // Normalize spaces and split the keyword into individual words
             $keyword = preg_replace('/\s+/', ' ', trim($keyword));
 

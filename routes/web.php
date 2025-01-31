@@ -13,6 +13,7 @@ use App\Http\Controllers\Home\CategoryController as HomeCategoryController;
 use App\Http\Controllers\Home\ProductController as HomeProductController;
 use App\Http\Controllers\Home\CommentController as HomeCommentController;
 use App\Http\Controllers\Home\UserProfileController;
+use App\Http\Controllers\Home\WishListController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/admin-panel/dashboard', function () {
@@ -50,14 +51,18 @@ Route::prefix('admin-panel/management')->name('admin.')->group(function () {
 // ---------------- End Admin Routs ----------------
 
 // ---------------- Home Routs ----------------
-Route::get('/', [HomeController::class, 'index'])->name('home.index');
-Route::get('/product-modal', [HomeController::class, 'showProductModal'])->name('showProductModal');
+Route::prefix('/')->name('home.')->group(function () {
+    Route::get('', [HomeController::class, 'index'])->name('index');
 
-Route::get('/categories/{category:slug}', [HomeCategoryController::class, 'show'])->name('home.categories.show');
+    Route::get('/categories/{category:slug}', [HomeCategoryController::class, 'show'])->name('categories.show');
 
-Route::get('/products/{product:slug}', [HomeProductController::class, 'show'])->name('home.products.show');
+    Route::get('/products/{product:slug}', [HomeProductController::class, 'show'])->name('products.show');
 
-Route::post('/comments/{product}', [HomeCommentController::class, 'store'])->name('home.comments.store');
+    Route::post('/comments/{product}', [HomeCommentController::class, 'store'])->name('comments.store');
+
+    Route::get('/wishlist/toggle/{product}', [WishListController::class, 'toggle'])->name('wishlist.toggle');
+});
+//Route::get('/product-modal', [HomeController::class, 'showProductModal'])->name('showProductModal');
 // ---------------- End Home Routs ----------------
 
 // ---------------- User Profile Routs ----------------

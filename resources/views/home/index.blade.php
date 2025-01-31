@@ -118,10 +118,24 @@
                                                         </a>
                                                     </li>
                                                     <li>
-                                                        <a href="#">
-                                                            <i class="sli sli-heart"></i>
-                                                            <span class="ht-product-action-tooltip"> افزودن به علاقه مندی ها </span>
-                                                        </a>
+                                                        @auth
+                                                            @if($product->existsInUserWishList(auth()->user()))
+                                                                <a href="{{ route('home.wishlist.toggle', $product) }}">
+                                                                    <i class="fas fa-heart" style="color: #ff3535;"></i>
+                                                                    <span class="ht-product-action-tooltip"> حذف از علاقه مندی ها </span>
+                                                                </a>
+                                                            @else
+                                                                <a href="{{ route('home.wishlist.toggle', $product) }}">
+                                                                    <i class="sli sli-heart"></i>
+                                                                    <span class="ht-product-action-tooltip"> افزودن به علاقه مندی ها </span>
+                                                                </a>
+                                                            @endif
+                                                        @else
+                                                            <a href="{{ route('home.wishlist.toggle', $product) }}">
+                                                                <i class="sli sli-heart"></i>
+                                                                <span class="ht-product-action-tooltip"> افزودن به علاقه مندی ها </span>
+                                                            </a>
+                                                        @endauth
                                                     </li>
                                                     <li>
                                                         <a href="#">
@@ -772,8 +786,21 @@
                                                     <a href="#">افزودن به سبد خرید</a>
                                                 </div>
                                                 <div class="pro-details-wishlist">
-                                                    <a title="Add To Wishlist"
-                                                       href="#"><i class="sli sli-heart"></i></a>
+                                                    @auth
+                                                        @if($product->existsInUserWishList(auth()->user()))
+                                                            <a title="حذف از علاقه‌مندی ها" href="{{ route('home.wishlist.toggle', $product) }}">
+                                                                <i class="fas fa-heart" style="color: #ff3535;"></i>
+                                                            </a>
+                                                        @else
+                                                            <a title="افزودن به علاقه مندی ها" href="{{ route('home.wishlist.toggle', $product) }}">
+                                                                <i class="sli sli-heart"></i>
+                                                            </a>
+                                                        @endif
+                                                    @else
+                                                        <a title="افزودن به علاقه مندی ها" href="{{ route('home.wishlist.toggle', $product) }}">
+                                                            <i class="sli sli-heart"></i>
+                                                        </a>
+                                                    @endauth
                                                 </div>
                                                 <div class="pro-details-compare">
                                                     <a title="Add To Compare"

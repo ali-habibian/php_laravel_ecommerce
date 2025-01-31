@@ -73,7 +73,7 @@ class CommentController extends Controller
                 return redirect()->to(url()->previous() . '#comments')->with('error', 'خطایی رخ داد');
             }
         } else {
-            return redirect()->back()->with('warning', 'برای ثبت ثبت نظر شما باید ابتدا وارد سایت شوید');
+            return redirect()->back()->with('warning', 'برای ثبت نظر شما باید ابتدا وارد سایت شوید');
         }
 
         return redirect()->back()->with('success', 'نظر شما با موفقیت ثبت شد');
