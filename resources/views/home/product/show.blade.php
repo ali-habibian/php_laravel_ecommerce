@@ -217,7 +217,9 @@
                                         @foreach($product->approvedComments as $comment)
                                             <div class="single-review">
                                                 <div class="review-img">
-                                                    <img src="{{ ($comment->user->avatar == null) ? asset("images/home/default-user-avatar.png") : asset($comment->user->avatar) }}" alt="user-avatar">
+                                                    <img src="{{ ($comment->user->avatar == null)
+                                                        ? asset("images/home/default-user-avatar.png")
+                                                        : asset($comment->user->avatar) }}" alt="user-avatar">
                                                 </div>
                                                 <div class="review-content text-right" style="width: 80%;">
                                                     <p class="text-right">{{ $comment->text }}</p>

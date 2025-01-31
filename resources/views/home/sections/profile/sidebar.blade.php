@@ -20,7 +20,7 @@
         لیست علاقه مندی ها
     </a>
 
-    <a href="{{ route('home.profile.comments.index', auth()->user()) }}" class="{{ Route::is('home.profile.comments.index') ? 'active' : '' }}">
+    <a href="{{ route('home.profile.comments.index') }}" class="{{ Route::is('home.profile.comments.index') ? 'active' : '' }}">
         <i class="sli sli-bubble ml-1"></i>
         دیدگاه ها
     </a>

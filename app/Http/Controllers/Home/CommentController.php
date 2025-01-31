@@ -20,10 +20,10 @@ class CommentController extends Controller
         //
     }
 
-    public function userCommentsIndex(User $user)
+    public function userCommentsIndex()
     {
-        $comments = $user->comments()->with('product')->get();
-        return view('home.user.profile.comments', compact('user', 'comments'));
+        $comments = auth()->user()->comments()->where('approved', true)->with('product')->get();
+        return view('home.user.profile.comments', compact('comments'));
     }
 
     /**

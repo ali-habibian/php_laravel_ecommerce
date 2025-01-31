@@ -63,7 +63,7 @@ Route::post('/comments/{product}', [HomeCommentController::class, 'store'])->nam
 // ---------------- User Profile Routs ----------------
 Route::prefix('profile')->name('home.profile.')->group(function () {
     Route::get('/', [UserProfileController::class, 'index'])->name('index');
-    Route::get('/comments/{user}', [HomeCommentController::class, 'userCommentsIndex'])->name('comments.index');
+    Route::get('/comments', [HomeCommentController::class, 'userCommentsIndex'])->name('comments.index');
 });
 // ---------------- End User Profile Routs ----------------
 

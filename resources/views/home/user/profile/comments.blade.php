@@ -17,7 +17,7 @@
 </div>
 
 <!-- my account wrapper start -->
-<div class="my-account-wrapper pt-100 pb-100">
+<div class="my-account-wrapper pt-100 pb-50">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
@@ -38,85 +38,34 @@
                                     <h3> دیدگاه ها </h3>
                                     <div class="review-wrapper">
 
-                                        <div class="single-review">
-                                            <div class="review-img">
-                                                <img src="assets/img/product-details/client-1.jpg" alt="">
-                                            </div>
-                                            <div class="review-content w-100 text-right">
-                                                <p class="text-right">
-                                                    لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت
-                                                    چاپ و با
-                                                    استفاده از طراحان گرافیک است.
-                                                </p>
-                                                <div class="review-top-wrap">
-                                                    <div class="review-name d-flex align-items-center">
-                                                        <h4>
-                                                            برای محصول :
-                                                        </h4>
-                                                        <a class="mr-1" href="#" style="color:#ff3535;">
-                                                            لورم ایپسوم </a>
-                                                    </div>
-                                                    <div>
-                                                        در تاریخ :
-                                                        22 تیر 1399
+                                        @foreach($comments as $comment)
+                                            <div class="single-review">
+                                                <div class="review-img">
+                                                    <img src="{{ ($comment->user->avatar == null)
+                                                        ? asset("images/home/default-user-avatar.png")
+                                                        : asset($comment->user->avatar) }}" alt="user-avatar">
+                                                </div>
+                                                <div class="review-content w-100 text-right">
+                                                    <p class="text-right">
+                                                        {{ $comment->text }}
+                                                    </p>
+                                                    <div class="review-top-wrap">
+                                                        <div class="review-name d-flex align-items-center">
+                                                            <h4>
+                                                                برای محصول :
+                                                            </h4>
+                                                            <a class="mr-1" href="{{ route('home.products.show', $comment->product->slug) }}" style="color:#ff3535;">
+                                                                {{ $comment->product->name }} </a>
+                                                        </div>
+                                                        <div>
+                                                            در تاریخ :
+                                                            {{ verta($comment->created_at)->format('%d %B %Y') }}
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        @endforeach
 
-                                        <div class="single-review">
-                                            <div class="review-img">
-                                                <img src="assets/img/product-details/client-2.jpg" alt="">
-                                            </div>
-                                            <div class="review-content w-100 text-right">
-                                                <p class="text-right">
-                                                    لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت
-                                                    چاپ و با
-                                                    استفاده از طراحان گرافیک است. چاپگرها و متون بلکه
-                                                    روزنامه و مجله در
-                                                    ستون و سطرآنچنان که لازم است
-                                                </p>
-                                                <div class="review-top-wrap text-right">
-                                                    <div class="review-name d-flex align-items-center">
-                                                        <h4>
-                                                            برای محصول :
-                                                            <a class="mr-1" href="#" style="color:#ff3535;">
-                                                                لورم ایپسوم </a>
-                                                        </h4>
-                                                    </div>
-                                                    <div>
-                                                        در تاریخ :
-                                                        22 تیر 1399
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="single-review">
-                                            <div class="review-img">
-                                                <img src="assets/img/product-details/client-1.jpg" alt="">
-                                            </div>
-                                            <div class="review-content w-100 text-right">
-                                                <p class="text-right">
-                                                    لورم ایپسوم متن ساختگی با تولید سادگی نامفهوم از صنعت
-                                                    چاپ و با
-                                                    استفاده از طراحان گرافیک است.
-                                                </p>
-                                                <div class="review-top-wrap">
-                                                    <div class="review-name d-flex align-items-center">
-                                                        <h4>
-                                                            برای محصول :
-                                                        </h4>
-                                                        <a class="mr-1" href="#" style="color:#ff3535;">
-                                                            لورم ایپسوم </a>
-                                                    </div>
-                                                    <div>
-                                                        در تاریخ :
-                                                        22 تیر 1399
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
                                     </div>
                                 </div>
 
