@@ -28,4 +28,18 @@ class WishListController extends Controller
 
         return redirect()->back()->with('success', 'محصول با موفقیت به لیست علاقه‌مندی ها اضافه شد');
     }
+
+    public function userWishListIndex()
+    {
+        $wishlist = auth()->user()->wishlist()->with('product')->get();
+
+        return view('home.user.profile.wishlist', compact('wishlist'));
+    }
+
+    public function removeProductFromUserWishList(Product $product)
+    {
+        auth()->user()->wishlist()->where('product_id', $product->id)->delete();
+
+        return redirect()->back()->with('success', 'محصول با موفقیت از لیست علاقه‌مندی ها حذف شد');
+    }
 }

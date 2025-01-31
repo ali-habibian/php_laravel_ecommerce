@@ -15,9 +15,9 @@
         آدرس ها
     </a>
 
-    <a href="#wishlist">
+    <a href="{{ route('home.profile.wishlist.index') }}" class="{{ Route::is('home.profile.wishlist.index') ? 'active' : '' }}">
         <i class="sli sli-heart ml-1"></i>
-        لیست علاقه مندی ها
+        لیست علاقه‌مندی ها
     </a>
 
     <a href="{{ route('home.profile.comments.index') }}" class="{{ Route::is('home.profile.comments.index') ? 'active' : '' }}">

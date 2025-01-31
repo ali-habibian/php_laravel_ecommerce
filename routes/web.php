@@ -69,6 +69,8 @@ Route::prefix('/')->name('home.')->group(function () {
 Route::prefix('profile')->name('home.profile.')->group(function () {
     Route::get('/', [UserProfileController::class, 'index'])->name('index');
     Route::get('/comments', [HomeCommentController::class, 'userCommentsIndex'])->name('comments.index');
+    Route::get('/wishlist', [WishListController::class, 'userWishListIndex'])->name('wishlist.index');
+    Route::delete('/wishlist/remove/{product}', [WishListController::class, 'removeProductFromUserWishList'])->name('wishlist.remove');
 });
 // ---------------- End User Profile Routs ----------------
 

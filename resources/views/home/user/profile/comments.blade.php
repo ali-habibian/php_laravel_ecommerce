@@ -17,7 +17,7 @@
 </div>
 
 <!-- my account wrapper start -->
-<div class="my-account-wrapper pt-100 pb-50">
+<div class="my-account-wrapper pt-100 pb-100">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
