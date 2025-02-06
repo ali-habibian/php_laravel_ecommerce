@@ -9,6 +9,11 @@ use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
+    public function index()
+    {
+        return view('home.cart.index');
+    }
+
     public function addProductToCart(Request $request)
     {
         $request->validate([

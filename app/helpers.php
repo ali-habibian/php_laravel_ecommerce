@@ -40,3 +40,45 @@ function convertShamsiToGregorian(?string $shamsiDate): ?DateTime
     return Verta::parse($shamsiDate)->datetime();
 }
 
+/**
+ * Calculate the total discount amount for items in the cart.
+ *
+ * This function iterates over each item in the cart and calculates the total discount
+ * based on the difference between the original price and the sale price of items that are on sale.
+ *
+ * @return float|int The total discount amount for the cart. Returns a float or int value.
+ */
+function cartTotalDiscountAmount(): float|int
+{
+    $totalDiscountAmount = 0;
+    foreach (Cart::getContent() as $item){
+        if ($item->attributes->is_sale){
+            $totalDiscountAmount += $item->quantity * ($item->attributes->price - $item->attributes->sale_price);
+        }
+    }
+
+    return $totalDiscountAmount;
+}
+
+/**
+ * Calculate the total delivery amount for items in the cart.
+ *
+ * This function iterates over each item in the cart and calculates the total delivery
+ * amount. It adds the base delivery amount for each item and additional delivery
+ * amount per product for quantities greater than one.
+ *
+ * @return int The total delivery amount for the cart.
+ */
+function cartTotalDeliveryAmount(): int
+{
+    $totalDeliveryAmount = 0;
+    foreach (Cart::getContent() as $item){
+        $totalDeliveryAmount += $item->associatedModel->delivery_amount;
+        if ($item->quantity > 1){
+            $totalDeliveryAmount += $item->associatedModel->delivery_amount_per_product * ($item->quantity - 1);
+        }
+    }
+
+    return $totalDeliveryAmount;
+}
+

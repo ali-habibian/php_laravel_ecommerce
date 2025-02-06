@@ -28,6 +28,15 @@ class ProductVariation extends Model
         return ($this->sale_price !== null && $this->date_on_sale_from < Carbon::now() && $this->date_on_sale_to > Carbon::now());
     }
 
+    /**
+     * Get the percentage discount for the product variation.
+     *
+     * This method calculates the percentage discount based on the difference between
+     * the original price and the sale price of the product variation. If the product
+     * is not on sale, it returns null.
+     *
+     * @return float|null The percentage discount as a float, or null if the product is not on sale.
+     */
     public function getPercentDiscountAttribute(): ?float
     {
         return $this->is_sale ? round((($this->price - $this->sale_price) / $this->price) * 100) : null;

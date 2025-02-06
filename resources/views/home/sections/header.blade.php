@@ -130,7 +130,7 @@
                                             <a class="default-btn" href="checkout.html">
                                                 ثبت سفارش
                                             </a>
-                                            <a class="default-btn" href="cart-page.html">
+                                            <a class="default-btn" href="{{ route('home.cart.index') }}">
                                                 سبد خرید
                                             </a>
                                         </div>
@@ -273,7 +273,7 @@
                                         <a class="default-btn" href="checkout.html">
                                             ثبت سفارش
                                         </a>
-                                        <a class="default-btn" href="cart-page.html">
+                                        <a class="default-btn" href="{{ route('home.cart.index') }}">
                                             سبد خرید
                                         </a>
                                     </div>
