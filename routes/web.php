@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\CommentController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Home\CartController;
 use App\Http\Controllers\Home\CompareController;
 use App\Http\Controllers\Home\HomeController;
 use App\Http\Controllers\Home\CategoryController as HomeCategoryController;
@@ -66,6 +67,8 @@ Route::prefix('/')->name('home.')->group(function () {
     Route::get('/compare', [CompareController::class, 'index'])->name('compare.index');
     Route::get('/compare/add/{product}', [CompareController::class, 'addProductToCompare'])->name('compare.add.product');
     Route::get('/compare/remove/{productId}', [CompareController::class, 'removeProductFromCompare'])->name('compare.remove.product');
+
+    Route::post('/cart/add', [CartController::class, 'addProductToCart'])->name('cart.add.product');
 });
 //Route::get('/product-modal', [HomeController::class, 'showProductModal'])->name('showProductModal');
 // ---------------- End Home Routs ----------------
@@ -83,3 +86,8 @@ Route::prefix('profile')->name('home.profile.')->group(function () {
 Route::get('/auth/redirect/{provider}', [AuthController::class, 'redirectToProvider'])->name('auth.redirect');
 // callback url
 Route::get('/auth/callback/{provider}', [AuthController::class, 'handleProviderCallback'])->name('auth.callback') ;
+
+Route::get('/test', function () {
+//    \Cart::clear();
+    dd(\Cart::getContent());
+});

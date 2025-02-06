@@ -11,6 +11,7 @@
     "require": {
         "php": "^8.2",
         "cviebrock/eloquent-sluggable": "^11.0",
+        "darryldecode/cart": "^4.2",
         "ghasedaksms/ghasedaksms-laravel": "^1.0",
         "hekmatinasser/verta": "^8.4",
         "laravel/fortify": "^1.25",

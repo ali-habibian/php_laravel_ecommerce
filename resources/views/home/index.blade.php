@@ -692,7 +692,7 @@
                  id="productDetailModal-{{$product->id}}"
                  tabindex="-1"
                  role="dialog"
-                 aria-hidden="true">
+                 aria-hidden="false">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -783,7 +783,7 @@
                                                            data-max="5"/>
                                                 </div>
                                                 <div class="pro-details-cart">
-                                                    <a href="#">افزودن به سبد خرید</a>
+                                                    <button onclick="addToCart()">افزودن به سبد خرید</button>
                                                 </div>
                                                 <div class="pro-details-wishlist">
                                                     @auth
@@ -867,6 +867,9 @@
 
 @push('scripts')
     <script>
+        let selectedProductId;
+        let selectedVariationId;
+
         function getVariationInfo(variation, productId, element) {
 
             setVariationPriceAndQuantity(variation, productId)
@@ -931,8 +934,34 @@
             let quantityInput = $('.quantity-input-' + productId);
             quantityInput.attr('data-max', variation.quantity);
             quantityInput.val(1);
+
+            selectedVariationId = variation.id;
+            selectedProductId = productId;
         }
 
+        function addToCart(){
+            $.ajax({
+                url: "{{ route('home.cart.add.product') }}",
+                method: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    product_id: selectedProductId,
+                    quantity: $('.quantity-input-' + selectedProductId).val(),
+                    variation_id: selectedVariationId,
+                },
+                success: function (res) {
+                    showSwalSuccess(res['success']);
+                },
+                error: function (res) {
+                    if (res.status === 422) {
+                        showSwalError(res.responseJSON['error']);
+                    } else {
+                        alert('خطایی رخ داد' + res.status);
+                        console.log(res)
+                    }
+                }
+            })
+        }
     </script>
 @endpush
 

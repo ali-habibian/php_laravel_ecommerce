@@ -40,6 +40,7 @@
 <script src="{{ asset('/js/home/jquery-1.12.4.min.js') }}"></script>
 <script src="{{ asset('/js/home/plugins.js') }}"></script>
 @vite('resources/js/home/home.js')
+<script src="{{ asset('/js/helpers.js') }}"></script>
 
 {{--@include('sweet::alert')--}}
 
