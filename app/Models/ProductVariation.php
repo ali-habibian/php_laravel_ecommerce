@@ -13,7 +13,7 @@ class ProductVariation extends Model
 
     protected $table = 'product_variations';
     protected $guarded = [];
-    protected $appends = ['is_sale'];
+    protected $appends = ['is_sale', 'percent_discount'];
 
     /**
      * Determine if the product variation is on sale.
@@ -28,6 +28,10 @@ class ProductVariation extends Model
         return ($this->sale_price !== null && $this->date_on_sale_from < Carbon::now() && $this->date_on_sale_to > Carbon::now());
     }
 
+    public function getPercentDiscountAttribute(): ?float
+    {
+        return $this->is_sale ? round((($this->price - $this->sale_price) / $this->price) * 100) : null;
+    }
 
     public function product(): BelongsTo
     {

@@ -69,6 +69,7 @@ Route::prefix('/')->name('home.')->group(function () {
     Route::get('/compare/remove/{productId}', [CompareController::class, 'removeProductFromCompare'])->name('compare.remove.product');
 
     Route::post('/cart/add', [CartController::class, 'addProductToCart'])->name('cart.add.product');
+    Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 });
 //Route::get('/product-modal', [HomeController::class, 'showProductModal'])->name('showProductModal');
 // ---------------- End Home Routs ----------------
@@ -88,6 +89,6 @@ Route::get('/auth/redirect/{provider}', [AuthController::class, 'redirectToProvi
 Route::get('/auth/callback/{provider}', [AuthController::class, 'handleProviderCallback'])->name('auth.callback') ;
 
 Route::get('/test', function () {
-//    \Cart::clear();
-    dd(\Cart::getContent());
+    \Cart::clear();
+//    dd(\Cart::getContent());
 });

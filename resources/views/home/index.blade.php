@@ -812,7 +812,7 @@
                                         <div class="pro-details-meta">
                                             <span>دسته بندی :</span>
                                             <ul>
-                                                <li><a href="#">{{ $product->category->parent->name }}
+                                                <li><a href="{{ route('home.categories.show', $product->category->slug) }}">{{ $product->category->parent->name }}
                                                         ، {{ $product->category->name }}</a></li>
                                             </ul>
                                         </div>
@@ -820,7 +820,7 @@
                                             <span>تگ ها :</span>
                                             <ul>
                                                 @foreach($product->tags as $tag)
-                                                    <li><a href="#"> {{$tag->name}}{{$loop->last? '' : '،'}} </a></li>
+                                                    <li><a href="javascript:void(0)"> {{$tag->name}}{{$loop->last? '' : '،'}} </a></li>
                                                 @endforeach
                                             </ul>
                                         </div>
@@ -950,7 +950,9 @@
                     variation_id: selectedVariationId,
                 },
                 success: function (res) {
-                    showSwalSuccess(res['success']);
+                    showSwalSuccess(res['success'], () => {
+                        location.reload();
+                    });
                 },
                 error: function (res) {
                     if (res.status === 422) {
