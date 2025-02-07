@@ -32,7 +32,7 @@ class CouponController extends Controller
      */
     public function store(Request $request)
     {
-        $validator = Validator::make($request->all(), [
+        Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'code' => 'required|string|max:255',
             'type' => 'required|in:fixed,percent',
@@ -78,24 +78,57 @@ class CouponController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Coupon $coupon)
     {
-        //
+        return view('admin.coupons.edit', compact('coupon'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Coupon $coupon)
     {
-        //
+        Validator::make($request->all(), [
+            'name' => 'required|string|max:255',
+            'code' => 'required|string|max:255',
+            'type' => 'required|in:fixed,percent',
+            'amount' => 'required_if:type,fixed',
+            'percent' => 'required_if:type,percent',
+            'max_percentage_amount' => 'required_if:type,percent',
+            'expires_at' => 'required',
+            'description' => 'nullable|string',
+        ], [
+            'amount.required_if' => 'هنگامی که :other برابر با (مبلغی) است، فیلد :attribute الزامی است.',
+            'percent.required_if' => 'هنگامی که :other برابر با (درصدی) است، فیلد :attribute الزامی است.',
+            'max_percentage_amount.required_if' => 'هنگامی که :other برابر با (درصدی) است، فیلد :attribute الزامی است.',
+        ])->validate();
+
+        try {
+            $gregorianExpireDate = convertShamsiToGregorian($request->expires_at);
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', 'تاریخ نامعتبر است');
+        }
+
+        $coupon->update([
+            'name' => $request->name,
+            'code' => $request->code,
+            'type' => $request->type,
+            'amount' => $request->amount,
+            'percent' => $request->percent,
+            'max_percentage_amount' => $request->max_percentage_amount,
+            'expires_at' => $gregorianExpireDate,
+            'description' => $request->description,
+        ]);
+
+        return redirect()->route('admin.coupons.index')->with('success', 'کوپن با موفقیت ویرایش شد');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Coupon $coupon)
     {
-        //
+        $coupon->delete();
+        return redirect()->route('admin.coupons.index')->with('success', 'کوپن با موفقیت حذف شد.');
     }
 }
