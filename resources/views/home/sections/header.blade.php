@@ -110,7 +110,7 @@
                                                         <img alt="{{ $item->associatedModel->name }}" src="{{ asset($item->associatedModel->primary_image) }}" />
                                                     </a>
                                                     <div class="item-close">
-                                                        <a href="#"><i class="sli sli-close"></i></a>
+                                                        <a href="{{ route('home.cart.remove.product', $item->id) }}"><i class="sli sli-close"></i></a>
                                                     </div>
                                                 </div>
                                             </li>
@@ -253,7 +253,7 @@
                                                         <img alt="{{ $item->associatedModel->name }}" src="{{ asset($item->associatedModel->primary_image) }}" />
                                                     </a>
                                                     <div class="item-close">
-                                                        <a href="#"><i class="sli sli-close"></i></a>
+                                                        <a href="{{ route('home.cart.remove.product', $item->id) }}"><i class="sli sli-close"></i></a>
                                                     </div>
                                                 </div>
                                             </li>
