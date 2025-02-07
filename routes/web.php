@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\BannerController;
 use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CommentController;
+use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Auth\AuthController;
@@ -31,6 +32,7 @@ Route::prefix('admin-panel/management')->name('admin.')->group(function () {
     Route::resource('products', ProductController::class);
     Route::resource('banners', BannerController::class);
     Route::resource('comments', CommentController::class);
+    Route::resource('coupons', CouponController::class);
 
     // Get category attributes
     Route::get('/category-attributes/{category}', [CategoryController::class, 'getCategoryAttributes'])->name('category.attributes');

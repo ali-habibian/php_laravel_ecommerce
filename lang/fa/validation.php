@@ -181,8 +181,12 @@ return [
         'variation_values.*.sale_price' => 'قیمت تخفیفی متغیر',
         'variation_values.*.date_on_sale_from' => 'تاریخ شروع تخفیف',
         'variation_values.*.date_on_sale_to' => 'تاریخ پایان تخفیف',
-        'type' => 'نوع بنر',
+        'type' => 'نوع',
         'image' => 'تصویر',
+        'amount' => 'مبلغ',
+        'percent' => 'درصد',
+        'max_percentage_amount' => 'حداکثر مبلغ برای نوع درصدی',
+        'expires_at' => 'تاریخ انقضا',
     ],
 
 ];
