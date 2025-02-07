@@ -51,6 +51,20 @@
             </div>
         </div>
     </li>
+
+    <!-- Nav Item - Orders Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseOrders" aria-expanded="true"
+           aria-controls="collapseProducts">
+            <i class="fas fa-handshake"></i>
+            <span> سفارشات </span>
+        </a>
+        <div id="collapseOrders" class="collapse" aria-labelledby="headingOrders" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="{{ route('admin.coupons.index') }}">کوپن‌ها</a>
+            </div>
+        </div>
+    </li>
     <!--------------------------------- End store section --------------------------------->
 
     <!--------------------------------- Settings section --------------------------------->
