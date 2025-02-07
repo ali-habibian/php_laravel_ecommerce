@@ -68,8 +68,9 @@ Route::prefix('/')->name('home.')->group(function () {
     Route::get('/compare/add/{product}', [CompareController::class, 'addProductToCompare'])->name('compare.add.product');
     Route::get('/compare/remove/{productId}', [CompareController::class, 'removeProductFromCompare'])->name('compare.remove.product');
 
-    Route::post('/cart/add', [CartController::class, 'addProductToCart'])->name('cart.add.product');
     Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
+    Route::post('/cart/add', [CartController::class, 'addProductToCart'])->name('cart.add.product');
+    Route::put('/cart/update', [CartController::class, 'updateCart'])->name('cart.update');
 });
 //Route::get('/product-modal', [HomeController::class, 'showProductModal'])->name('showProductModal');
 // ---------------- End Home Routs ----------------

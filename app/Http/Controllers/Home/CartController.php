@@ -45,4 +45,29 @@ class CartController extends Controller
 
         return response()->json(['success' => 'محصول با موفقیت به سبد خرید اضافه شد']);
     }
+
+    public function updateCart(Request $request)
+    {
+        $request->validate([
+            'qtybutton' => 'required|array',
+            'qtybutton.*' => 'required|integer|min:1',
+        ]);
+
+        foreach ($request->qtybutton as $rowId => $quantity){
+            $item = Cart::get($rowId);
+
+            if ($quantity > $item->attributes->quantity){
+                return redirect()->back()->with('error', 'تعداد درخواستی بیشتر از موجودی است');
+            }
+
+            Cart::update($rowId, array(
+                'quantity' => array(
+                    'relative' => false,
+                    'value' => $quantity,
+                )
+            ));
+        }
+
+        return redirect()->back()->with('success', 'سبد خرید شما با موفقیت بروزرسانی شد');
+    }
 }
