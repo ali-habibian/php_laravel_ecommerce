@@ -128,11 +128,11 @@
                                     <p> کد تخفیف خود را وارد کنید: </p>
                                     <form action="{{ route('home.cart.coupon.apply') }}" method="post">
                                         @csrf
-                                        <input type="text" name="code">
+                                        <input type="text" name="code" @error('code') class="mb-1" @enderror>
                                         @error('code')
-                                            <div class="alert alert-danger">
-                                                {{ $message }}
-                                            </div>
+                                            <p class="input-error-validation">
+                                                <strong>{{ $message }}</strong>
+                                            </p>
                                         @enderror
                                         <button class="cart-btn-2" type="submit"> ثبت </button>
                                     </form>

@@ -6,6 +6,8 @@ use App\Http\Controllers\Controller;
 use App\Models\city;
 use App\Models\Province;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
+use Validator;
 
 class UserAddressController extends Controller
 {
@@ -15,10 +17,10 @@ class UserAddressController extends Controller
     public function index()
     {
         $userAddress = auth()->user()->addresses;
-        $province = Province::all();
+        $provinces = Province::all();
         $cities = City::all();
 
-        return view('home.user.profile.address', compact('userAddress', 'province', 'cities'));
+        return view('home.user.profile.address', compact('userAddress', 'provinces', 'cities'));
     }
 
     /**
@@ -34,7 +36,37 @@ class UserAddressController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validateWithBag('storeAddress', [
+            'title' => 'required|max:255',
+            'address' => 'required|string|max:255',
+            'tel' => [
+                'required',
+                function ($attribute, $value, $fail) {
+                    if (!Validator::make([$attribute => $value], ['tel' => 'ir_phone_with_code'])->passes() &&
+                        !Validator::make([$attribute => $value], ['tel' => 'ir_mobile:zero'])->passes()) {
+                        $fail(":attribute باید شماره تلفن ثابت با کد شهر باشد و یا شماره موبایل که با صفر شروع می‌شود.");
+                    }
+                },
+            ],
+            'postal_code' => 'required|ir_postal_code:without_seprate',
+            'province_id' => 'required',
+            'city_id' => 'required',
+        ]);
+
+        try {
+            auth()->user()->addresses()->create([
+                'title' => $request->title,
+                'address' => $request->address,
+                'tel' => $request->tel,
+                'postal_code' => $request->postal_code,
+                'province_id' => $request->province_id,
+                'city_id' => $request->city_id,
+            ]);
+
+            return back()->with('success', 'آدرس با موفقیت ثبت شد');
+        }catch (\Exception $e){
+            return back()->with('error', 'خطا در ثبت آدرس، لطفا مجددا تلاش کنید');
+        }
     }
 
     /**

@@ -18,6 +18,7 @@ use App\Http\Controllers\Home\CommentController as HomeCommentController;
 use App\Http\Controllers\Home\UserAddressController;
 use App\Http\Controllers\Home\UserProfileController;
 use App\Http\Controllers\Home\WishListController;
+use App\Models\City;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/admin-panel/dashboard', function () {
@@ -88,8 +89,13 @@ Route::prefix('profile')->name('home.profile.')->group(function () {
     Route::get('/wishlist', [WishListController::class, 'userWishListIndex'])->name('wishlist.index');
     Route::delete('/wishlist/remove/{product}', [WishListController::class, 'removeProductFromUserWishList'])->name('wishlist.remove');
     Route::get('/address', [UserAddressController::class, 'index'])->name('address.index');
+    Route::post('/address', [UserAddressController::class, 'store'])->name('address.store');
 });
 // ---------------- End User Profile Routs ----------------
+
+Route::get('/get-cities/{provinceId}', function ($provinceId) {
+    return response()->json(City::where('province_id', $provinceId)->get());
+})->name('get.cities');
 
 // Social auth routs
 Route::get('/auth/redirect/{provider}', [AuthController::class, 'redirectToProvider'])->name('auth.redirect');
