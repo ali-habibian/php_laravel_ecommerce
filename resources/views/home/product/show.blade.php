@@ -115,7 +115,7 @@
                                            data-max="5"/>
                                 </div>
                                 <div class="pro-details-cart btn-hover">
-                                    <a href="#"> افزودن به سبد خرید </a>
+                                    <button onclick="addToCart()"> افزودن به سبد خرید </button>
                                 </div>
                                 <div class="pro-details-wishlist">
                                     @auth
@@ -518,7 +518,7 @@
                                                            data-max="5"/>
                                                 </div>
                                                 <div class="pro-details-cart">
-                                                    <a href="#">افزودن به سبد خرید</a>
+                                                    <button onclick="addToCartSameProduct()">افزودن به سبد خرید</button>
                                                 </div>
                                                 <div class="pro-details-wishlist">
                                                     @auth
@@ -601,6 +601,9 @@
 
 @push('scripts')
     <script>
+        let selectedProductId;
+        let selectedVariationId;
+
         document.addEventListener('DOMContentLoaded', function () {
             // Initialize the active variation
             const product = @json($product);
@@ -671,9 +674,41 @@
             let quantityInput = $('.quantity-input-' + productId);
             quantityInput.attr('data-max', variation.quantity);
             quantityInput.val(1);
+
+            selectedVariationId = variation.id;
+            selectedProductId = productId;
+        }
+
+        function addToCart(){
+            $.ajax({
+                url: "{{ route('home.cart.add.product') }}",
+                method: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    product_id: selectedProductId,
+                    quantity: $('.quantity-input-' + selectedProductId).val(),
+                    variation_id: selectedVariationId,
+                },
+                success: function (res) {
+                    showSwalSuccess(res['success'], () => {
+                        location.reload();
+                    });
+                },
+                error: function (res) {
+                    if (res.status === 422) {
+                        showSwalError(res.responseJSON['error']);
+                    } else {
+                        alert('خطایی رخ داد' + res.status);
+                        console.log(res)
+                    }
+                }
+            })
         }
 
     //     -------------------- same products --------------------
+        let selectedSameProductId;
+        let selectedSameVariationId;
+
         function getVariationInfoSameProduct(variation, productId, element) {
 
             setVariationPriceAndQuantitySameProduct(variation, productId)
@@ -738,6 +773,35 @@
             let quantityInput = $('.quantity-input-' + productId);
             quantityInput.attr('data-max', variation.quantity);
             quantityInput.val(1);
+
+            selectedSameVariationId = variation.id;
+            selectedSameProductId = productId;
+        }
+
+        function addToCartSameProduct(){
+            $.ajax({
+                url: "{{ route('home.cart.add.product') }}",
+                method: 'POST',
+                data: {
+                    _token: '{{ csrf_token() }}',
+                    product_id: selectedSameProductId,
+                    quantity: $('.quantity-input-' + selectedProductId).val(),
+                    variation_id: selectedSameVariationId,
+                },
+                success: function (res) {
+                    showSwalSuccess(res['success'], () => {
+                        location.reload();
+                    });
+                },
+                error: function (res) {
+                    if (res.status === 422) {
+                        showSwalError(res.responseJSON['error']);
+                    } else {
+                        alert('خطایی رخ داد' + res.status);
+                        console.log(res)
+                    }
+                }
+            })
         }
 
     </script>
