@@ -5,9 +5,9 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Order extends Model
+class UserAddress extends Model
 {
-    protected $table = 'orders';
+    protected $table = 'user_addresses';
     protected $guarded = [];
 
     public function user(): BelongsTo
@@ -15,13 +15,13 @@ class Order extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function coupon(): BelongsTo
+    public function province(): BelongsTo
     {
-        return $this->belongsTo(Coupon::class);
+        return $this->belongsTo(Province::class);
     }
 
-    public function address(): BelongsTo
+    public function city(): BelongsTo
     {
-        return $this->belongsTo(UserAddress::class);
+        return $this->belongsTo(City::class);
     }
 }

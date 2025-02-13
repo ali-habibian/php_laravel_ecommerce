@@ -10,7 +10,7 @@
         سفارشات
     </a>
 
-    <a href="#address">
+    <a href="{{ route('home.profile.address.index') }}">
         <i class="sli sli-map ml-1"></i>
         آدرس ها
     </a>

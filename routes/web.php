@@ -15,6 +15,7 @@ use App\Http\Controllers\Home\HomeController;
 use App\Http\Controllers\Home\CategoryController as HomeCategoryController;
 use App\Http\Controllers\Home\ProductController as HomeProductController;
 use App\Http\Controllers\Home\CommentController as HomeCommentController;
+use App\Http\Controllers\Home\UserAddressController;
 use App\Http\Controllers\Home\UserProfileController;
 use App\Http\Controllers\Home\WishListController;
 use Illuminate\Support\Facades\Route;
@@ -86,6 +87,7 @@ Route::prefix('profile')->name('home.profile.')->group(function () {
     Route::get('/comments', [HomeCommentController::class, 'userCommentsIndex'])->name('comments.index');
     Route::get('/wishlist', [WishListController::class, 'userWishListIndex'])->name('wishlist.index');
     Route::delete('/wishlist/remove/{product}', [WishListController::class, 'removeProductFromUserWishList'])->name('wishlist.remove');
+    Route::get('/address', [UserAddressController::class, 'index'])->name('address.index');
 });
 // ---------------- End User Profile Routs ----------------
 
