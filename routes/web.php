@@ -75,6 +75,7 @@ Route::prefix('/')->name('home.')->group(function () {
     Route::put('/cart/update', [CartController::class, 'updateCart'])->name('cart.update');
     Route::get('/cart/remove/{rowId}', [CartController::class, 'removeCartItem'])->name('cart.remove.product');
     Route::get('/cart/clear', [CartController::class, 'clearCart'])->name('cart.clear');
+    Route::post('/cart/coupon/apply', [CartController::class, 'applyCoupon'])->name('cart.coupon.apply');
 });
 //Route::get('/product-modal', [HomeController::class, 'showProductModal'])->name('showProductModal');
 // ---------------- End Home Routs ----------------

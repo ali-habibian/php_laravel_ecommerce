@@ -1,6 +1,9 @@
 <?php
 
+use App\Models\Coupon;
+use App\Models\Order;
 use Carbon\Carbon;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\UploadedFile;
 
 /**
@@ -51,8 +54,8 @@ function convertShamsiToGregorian(?string $shamsiDate): ?DateTime
 function cartTotalDiscountAmount(): float|int
 {
     $totalDiscountAmount = 0;
-    foreach (Cart::getContent() as $item){
-        if ($item->attributes->is_sale){
+    foreach (Cart::getContent() as $item) {
+        if ($item->attributes->is_sale) {
             $totalDiscountAmount += $item->quantity * ($item->attributes->price - $item->attributes->sale_price);
         }
     }
@@ -72,9 +75,9 @@ function cartTotalDiscountAmount(): float|int
 function cartTotalDeliveryAmount(): int
 {
     $totalDeliveryAmount = 0;
-    foreach (Cart::getContent() as $item){
+    foreach (Cart::getContent() as $item) {
         $totalDeliveryAmount += $item->associatedModel->delivery_amount;
-        if ($item->quantity > 1){
+        if ($item->quantity > 1) {
             $totalDeliveryAmount += $item->associatedModel->delivery_amount_per_product * ($item->quantity - 1);
         }
     }
@@ -82,3 +85,62 @@ function cartTotalDeliveryAmount(): int
     return $totalDeliveryAmount;
 }
 
+/**
+ * Validates a coupon code and applies the coupon if valid.
+ *
+ * This function checks if a coupon with the given code exists, has not expired,
+ * and has not been used by the current user before. If the coupon is valid, it
+ * calculates the discount based on the coupon type (fixed or percentage) and
+ * stores the discount information in the session. If the coupon is invalid or
+ * already used, it throws an exception.
+ *
+ * @param string $code The coupon code to validate.
+ * @return array An array with a success message if the coupon is applied successfully.
+ * @throws Exception If the coupon is invalid or already used by the user.
+ */
+function validateCoupon(string $code): array
+{
+    if (session()->has('coupon')){
+        session()->forget('coupon');
+    }
+
+    $coupon = Coupon::where('code', $code)
+        ->where('expires_at', '>', Carbon::now())
+        ->firstOrFail();
+
+    $isUserUsedCoupon = Order::where('coupon_id', $coupon->id)
+        ->where('user_id', auth()->id())
+        ->where('payment_status', '=', true)
+        ->exists();
+
+    if ($isUserUsedCoupon) {
+        throw new Exception('شما قبلا این کد تخفیف را استفاده کرده اید', 403);
+    }
+
+    if ($coupon->getRawOriginal('type') === 'fixed') {
+        session()->put('coupon', ['code' => $coupon->code, 'amount' => $coupon->amount]);
+    } else {
+        $total = Cart::getTotal();
+        $discountAmount = ($total * $coupon->percent) / 100;
+        $finalDiscountAmount = $discountAmount > $coupon->max_percentage_amount ? $coupon->max_percentage_amount : $discountAmount;
+
+        session()->put('coupon', ['code' => $coupon->code, 'amount' => $finalDiscountAmount]);
+    }
+
+    return ['success' => 'کد تخفیف با موفقیت اعمال شد'];
+}
+
+function cartTotalAmount()
+{
+    $totalAmount = Cart::getTotal() + cartTotalDeliveryAmount();
+
+    if (session()->has('coupon')) {
+        if (session('coupon.amount') > $totalAmount) {
+            return 0;
+        } else {
+            return $totalAmount - session('coupon.amount');
+        }
+    } else {
+        return $totalAmount;
+    }
+}

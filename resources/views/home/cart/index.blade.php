@@ -125,9 +125,15 @@
                                     <h4 class="cart-bottom-title section-bg-gray"> کد تخفیف </h4>
                                 </div>
                                 <div class="discount-code">
-                                    <p> لورم ایپسوم متن ساختگی با تولید سادگی </p>
-                                    <form>
-                                        <input type="text" required="" name="name">
+                                    <p> کد تخفیف خود را وارد کنید: </p>
+                                    <form action="{{ route('home.cart.coupon.apply') }}" method="post">
+                                        @csrf
+                                        <input type="text" name="code">
+                                        @error('code')
+                                            <div class="alert alert-danger">
+                                                {{ $message }}
+                                            </div>
+                                        @enderror
                                         <button class="cart-btn-2" type="submit"> ثبت </button>
                                     </form>
                                 </div>
@@ -158,6 +164,17 @@
                                     </h5>
                                 @endif
 
+                                @if(session()->has('coupon'))
+                                    <hr>
+                                    <h5 style="color: #ff3535">
+                                        مبلغ کد تخفیف :
+                                        <span>
+                                            {{ number_format(session('coupon.amount')) }}
+                                            تومان
+                                        </span>
+                                    </h5>
+                                @endif
+
                                 <div class="total-shipping">
                                     <h5>
                                         هزینه ارسال :
@@ -177,7 +194,7 @@
                                 <h4 class="grand-totall-title">
                                     جمع کل:
                                     <span>
-                                        {{ number_format(Cart::getTotal() + cartTotalDeliveryAmount())}}
+                                        {{ number_format(cartTotalAmount()) }}
                                         تومان
                                     </span>
                                 </h4>

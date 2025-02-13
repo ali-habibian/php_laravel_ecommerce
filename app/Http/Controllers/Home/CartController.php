@@ -5,6 +5,8 @@ namespace App\Http\Controllers\Home;
 use App\Http\Controllers\Controller;
 use App\Models\Product;
 use Cart;
+use Exception;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
@@ -25,12 +27,12 @@ class CartController extends Controller
         $product = Product::findOrFail($request->product_id);
         $productVariation = $product->productVariations()->findOrFail($request->variation_id);
 
-        if ($request->quantity > $productVariation->quantity){
+        if ($request->quantity > $productVariation->quantity) {
             return response()->json(['error' => 'تعداد درخواستی بیشتر از موجودی است'], 422);
         }
 
         $rowId = $product->id . '_' . $productVariation->id;
-        if (Cart::get($rowId)){
+        if (Cart::get($rowId)) {
             return response()->json(['error' => 'محصول قبلا به سبد خرید اضافه شده است'], 422);
         }
 
@@ -53,10 +55,10 @@ class CartController extends Controller
             'qtybutton.*' => 'required|integer|min:1',
         ]);
 
-        foreach ($request->qtybutton as $rowId => $quantity){
+        foreach ($request->qtybutton as $rowId => $quantity) {
             $item = Cart::get($rowId);
 
-            if ($quantity > $item->attributes->quantity){
+            if ($quantity > $item->attributes->quantity) {
                 return redirect()->back()->with('error', 'تعداد درخواستی بیشتر از موجودی است');
             }
 
@@ -83,5 +85,27 @@ class CartController extends Controller
         Cart::clear();
 
         return redirect()->back()->with('success', 'سبد خرید شما خالی شد');
+    }
+
+    public function applyCoupon(Request $request)
+    {
+        $request->validate([
+            'code' => 'required'
+        ]);
+
+        if (!auth()->check()) {
+            return redirect()->back()->with('error', 'برای استفاده از کد تخفیف باید وارد سایت شوید');
+        }
+
+        try {
+            validateCoupon($request->code);
+            return redirect()->back()->with('success', 'کد تخفیف با موفقیت اعمال شد');
+        } catch (Exception $e) {
+            if ($e->getCode() === 403) {
+                return redirect()->back()->with('error', $e->getMessage());
+            }
+
+            return redirect()->back()->with('error', 'کد تخفیف وارد شده معتبر نمی باشد');
+        }
     }
 }
