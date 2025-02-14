@@ -179,19 +179,15 @@
                                                 <button class="cart-btn-2" type="submit"> ثبت آدرس جدید
                                                 </button>
                                             </div>
-
                                         </div>
-
                                     </form>
-
                                 </div>
                             </div>
-
                         </div>
-
                     </div>
                 </div>
 
+                <!-- ORDER SECTION -->
                 <div class="col-lg-5">
                     <div class="your-order-area">
                         <h3> سفارش شما </h3>
@@ -204,43 +200,82 @@
                                 </div>
                                 <div class="your-order-middle">
                                     <ul>
-                                        <li>
-                                            لورم ایپسوم
-                                            -
-                                            1
-                                            <span>
-                                                50000
-                                                تومان
-                                            </span>
-                                        </li>
-                                        <li>
-                                            لورم ایپسوم
-                                            -
-                                            2
-                                            <span>
-                                                40000
-                                                تومان
-                                            </span>
-                                        </li>
+                                        @foreach(Cart::getContent() as $item)
+                                            <li class="d-flex justify-content-between">
+                                                <div>
+                                                    {{ Str::limit($item->name, 35, '…') }}
+                                                    <div dir="rtl">
+                                                        <p class="mb-0 mt-0" style="font-size: 12px">{{ number_format($item->price) }} * {{ $item->quantity }}</p>
+                                                        <p class="mb-0 mt-0" style="font-size: 12px">
+                                                            {{ \App\Models\Attribute::find($item->attributes->attribute_id)->name }}
+                                                            : {{ $item->attributes->value }}
+                                                        </p>
+
+                                                        @if($item->attributes->is_sale)
+                                                            <p style="color: red; font-size: 12px">
+                                                                %{{ $item->attributes->percent_discount }} تخفیف
+                                                            </p>
+                                                        @endif
+                                                    </div>
+                                                </div>
+                                                <span>
+                                                    {{ number_format($item->getPriceSum()) }}
+                                                    تومان
+                                                </span>
+                                            </li>
+                                        @endforeach
                                     </ul>
                                 </div>
                                 <div class="your-order-info order-subtotal">
                                     <ul>
-                                        <li> مبلغ
+                                        <li> مبلغ کل سفارش :
                                             <span>
-                                                90000
+                                                {{ number_format(Cart::getTotal() + cartTotalDiscountAmount())}}
                                                 تومان
                                             </span>
                                         </li>
                                     </ul>
                                 </div>
+
+                                @if(cartTotalDiscountAmount() > 0)
+                                    <div class="your-order-info order-subtotal" style="color: #ff3535">
+                                        <ul>
+                                            <li> مبلغ تخفیف ها :
+                                                <span>
+                                                    {{ number_format(cartTotalDiscountAmount())}}
+                                                    تومان
+                                                </span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                @endif
+
+                                @if(session()->has('coupon'))
+                                    <div class="your-order-info order-subtotal" style="color: #ff3535">
+                                        <ul>
+                                            <li> مبلغ کد تخفیف :
+                                                <span>
+                                                    {{ number_format(session('coupon.amount')) }}
+                                                    تومان
+                                                </span>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                @endif
+
                                 <div class="your-order-info order-shipping">
                                     <ul>
                                         <li> هزینه ارسال
-                                            <span>
-                                                8000
-                                                تومان
-                                            </span>
+                                            @if(cartTotalDeliveryAmount() == 0)
+                                                <span>
+                                                    رایگان
+                                                </span>
+                                            @else
+                                                <span>
+                                                    {{ number_format(cartTotalDeliveryAmount()) }}
+                                                    تومان
+                                                </span>
+                                            @endif
                                         </li>
                                     </ul>
                                 </div>
@@ -248,8 +283,9 @@
                                     <ul>
                                         <li>جمع کل
                                             <span>
-                                                980000
-                                                تومان </span>
+                                                {{ number_format(cartTotalAmount()) }}
+                                                تومان
+                                            </span>
                                         </li>
                                     </ul>
                                 </div>
