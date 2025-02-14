@@ -88,9 +88,6 @@ Route::prefix('profile')->name('home.profile.')->group(function () {
     Route::get('/comments', [HomeCommentController::class, 'userCommentsIndex'])->name('comments.index');
     Route::get('/wishlist', [WishListController::class, 'userWishListIndex'])->name('wishlist.index');
     Route::delete('/wishlist/remove/{product}', [WishListController::class, 'removeProductFromUserWishList'])->name('wishlist.remove');
-//    Route::get('/address', [UserAddressController::class, 'index'])->name('address.index');
-//    Route::post('/address', [UserAddressController::class, 'store'])->name('address.store');
-//    Route::put('/address', [UserAddressController::class, 'store'])->name('address.store');
     Route::resource('addresses', UserAddressController::class);
 });
 // ---------------- End User Profile Routs ----------------

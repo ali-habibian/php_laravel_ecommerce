@@ -48,7 +48,6 @@
                                                     {{ $address->$address }}
                                                     <br>
                                                     <span> <strong>استان :</strong> {{ $address->province->name }} </span>
-{{--                                                    <span> | </span>--}}
                                                     <span> <strong>شهر :</strong> {{ $address->city->name }} </span>
                                                 </p>
                                                 <p>
@@ -57,7 +56,7 @@
                                                 </p>
                                                 <p>
                                                     <strong>شماره موبایل :</strong>
-                                                    {{ auth()->user()->mobile }}
+                                                    {{ $address->tel }}
                                                 </p>
 
                                             </address>
@@ -67,6 +66,14 @@
                                                href="#collapse-address-{{ $address->id }}">
                                                 <i class="sli sli-pencil"></i>
                                                 ویرایش آدرس
+                                            </a>
+
+                                            <a class="check-btn sqr-btn mr-2 delete-button"
+                                               data-id="{{ $address->id }}"
+                                               onclick="deleteAddress({{ $address->id }})"
+                                               href="javascript:void(0);">
+                                                <i class="sli sli-trash"></i>
+                                                حذف آدرس
                                             </a>
 
                                             <div class="collapse-address-update-content collapse"
@@ -349,5 +356,31 @@
                 }
             }
         });
+
+        function deleteAddress(id){
+            Swal.fire({
+                title: 'آیا مطمئن هستید؟',
+                text: "این عملیات قابل بازگشت نیست!",
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'بله، حذف کن!',
+                cancelButtonText: 'لغو'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    // Create a form and submit it to delete the address
+                    const form = document.createElement('form');
+                    form.method = 'POST';
+                    form.action = "{{ route('home.profile.addresses.destroy', ['address' => ':id']) }}".replace(':id', id);
+                    form.innerHTML = `
+                            @csrf
+                    @method('DELETE')
+                    `;
+                    document.body.appendChild(form);
+                    form.submit();
+                }
+            });
+        }
     </script>
 @endpush

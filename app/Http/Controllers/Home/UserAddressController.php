@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Home;
 
 use App\Http\Controllers\Controller;
 use App\Models\city;
+use App\Models\Order;
 use App\Models\Province;
 use App\Models\UserAddress;
 use Illuminate\Http\Request;
@@ -130,8 +131,20 @@ class UserAddressController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(UserAddress $address)
     {
-        //
+        try {
+            if ($address->user_id == auth()->id()) {
+                if (Order::where('address_id', $address->id)->exists()){
+                    return back()->with('error', 'سفارش‌هایی برای این آدرس ثبت شده است، بنابراین امکان حذف آن وجود ندارد');
+                }
+                $address->delete();
+                return back()->with('success', 'آدرس با موفقیت حذف شد');
+            } else {
+                throw new \Exception('خطا در حذف آدرس');
+            }
+        } catch (\Exception $e) {
+            return back()->with('error', 'خطا در حذف آدرس، لطفا مجددا تلاش کنید');
+        }
     }
 }
