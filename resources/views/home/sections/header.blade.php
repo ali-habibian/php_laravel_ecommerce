@@ -4,7 +4,7 @@
             <div class="row">
                 <div class="col-xl-2 col-lg-2">
                     <div class="logo pt-40">
-                        <a href="index.html">
+                        <a href="{{ route('home.index') }}">
                             <h3 class="font-weight-bold">Ali.Ecommerce</h3>
                         </a>
                     </div>
@@ -127,7 +127,7 @@
                                             </span>
                                         </div>
                                         <div class="shopping-cart-btn btn-hover text-center">
-                                            <a class="default-btn" href="checkout.html">
+                                            <a class="default-btn" href="{{ route('home.orders.checkout') }}">
                                                 ثبت سفارش
                                             </a>
                                             <a class="default-btn" href="{{ route('home.cart.index') }}">
@@ -270,7 +270,7 @@
                                         </span>
                                     </div>
                                     <div class="shopping-cart-btn btn-hover text-center">
-                                        <a class="default-btn" href="checkout.html">
+                                        <a class="default-btn" href="{{ route('home.orders.checkout') }}">
                                             ثبت سفارش
                                         </a>
                                         <a class="default-btn" href="{{ route('home.cart.index') }}">

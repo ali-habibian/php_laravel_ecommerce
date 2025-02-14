@@ -78,6 +78,8 @@ Route::prefix('/')->name('home.')->group(function () {
     Route::get('/cart/remove/{rowId}', [CartController::class, 'removeCartItem'])->name('cart.remove.product');
     Route::get('/cart/clear', [CartController::class, 'clearCart'])->name('cart.clear');
     Route::post('/cart/coupon/apply', [CartController::class, 'applyCoupon'])->name('cart.coupon.apply');
+
+    Route::get('/orders/checkout', [CartController::class, 'orderCheckout'])->name('orders.checkout');
 });
 //Route::get('/product-modal', [HomeController::class, 'showProductModal'])->name('showProductModal');
 // ---------------- End Home Routs ----------------
