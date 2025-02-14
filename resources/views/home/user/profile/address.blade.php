@@ -62,23 +62,30 @@
 
                                             </address>
 
-                                            <a href="#" class="check-btn sqr-btn collapse-address-update">
+                                            <a class="check-btn sqr-btn"
+                                               data-toggle="collapse"
+                                               href="#collapse-address-{{ $address->id }}">
                                                 <i class="sli sli-pencil"></i>
                                                 ویرایش آدرس
                                             </a>
 
-                                            <div class="collapse-address-update-content">
-                                                <form action="#">
+                                            <div class="collapse-address-update-content collapse"
+                                                 id="collapse-address-{{ $address->id }}"
+                                                 style="{{ (count($errors->{'updateAddress-' . $address->id}) > 0) ? 'display: block;' : '' }}">
+                                                <form action="{{ route('home.profile.addresses.update', $address) }}" method="post">
+                                                    @csrf
+                                                    @method('PUT')
+
                                                     <div class="row">
                                                         <div class="tax-select col-lg-6 col-md-6">
                                                             <label>عنوان</label>
                                                             <input type="text"
                                                                    name="title"
                                                                    placeholder="عنوان..."
-                                                                   value="{{ old('title', $address->title) }}"
-                                                                   @error('title', 'updateAddress') class="mb-1" @enderror>
+                                                                   value="{{ $address->title }}"
+                                                                   @error('title', 'updateAddress-' . $address->id) class="mb-1" @enderror>
 
-                                                            @error('title', 'updateAddress')
+                                                            @error('title', 'updateAddress-' . $address->id)
                                                                 <p class="input-error-validation">
                                                                     <strong>{{ $message }}</strong>
                                                                 </p>
@@ -90,10 +97,10 @@
                                                             <input type="text"
                                                                    name="tel"
                                                                    placeholder="شماره تلفن ثابت با کد شهر یا شماره موبایل..."
-                                                                   value="{{ old('tel', $address->tel) }}"
-                                                                   @error('tel', 'updateAddress') class="mb-1" @enderror>
+                                                                   value="{{ $address->tel }}"
+                                                                   @error('tel', 'updateAddress-' . $address->id) class="mb-1" @enderror>
 
-                                                            @error('tel', 'updateAddress')
+                                                            @error('tel', 'updateAddress-' . $address->id)
                                                                 <p class="input-error-validation">
                                                                     <strong>{{ $message }}</strong>
                                                                 </p>
@@ -102,16 +109,17 @@
 
                                                         <div class="tax-select col-lg-6 col-md-6">
                                                             <label>استان</label>
-                                                            <select class="email s-email s-wid province-select @error('province_id', 'updateAddress') mb-1 @enderror"
-                                                                    name="province_id">
+                                                            <select class="email s-email s-wid province-select @error('province_id', 'updateAddress-' . $address->id) mb-1 @enderror"
+                                                                    name="province_id"
+                                                                    data-city-id="{{ $address->city_id }}">
                                                                 @foreach($provinces as $province)
                                                                     <option value="{{ $province->id }}"
-                                                                            @selected($province->id == old('province_id', $address->province_id))>{{ $province->name }}
+                                                                            @selected($province->id == $address->province_id)>{{ $province->name }}
                                                                     </option>
                                                                 @endforeach
                                                             </select>
 
-                                                            @error('province_id', 'updateAddress')
+                                                            @error('province_id', 'updateAddress-' . $address->id)
                                                                 <p class="input-error-validation">
                                                                     <strong>{{ $message }}</strong>
                                                                 </p>
@@ -120,11 +128,11 @@
 
                                                         <div class="tax-select col-lg-6 col-md-6">
                                                             <label>شهر</label>
-                                                            <select class="email s-email s-wid city-select @error('city_id', 'updateAddress') mb-1 @enderror"
+                                                            <select class="email s-email s-wid city-select @error('city_id', 'updateAddress-' . $address->id) mb-1 @enderror"
                                                                     name="city_id">
                                                             </select>
 
-                                                            @error('city_id', 'updateAddress')
+                                                            @error('city_id', 'updateAddress-' . $address->id)
                                                                 <p class="input-error-validation">
                                                                     <strong>{{ $message }}</strong>
                                                                 </p>
@@ -136,10 +144,10 @@
                                                             <input type="text"
                                                                    name="address"
                                                                    placeholder="آدرس..."
-                                                                   value="{{ old('address', $address->address) }}"
-                                                                   @error('address', 'updateAddress') class="mb-1" @enderror>
+                                                                   value="{{ $address->address }}"
+                                                                   @error('address', 'updateAddress-' . $address->id) class="mb-1" @enderror>
 
-                                                            @error('address', 'updateAddress')
+                                                            @error('address', 'updateAddress-' . $address->id)
                                                                 <p class="input-error-validation">
                                                                     <strong>{{ $message }}</strong>
                                                                 </p>
@@ -151,10 +159,10 @@
                                                             <input type="text"
                                                                    name="postal_code"
                                                                    placeholder="کد پستی..."
-                                                                   value="{{ old('postal_code', $address->postal_code) }}"
-                                                                   @error('postal_code', 'updateAddress') class="mb-1" @enderror>
+                                                                   value="{{ $address->postal_code }}"
+                                                                   @error('postal_code', 'updateAddress-' . $address->id) class="mb-1" @enderror>
 
-                                                            @error('postal_code', 'updateAddress')
+                                                            @error('postal_code', 'updateAddress-' . $address->id)
                                                                 <p class="input-error-validation">
                                                                     <strong>{{ $message }}</strong>
                                                                 </p>
@@ -179,7 +187,7 @@
                                     <div class="collapse-address-create-content"
                                          style="{{ count($errors->storeAddress) > 0 ? 'display: block;' : '' }}">
 
-                                        <form action="{{ route('home.profile.address.store') }}" method="post">
+                                        <form action="{{ route('home.profile.addresses.store') }}" method="post">
                                             @csrf
 
                                             <div class="row">
@@ -297,10 +305,27 @@
 @push('scripts')
     <script>
         $(document).ready(function () {
-            let provinceSelect = $('.province-select');
-            let citySelect = $('.city-select');
+            $('.province-select').each(function () {
+                let provinceSelect = $(this);
+                let citySelect = provinceSelect.closest('.tax-select').siblings('.tax-select').find('.city-select');
 
-            function loadCities(provinceId, selectedCityId = null) {
+                let initialProvince = provinceSelect.val();
+                let initialCity = provinceSelect.data('city-id'); // Retrieve city_id from a data attribute
+
+                if (initialProvince) {
+                    loadCities(initialProvince, citySelect, initialCity);
+                }
+            });
+
+            $('.province-select').on('change', function () {
+                let provinceSelect = $(this);
+                let provinceId = provinceSelect.val();
+                let citySelect = provinceSelect.closest('.tax-select').siblings('.tax-select').find('.city-select');
+
+                loadCities(provinceId, citySelect);
+            });
+
+            function loadCities(provinceId, citySelect, selectedCityId = null) {
                 let path = "{{ route('get.cities', ['provinceId' => ':provinceId']) }}";
                 path = path.replace(':provinceId', provinceId);
 
@@ -311,7 +336,7 @@
                         dataType: 'json',
                         success: function (data) {
                             citySelect.empty();
-                            citySelect.append('<option value="" disabled>انتخاب شهر</option>');
+                            citySelect.append('<option value="" disabled selected>انتخاب شهر</option>');
 
                             $.each(data, function (key, city) {
                                 let isSelected = selectedCityId && city.id == selectedCityId ? 'selected' : '';
@@ -322,19 +347,6 @@
                 } else {
                     citySelect.empty().append('<option value="">ابتدا استان را انتخاب کنید</option>');
                 }
-            }
-
-            // Trigger AJAX on province change
-            provinceSelect.on('change', function () {
-                loadCities($(this).val());
-            });
-
-            // On page load, check if a province is already selected and load cities
-            let initialProvince = provinceSelect.val();
-            let initialCity = "{{ old('city_id') }}"; // Retrieve previous city selection
-
-            if (initialProvince) {
-                loadCities(initialProvince, initialCity);
             }
         });
     </script>
