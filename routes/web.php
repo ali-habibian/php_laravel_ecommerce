@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\BrandController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CommentController;
 use App\Http\Controllers\Admin\CouponController;
+use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Auth\AuthController;
@@ -13,7 +14,7 @@ use App\Http\Controllers\Home\CartController;
 use App\Http\Controllers\Home\CompareController;
 use App\Http\Controllers\Home\HomeController;
 use App\Http\Controllers\Home\CategoryController as HomeCategoryController;
-use App\Http\Controllers\Home\OrderController;
+use App\Http\Controllers\Home\OrderController as HomeOrderController;
 use App\Http\Controllers\Home\ProductController as HomeProductController;
 use App\Http\Controllers\Home\CommentController as HomeCommentController;
 use App\Http\Controllers\Home\UserAddressController;
@@ -36,6 +37,7 @@ Route::prefix('admin-panel/management')->name('admin.')->group(function () {
     Route::resource('banners', BannerController::class);
     Route::resource('comments', CommentController::class);
     Route::resource('coupons', CouponController::class);
+    Route::resource('orders', OrderController::class);
 
     // Get category attributes
     Route::get('/category-attributes/{category}', [CategoryController::class, 'getCategoryAttributes'])->name('category.attributes');
@@ -81,9 +83,9 @@ Route::prefix('/')->name('home.')->group(function () {
     Route::post('/cart/coupon/apply', [CartController::class, 'applyCoupon'])->name('cart.coupon.apply');
 
     // Order routes
-    Route::get('/orders/checkout', [OrderController::class, 'checkout'])->name('orders.checkout');
-    Route::post('/orders/payment', [OrderController::class, 'payment'])->name('orders.payment');
-    Route::get('/orders/payment/callback/{gateway}', [OrderController::class, 'paymentVerify'])->name('orders.payment.callback');
+    Route::get('/orders/checkout', [HomeOrderController::class, 'checkout'])->name('orders.checkout');
+    Route::post('/orders/payment', [HomeOrderController::class, 'payment'])->name('orders.payment');
+    Route::get('/orders/payment/callback/{gateway}', [HomeOrderController::class, 'paymentVerify'])->name('orders.payment.callback');
 });
 //Route::get('/product-modal', [HomeController::class, 'showProductModal'])->name('showProductModal');
 // ---------------- End Home Routs ----------------
@@ -95,7 +97,7 @@ Route::prefix('profile')->name('home.profile.')->group(function () {
     Route::get('/wishlist', [WishListController::class, 'userWishListIndex'])->name('wishlist.index');
     Route::delete('/wishlist/remove/{product}', [WishListController::class, 'removeProductFromUserWishList'])->name('wishlist.remove');
     Route::resource('addresses', UserAddressController::class);
-    Route::get('/orders', [OrderController::class, 'userOrdersIndex'])->name('orders.index');
+    Route::get('/orders', [HomeOrderController::class, 'userOrdersIndex'])->name('orders.index');
 });
 // ---------------- End User Profile Routs ----------------
 
@@ -106,7 +108,7 @@ Route::get('/get-cities/{provinceId}', function ($provinceId) {
 // Social auth routs
 Route::get('/auth/redirect/{provider}', [AuthController::class, 'redirectToProvider'])->name('auth.redirect');
 // callback url
-Route::get('/auth/callback/{provider}', [AuthController::class, 'handleProviderCallback'])->name('auth.callback') ;
+Route::get('/auth/callback/{provider}', [AuthController::class, 'handleProviderCallback'])->name('auth.callback');
 
 Route::get('/test', function () {
     \Cart::clear();
