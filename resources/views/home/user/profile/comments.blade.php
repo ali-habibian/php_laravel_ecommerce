@@ -37,6 +37,11 @@
                                 <div class="myaccount-content">
                                     <h3> دیدگاه ها </h3>
                                     <div class="review-wrapper">
+                                        @if($comments->isEmpty())
+                                            <div class="alert alert-danger">
+                                                لیست دیدگاه های شما خالی می باشد
+                                            </div>
+                                        @endif
 
                                         @foreach($comments as $comment)
                                             <div class="single-review">

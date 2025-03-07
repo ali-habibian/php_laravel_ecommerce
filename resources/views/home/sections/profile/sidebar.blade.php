@@ -5,7 +5,7 @@
         پروفایل
     </a>
 
-    <a href="#orders">
+    <a href="{{ route('home.profile.orders.index') }}" class="{{ Route::is('home.profile.orders.index') ? 'active' : '' }}">
         <i class="sli sli-basket ml-1"></i>
         سفارشات
     </a>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Home;
 
 use App\Constants\PaymentTypes;
 use App\Http\Controllers\Controller;
+use App\Models\Order;
 use App\Models\ProductVariation;
 use App\Models\Province;
 use App\PaymentGateway\Pay;
@@ -107,11 +108,18 @@ class OrderController extends Controller
             if (array_key_exists('error', $zarinpalGatewayResult)) {
                 return redirect()->back()->with('error', $zarinpalGatewayResult['error']);
             } else {
+                // TODO: send email and sms to user
                 return redirect()->route('home.index')->with('success', $zarinpalGatewayResult['success']);
             }
         }else{
             return redirect()->back()->with('error', 'درگاه پرداختی انتخاب شده معتبر نمی باشد');
         }
+    }
+
+    public function userOrdersIndex()
+    {
+        $orders = Order::where('user_id', auth()->user()->id)->where('status', '=', '1')->get();
+        return view('home.user.profile.orders', compact('orders'));
     }
 
     private function checkCart()

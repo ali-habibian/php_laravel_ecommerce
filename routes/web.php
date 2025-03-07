@@ -95,6 +95,7 @@ Route::prefix('profile')->name('home.profile.')->group(function () {
     Route::get('/wishlist', [WishListController::class, 'userWishListIndex'])->name('wishlist.index');
     Route::delete('/wishlist/remove/{product}', [WishListController::class, 'removeProductFromUserWishList'])->name('wishlist.remove');
     Route::resource('addresses', UserAddressController::class);
+    Route::get('/orders', [OrderController::class, 'userOrdersIndex'])->name('orders.index');
 });
 // ---------------- End User Profile Routs ----------------
 
