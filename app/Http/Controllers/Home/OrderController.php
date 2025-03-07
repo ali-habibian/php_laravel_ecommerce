@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\ProductVariation;
 use App\Models\Province;
 use App\PaymentGateway\Pay;
+use App\PaymentGateway\Zarinpal;
 use Cart;
 use Exception;
 use Illuminate\Http\Request;
@@ -57,25 +58,59 @@ class OrderController extends Controller
             return redirect()->route('home.index')->with('error', $amounts['error']);
         }
 
-        $payGateway = new Pay();
-        $payGatewayResult = $payGateway->send($amounts, $request->address_id);
+        if ($request->payment_method == PaymentTypes::PAY->value) {
+            return redirect()->back()->with('error', 'درگاه پرداخت پی موقتا از دسترس خارج شده است، لطفا درگاه دیگری را انتخاب کنید');
 
-        if (array_key_exists('error', $payGatewayResult)) {
-            return redirect()->back()->with('error', $payGatewayResult['error']);
+//            $payGateway = new Pay();
+//            $payGatewayResult = $payGateway->send($amounts, $request->address_id);
+//
+//            if (array_key_exists('error', $payGatewayResult)) {
+//                return redirect()->back()->with('error', $payGatewayResult['error']);
+//            } else {
+//                return redirect()->to($payGatewayResult['redirect']);
+//            }
+        } else if ($request->payment_method == PaymentTypes::ZARINPAL->value) {
+            $zarinpalGateway = new Zarinpal();
+            $zarinpalGatewayResult = $zarinpalGateway->send($amounts, 'پرداخت تست درگاه زرین پال', $request->address_id);
+
+            if (array_key_exists('error', $zarinpalGatewayResult)) {
+                return redirect()->back()->with('error', $zarinpalGatewayResult['error']);
+            } else {
+                return redirect()->to($zarinpalGatewayResult['redirect']);
+            }
         } else {
-            return redirect()->to($payGatewayResult['redirect']);
+            return redirect()->back()->with('error', 'درگاه پرداختی انتخاب شده معتبر نمی باشد');
         }
     }
 
-    public function paymentVerify(Request $request)
+    public function paymentVerify(Request $request, $gateway)
     {
-        $payGateway = new Pay();
-        $payGatewayResult = $payGateway->verify($request->token, $request->status);
+        if ($gateway == PaymentTypes::PAY->value) {
+            $payGateway = new Pay();
+            $payGatewayResult = $payGateway->verify($request->token, $request->status);
 
-        if (array_key_exists('error', $payGatewayResult)) {
-            return redirect()->back()->with('error', $payGatewayResult['error']);
-        } else {
-            return redirect()->route('home.index')->with('success', $payGatewayResult['success']);
+            if (array_key_exists('error', $payGatewayResult)) {
+                return redirect()->back()->with('error', $payGatewayResult['error']);
+            } else {
+                return redirect()->route('home.index')->with('success', $payGatewayResult['success']);
+            }
+        } elseif ($gateway == PaymentTypes::ZARINPAL->value){
+            $zarinpalGateway = new Zarinpal();
+
+            $amounts = $this->getAmounts();
+            if (array_key_exists('error', $amounts)) {
+                return redirect()->route('home.index')->with('error', $amounts['error']);
+            }
+
+            $zarinpalGatewayResult = $zarinpalGateway->verify($request->Authority, $amounts['paying_amount']);
+
+            if (array_key_exists('error', $zarinpalGatewayResult)) {
+                return redirect()->back()->with('error', $zarinpalGatewayResult['error']);
+            } else {
+                return redirect()->route('home.index')->with('success', $zarinpalGatewayResult['success']);
+            }
+        }else{
+            return redirect()->back()->with('error', 'درگاه پرداختی انتخاب شده معتبر نمی باشد');
         }
     }
 

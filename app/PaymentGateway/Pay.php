@@ -15,7 +15,7 @@ class Pay extends Payment
         $mobile = auth()->user()->mobile;
         $factorNumber = null;
         $description = null;
-        $redirect = route('home.orders.payment.callback', PaymentTypes::PAY);
+        $redirect = route('home.orders.payment.callback', PaymentTypes::PAY->value);
         $result = $this->sendRequest($api, $amount, $redirect, $mobile, $factorNumber, $description);
         $result = json_decode($result);
         if (isset($result->status)) {
@@ -77,7 +77,7 @@ class Pay extends Payment
         ]);
     }
 
-    public function verifyRequest($api, $token)
+    private function verifyRequest($api, $token): bool|string
     {
         return $this->curl_post('https://pay.ir/pg/verify', [
             'api' => $api,
@@ -85,7 +85,7 @@ class Pay extends Payment
         ]);
     }
 
-    public function curl_post($url, $params)
+    private function curl_post($url, $params): bool|string
     {
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $url);

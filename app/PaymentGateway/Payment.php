@@ -7,7 +7,7 @@ use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\ProductVariation;
 use App\Models\Transaction;
-use Darryldecode\Cart\Cart;
+use Cart;
 use DB;
 use Exception;
 
@@ -32,7 +32,7 @@ class Payment
             foreach (Cart::getContent() as $item) {
                 OrderItem::create([
                     'order_id' => $order->id,
-                    'product_id' => $item->associatedModel->product_id,
+                    'product_id' => $item->associatedModel->id,
                     'product_variation_id' => $item->attributes->id,
                     'price' => $item->price,
                     'quantity' => $item->quantity,

@@ -83,7 +83,7 @@ Route::prefix('/')->name('home.')->group(function () {
     // Order routes
     Route::get('/orders/checkout', [OrderController::class, 'checkout'])->name('orders.checkout');
     Route::post('/orders/payment', [OrderController::class, 'payment'])->name('orders.payment');
-    Route::get('/orders/payment/callback/{paymentType}', [OrderController::class, 'paymentVerify'])->name('orders.payment.callback');
+    Route::get('/orders/payment/callback/{gateway}', [OrderController::class, 'paymentVerify'])->name('orders.payment.callback');
 });
 //Route::get('/product-modal', [HomeController::class, 'showProductModal'])->name('showProductModal');
 // ---------------- End Home Routs ----------------
