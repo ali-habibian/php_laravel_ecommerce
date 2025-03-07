@@ -13,6 +13,7 @@ use App\Http\Controllers\Home\CartController;
 use App\Http\Controllers\Home\CompareController;
 use App\Http\Controllers\Home\HomeController;
 use App\Http\Controllers\Home\CategoryController as HomeCategoryController;
+use App\Http\Controllers\Home\OrderController;
 use App\Http\Controllers\Home\ProductController as HomeProductController;
 use App\Http\Controllers\Home\CommentController as HomeCommentController;
 use App\Http\Controllers\Home\UserAddressController;
@@ -79,7 +80,10 @@ Route::prefix('/')->name('home.')->group(function () {
     Route::get('/cart/clear', [CartController::class, 'clearCart'])->name('cart.clear');
     Route::post('/cart/coupon/apply', [CartController::class, 'applyCoupon'])->name('cart.coupon.apply');
 
-    Route::get('/orders/checkout', [CartController::class, 'orderCheckout'])->name('orders.checkout');
+    // Order routes
+    Route::get('/orders/checkout', [OrderController::class, 'checkout'])->name('orders.checkout');
+    Route::post('/orders/payment', [OrderController::class, 'payment'])->name('orders.payment');
+    Route::get('/orders/payment/callback/{paymentType}', [OrderController::class, 'paymentVerify'])->name('orders.payment.callback');
 });
 //Route::get('/product-modal', [HomeController::class, 'showProductModal'])->name('showProductModal');
 // ---------------- End Home Routs ----------------

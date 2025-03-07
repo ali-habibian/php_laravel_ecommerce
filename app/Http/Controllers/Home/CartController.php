@@ -4,10 +4,8 @@ namespace App\Http\Controllers\Home;
 
 use App\Http\Controllers\Controller;
 use App\Models\Product;
-use App\Models\Province;
 use Cart;
 use Exception;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 
 class CartController extends Controller
@@ -108,17 +106,5 @@ class CartController extends Controller
 
             return redirect()->back()->with('error', 'کد تخفیف وارد شده معتبر نمی باشد');
         }
-    }
-
-    public function orderCheckout()
-    {
-        if (Cart::isEmpty()){
-            return redirect()->back()->with('home.cart.index')->with('error', 'سبد خرید شما خالی است');
-        }
-
-        $userAddress = auth()->user()->addresses;
-        $provinces = Province::all();
-
-        return view('home.orders.checkout', compact('userAddress', 'provinces'));
     }
 }

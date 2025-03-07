@@ -3,7 +3,6 @@
 use App\Models\Coupon;
 use App\Models\Order;
 use Carbon\Carbon;
-use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\UploadedFile;
 
 /**
@@ -100,7 +99,7 @@ function cartTotalDeliveryAmount(): int
  */
 function validateCoupon(string $code): array
 {
-    if (session()->has('coupon')){
+    if (session()->has('coupon')) {
         session()->forget('coupon');
     }
 
@@ -118,13 +117,13 @@ function validateCoupon(string $code): array
     }
 
     if ($coupon->getRawOriginal('type') === 'fixed') {
-        session()->put('coupon', ['code' => $coupon->code, 'amount' => $coupon->amount]);
+        session()->put('coupon', ['id' => $coupon->id, 'code' => $coupon->code, 'amount' => $coupon->amount]);
     } else {
         $total = Cart::getTotal();
         $discountAmount = ($total * $coupon->percent) / 100;
         $finalDiscountAmount = $discountAmount > $coupon->max_percentage_amount ? $coupon->max_percentage_amount : $discountAmount;
 
-        session()->put('coupon', ['code' => $coupon->code, 'amount' => $finalDiscountAmount]);
+        session()->put('coupon', ['id' => $coupon->id, 'code' => $coupon->code, 'amount' => $finalDiscountAmount]);
     }
 
     return ['success' => 'کد تخفیف با موفقیت اعمال شد'];
