@@ -76,7 +76,7 @@ class Order extends Model
 
     public function address(): BelongsTo
     {
-        return $this->belongsTo(UserAddress::class);
+        return $this->belongsTo(UserAddress::class, 'user_address_id');
     }
 
     public function orderItems(): HasMany

@@ -53,7 +53,7 @@
 
                                     <div class="dropdown-menu">
                                         <a class="dropdown-item text-right"
-                                           href="{{ route('admin.brands.show', ['brand' => $order]) }}">نمایش</a>
+                                           href="{{ route('admin.orders.show', ['order' => $order]) }}">نمایش</a>
                                     </div>
                                 </div>
                             </td>
