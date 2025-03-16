@@ -17,12 +17,12 @@
 
             <div class="row">
                 <div class="form-group col-md-3">
-                    <label for="name">نام کاربر</label>
+                    <label>نام کاربر</label>
                     <input class="form-control" disabled type="text" value="{{ $order->user->name }}">
                 </div>
 
                 <div class="form-group col-md-3">
-                    <label for="name">کد کوپن</label>
+                    <label>کد کوپن</label>
                     <input class="form-control"
                            disabled
                            type="text"
@@ -30,7 +30,7 @@
                 </div>
 
                 <div class="form-group col-md-3">
-                    <label for="name">وضعیت</label>
+                    <label>وضعیت</label>
                     <input class="form-control {{ $order->getRawOriginal('status') ? 'text-success' : 'text-danger' }}"
                            disabled
                            type="text"
@@ -38,7 +38,7 @@
                 </div>
 
                 <div class="form-group col-md-3">
-                    <label for="name">مبلغ</label>
+                    <label>مبلغ</label>
                     <input class="form-control"
                            disabled
                            type="text"
@@ -46,7 +46,7 @@
                 </div>
 
                 <div class="form-group col-md-3">
-                    <label for="name">هزینه ارسال</label>
+                    <label>هزینه ارسال</label>
                     <input class="form-control"
                            disabled
                            type="text"
@@ -54,7 +54,7 @@
                 </div>
 
                 <div class="form-group col-md-3">
-                    <label for="name">مبلغ کد تخفیف</label>
+                    <label>مبلغ کد تخفیف</label>
                     <input class="form-control"
                            disabled
                            type="text"
@@ -62,7 +62,7 @@
                 </div>
 
                 <div class="form-group col-md-3">
-                    <label for="name">مبلغ پرداختی</label>
+                    <label>مبلغ پرداختی</label>
                     <input class="form-control"
                            disabled
                            type="text"
@@ -70,12 +70,12 @@
                 </div>
 
                 <div class="form-group col-md-3">
-                    <label for="name">نوع پرداخت</label>
+                    <label>نوع پرداخت</label>
                     <input class="form-control" disabled type="text" value="{{ $order->payment_method }}">
                 </div>
 
                 <div class="form-group col-md-3">
-                    <label for="name">وضعیت پرداخت</label>
+                    <label>وضعیت پرداخت</label>
                     <input class="form-control {{ $order->getRawOriginal('payment_status') ? 'text-success' : 'text-danger' }}"
                            disabled
                            type="text"
@@ -83,7 +83,7 @@
                 </div>
 
                 <div class="form-group col-md-3">
-                    <label for="name">تاریخ سفارش</label>
+                    <label>تاریخ سفارش</label>
                     <input class="form-control"
                            disabled
                            type="text"
@@ -93,7 +93,7 @@
 
             <div class="row">
                 <div class="form-group col-12">
-                    <label for="name">آدرس</label>
+                    <label>آدرس</label>
                     <textarea class="form-control" disabled rows="3">{{ $order->address->address }}</textarea>
                 </div>
             </div>
