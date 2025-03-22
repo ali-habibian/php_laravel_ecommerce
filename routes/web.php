@@ -68,6 +68,7 @@ Route::prefix('/')->name('home.')->group(function () {
     Route::get('', [HomeController::class, 'index'])->name('index');
     Route::get('about-us', [HomeController::class, 'aboutUs'])->name('about-us');
     Route::get('contact-us', [HomeController::class, 'contactUs'])->name('contact-us');
+    Route::post('contact-us-form', [HomeController::class, 'contactUsForm'])->name('contact-us-form');
 
     Route::get('/categories/{category:slug}', [HomeCategoryController::class, 'show'])->name('categories.show');
 

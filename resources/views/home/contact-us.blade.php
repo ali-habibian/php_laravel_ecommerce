@@ -56,11 +56,37 @@
                 </div>
                 <div class="col-lg-7 col-md-6">
                     <div class="contact-from contact-shadow">
-                        <form id="contact-form" action="assets/mail.php" method="post">
-                            <input name="name" type="text" placeholder="نام شما">
-                            <input name="email" type="email" placeholder="ایمیل شما">
-                            <input name="subject" type="text" placeholder="موضوع پیام">
-                            <textarea name="message" placeholder="متن پیام"></textarea>
+                        <form id="contact-form" action="{{ route('home.contact-us-form') }}" method="post">
+                            @csrf
+
+                            <input name="name" type="text" placeholder="نام شما" value="{{ old('name') }}">
+                            @error('name')
+                                <p class="input-error-validation">
+                                    <strong>{{ $message }}</strong>
+                                </p>
+                            @enderror
+
+                            <input name="email" type="text" placeholder="ایمیل شما" value="{{ old('email') }}">
+                            @error('email')
+                                <p class="input-error-validation">
+                                    <strong>{{ $message }}</strong>
+                                </p>
+                            @enderror
+
+                            <input name="subject" type="text" placeholder="موضوع پیام" value="{{ old('subject') }}">
+                            @error('subject')
+                                <p class="input-error-validation">
+                                    <strong>{{ $message }}</strong>
+                                </p>
+                            @enderror
+
+                            <textarea name="message" placeholder="متن پیام">{{ old('message') }}</textarea>
+                            @error('message')
+                                <p class="input-error-validation">
+                                    <strong>{{ $message }}</strong>
+                                </p>
+                            @enderror
+
                             <button class="submit" type="submit"> ارسال پیام </button>
                         </form>
                         <p class="form-messege"></p>

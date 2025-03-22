@@ -6,6 +6,7 @@ use App\Constants\BannerTypes;
 use App\Http\Controllers\Controller;
 use App\Models\Banner;
 use App\Models\Category;
+use App\Models\ContactUs;
 use App\Models\Product;
 use App\Models\Setting;
 use Illuminate\Http\Request;
@@ -69,6 +70,25 @@ class HomeController extends Controller
     {
         $setting = Setting::first();
         return view('home.contact-us', compact('setting'));
+    }
+
+    public function contactUsForm(Request $request)
+    {
+        $request->validate([
+            'name' => 'required|string|min:3|max:50',
+            'email'=> 'required|email',
+            'subject' => 'required|string|min:3|max:255',
+            'message' => 'required|string|min:4|max:3000',
+        ]);
+
+        ContactUs::create([
+            'name' => $request->input('name'),
+            'email' => $request->input('email'),
+            'subject' => $request->input('subject'),
+            'message' => $request->input('message'),
+        ]);
+
+        return redirect()->back()->with('success', 'پیام شما با موفقیت ارسال شد');
     }
 
 //    public function showProductModal(Request $request)
