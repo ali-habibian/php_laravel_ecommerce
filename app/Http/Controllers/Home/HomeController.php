@@ -7,9 +7,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Banner;
 use App\Models\Category;
 use App\Models\ContactUs;
-use App\Models\Product;
 use App\Models\Setting;
 use Illuminate\Http\Request;
+use TimeHunter\LaravelGoogleReCaptchaV3\Validations\GoogleReCaptchaV3ValidationRule;
 
 class HomeController extends Controller
 {
@@ -79,6 +79,7 @@ class HomeController extends Controller
             'email'=> 'required|email',
             'subject' => 'required|string|min:3|max:255',
             'message' => 'required|string|min:4|max:3000',
+            'g-recaptcha-response' => [new GoogleReCaptchaV3ValidationRule('contact_us')]
         ]);
 
         ContactUs::create([

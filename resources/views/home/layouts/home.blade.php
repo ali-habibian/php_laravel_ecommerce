@@ -49,6 +49,8 @@
 
 @stack('scripts')
 
+{!!  GoogleReCaptchaV3::init() !!}
+
 </body>
 
 </html>

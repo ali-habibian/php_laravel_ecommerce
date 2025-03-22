@@ -110,8 +110,8 @@ return [
     'setting' => [
         [
             'action' => 'contact_us',
-            'threshold' => 0,
-            'score_comparison' => false,
+            'threshold' => 0.2,
+            'score_comparison' => true,
         ],
     ],
 
