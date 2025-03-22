@@ -83,6 +83,10 @@
         <a class="nav-link" href="{{ route('admin.banners.index') }}">
             <i class="fas fa-image"></i>
             <span> بنرها </span></a>
+
+        <a class="nav-link" href="{{ route('admin.settings.index') }}">
+            <i class="fas fa-address-card"></i>
+            <span> تماس با ما </span></a>
     </li>
     <!--------------------------------- End settings section --------------------------------->
 

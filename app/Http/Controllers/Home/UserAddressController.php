@@ -3,12 +3,10 @@
 namespace App\Http\Controllers\Home;
 
 use App\Http\Controllers\Controller;
-use App\Models\city;
 use App\Models\Order;
 use App\Models\Province;
 use App\Models\UserAddress;
 use Illuminate\Http\Request;
-use Illuminate\Validation\Rule;
 use Validator;
 
 class UserAddressController extends Controller

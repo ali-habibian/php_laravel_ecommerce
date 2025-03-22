@@ -8,6 +8,7 @@ use App\Http\Controllers\Admin\CommentController;
 use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProductController;
+use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Admin\TransactionController;
 use App\Http\Controllers\Auth\AuthController;
@@ -40,6 +41,7 @@ Route::prefix('admin-panel/management')->name('admin.')->group(function () {
     Route::resource('coupons', CouponController::class);
     Route::resource('orders', OrderController::class);
     Route::resource('transactions', TransactionController::class);
+    Route::resource('settings', SettingsController::class);
 
     // Get category attributes
     Route::get('/category-attributes/{category}', [CategoryController::class, 'getCategoryAttributes'])->name('category.attributes');
@@ -65,6 +67,7 @@ Route::prefix('admin-panel/management')->name('admin.')->group(function () {
 Route::prefix('/')->name('home.')->group(function () {
     Route::get('', [HomeController::class, 'index'])->name('index');
     Route::get('about-us', [HomeController::class, 'aboutUs'])->name('about-us');
+    Route::get('contact-us', [HomeController::class, 'contactUs'])->name('contact-us');
 
     Route::get('/categories/{category:slug}', [HomeCategoryController::class, 'show'])->name('categories.show');
 
