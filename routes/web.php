@@ -9,6 +9,7 @@ use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\TagController;
+use App\Http\Controllers\Admin\TransactionController;
 use App\Http\Controllers\Auth\AuthController;
 use App\Http\Controllers\Home\CartController;
 use App\Http\Controllers\Home\CompareController;
@@ -38,6 +39,7 @@ Route::prefix('admin-panel/management')->name('admin.')->group(function () {
     Route::resource('comments', CommentController::class);
     Route::resource('coupons', CouponController::class);
     Route::resource('orders', OrderController::class);
+    Route::resource('transactions', TransactionController::class);
 
     // Get category attributes
     Route::get('/category-attributes/{category}', [CategoryController::class, 'getCategoryAttributes'])->name('category.attributes');
