@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Banner;
 use App\Models\Category;
 use App\Models\Product;
+use App\Models\Setting;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -62,6 +63,12 @@ class HomeController extends Controller
             ->get();
 
         return view('home.about-us', compact('bottomBanners'));
+    }
+
+    public function contactUs()
+    {
+        $setting = Setting::first();
+        return view('home.contact-us', compact('setting'));
     }
 
 //    public function showProductModal(Request $request)
