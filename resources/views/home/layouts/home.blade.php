@@ -16,6 +16,11 @@
 
     @stack('style')
 
+    {!! SEO::generate() !!}
+
+    <!-- MINIFIED -->
+{{--    {!! SEO::generate(true) !!}--}}
+
 </head>
 
 <body>

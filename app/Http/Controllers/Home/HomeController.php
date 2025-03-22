@@ -8,6 +8,7 @@ use App\Models\Banner;
 use App\Models\Category;
 use App\Models\ContactUs;
 use App\Models\Setting;
+use Artesaos\SEOTools\Facades\SEOTools;
 use Illuminate\Http\Request;
 use TimeHunter\LaravelGoogleReCaptchaV3\Validations\GoogleReCaptchaV3ValidationRule;
 
@@ -15,6 +16,14 @@ class HomeController extends Controller
 {
     public function index()
     {
+        SEOTools::setTitle('خانه');
+        SEOTools::setDescription('This is my page description');
+        SEOTools::opengraph()->setUrl(route('home.index'));
+//        SEOTools::setCanonical('https://codecasts.com.br/lesson');
+        SEOTools::opengraph()->addProperty('type', 'articles');
+        SEOTools::twitter()->setSite('@Ali.habibian');
+//        SEOTools::jsonLd()->addImage(asset('images/logo.png'));
+
         $sliders = Banner::where('type', BannerTypes::SLIDER)
             ->where('is_active', true)
             ->orderBy('priority')
