@@ -53,6 +53,17 @@ class HomeController extends Controller
         return view('home.index', compact('sliders', 'indexTopBanners', 'indexBottomBanners', 'parentCategories'));
     }
 
+    public function aboutUs()
+    {
+        // TODO: Add about us page content to database to make it dynamic
+        $bottomBanners = Banner::where('type', BannerTypes::INDEX_BOTTOM)
+            ->where('is_active', true)
+            ->orderBy('priority')
+            ->get();
+
+        return view('home.about-us', compact('bottomBanners'));
+    }
+
 //    public function showProductModal(Request $request)
 //    {
 //        $modalProduct = Product::findOrFail($request->input('product_id'));

@@ -64,6 +64,7 @@ Route::prefix('admin-panel/management')->name('admin.')->group(function () {
 // ---------------- Home Routs ----------------
 Route::prefix('/')->name('home.')->group(function () {
     Route::get('', [HomeController::class, 'index'])->name('index');
+    Route::get('about-us', [HomeController::class, 'aboutUs'])->name('about-us');
 
     Route::get('/categories/{category:slug}', [HomeCategoryController::class, 'show'])->name('categories.show');
 
