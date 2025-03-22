@@ -11,6 +11,7 @@
   "require": {
     "php": "^8.2",
     "ext-curl": "*",
+    "artesaos/seotools": "^1.3",
     "cviebrock/eloquent-sluggable": "^11.0",
     "darryldecode/cart": "^4.2",
     "ghasedaksms/ghasedaksms-laravel": "^1.0",
