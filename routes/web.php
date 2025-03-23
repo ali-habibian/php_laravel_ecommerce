@@ -19,6 +19,7 @@ use App\Http\Controllers\Home\CategoryController as HomeCategoryController;
 use App\Http\Controllers\Home\OrderController as HomeOrderController;
 use App\Http\Controllers\Home\ProductController as HomeProductController;
 use App\Http\Controllers\Home\CommentController as HomeCommentController;
+use App\Http\Controllers\Home\SitemapController;
 use App\Http\Controllers\Home\UserAddressController;
 use App\Http\Controllers\Home\UserProfileController;
 use App\Http\Controllers\Home\WishListController;
@@ -69,6 +70,11 @@ Route::prefix('/')->name('home.')->group(function () {
     Route::get('about-us', [HomeController::class, 'aboutUs'])->name('about-us');
     Route::get('contact-us', [HomeController::class, 'contactUs'])->name('contact-us');
     Route::post('contact-us-form', [HomeController::class, 'contactUsForm'])->name('contact-us-form');
+
+    // Sitemap routes
+    Route::get('sitemap', [SitemapController::class, 'index'])->name('sitemap.index');
+    Route::get('sitemap-tags', [SitemapController::class, 'tags'])->name('sitemap.tags');
+    Route::get('sitemap-products', [SitemapController::class, 'products'])->name('sitemap.products');
 
     Route::get('/categories/{category:slug}', [HomeCategoryController::class, 'show'])->name('categories.show');
 
