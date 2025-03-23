@@ -18,6 +18,30 @@
             <span> داشبورد </span></a>
     </li>
 
+    <!--------------------------------- Users section --------------------------------->
+    <!-- Divider -->
+    <hr class="sidebar-divider">
+
+    <!-- Heading -->
+    <div class="sidebar-heading">
+        کاربران
+    </div>
+
+    <!-- Nav Item - Users Collapse Menu -->
+    <li class="nav-item">
+        <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseUsers" aria-expanded="true"
+           aria-controls="collapseUsers">
+            <i class="fas fa-users"></i>
+            <span> کاربران </span>
+        </a>
+        <div id="collapseUsers" class="collapse" aria-labelledby="headingUsers" data-parent="#accordionSidebar">
+            <div class="bg-white py-2 collapse-inner rounded">
+                <a class="collapse-item" href="{{ route('admin.users.index') }}">لیست کاربران</a>
+            </div>
+        </div>
+    </li>
+    <!--------------------------------- End Users section ----------------------------->
+
     <!--------------------------------- Store section --------------------------------->
     <!-- Divider -->
     <hr class="sidebar-divider">
