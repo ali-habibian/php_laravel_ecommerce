@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "8b7d14e8546ce36d94a7648d5c56fd7d",
+    "content-hash": "f97b04ef87eff32694c9dbbf1dd6542a",
     "packages": [
         {
             "name": "artesaos/seotools",
@@ -2962,6 +2962,70 @@
                 }
             ],
             "time": "2024-12-08T08:18:47+00:00"
+        },
+        {
+            "name": "lutomski/laravel-sitemap",
+            "version": "11.0.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/lutomski/laravel-sitemap.git",
+                "reference": "408796d8a28c41df6a9a9cf2616c2a51dbe78fb2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/lutomski/laravel-sitemap/zipball/408796d8a28c41df6a9a9cf2616c2a51dbe78fb2",
+                "reference": "408796d8a28c41df6a9a9cf2616c2a51dbe78fb2",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/filesystem": "^11.0",
+                "illuminate/support": "^11.0",
+                "php": "^8.2"
+            },
+            "require-dev": {
+                "laravel/framework": "^11.0",
+                "phpunit/phpunit": "^11.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Laravelium\\Sitemap\\SitemapServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Laravelium\\Sitemap": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Damian Lutomski",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Laravelium Sitemap package for Laravel.",
+            "homepage": "https://laravelium.com",
+            "keywords": [
+                "Sitemap",
+                "generator",
+                "google-news",
+                "html",
+                "laravel",
+                "laravel9",
+                "laravelium",
+                "php",
+                "xml"
+            ],
+            "support": {
+                "source": "https://github.com/lutomski/laravel-sitemap/tree/11.0.0"
+            },
+            "time": "2024-03-14T09:28:50+00:00"
         },
         {
             "name": "monolog/monolog",
