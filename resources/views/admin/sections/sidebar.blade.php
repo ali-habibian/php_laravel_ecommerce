@@ -37,6 +37,7 @@
         <div id="collapseUsers" class="collapse" aria-labelledby="headingUsers" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
                 <a class="collapse-item" href="{{ route('admin.users.index') }}">لیست کاربران</a>
+                <a class="collapse-item" href="{{ route('admin.permissions.index') }}">لیست مجوز‌ها</a>
             </div>
         </div>
     </li>
