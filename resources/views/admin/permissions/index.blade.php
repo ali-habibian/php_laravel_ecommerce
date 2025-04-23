@@ -103,7 +103,7 @@
                             // Create a form and submit it to delete the brand
                             const form = document.createElement('form');
                             form.method = 'POST';
-                            form.action = "{{ route('admin.permissions.destroy', ['permission' => ':id']) }}".replace(':id', permission);
+                            form.action = "{{ route('admin.permissions.destroy', ['permission' => ':id']) }}".replace(':id', permissionId);
                             form.innerHTML = `
                             @csrf
                             @method('DELETE')

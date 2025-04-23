@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Permission;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class PermissionController extends Controller
 {
@@ -45,7 +46,7 @@ class PermissionController extends Controller
 
             return redirect()->route('admin.permissions.index')->with('success', 'مجوز با موفقیت ثبت شد');
         } catch (\Exception $e) {
-            report($e);
+            Log::error('Error storing permission: ' . $e->getMessage());
             return redirect()->back()->with('error', 'مشکلی در ثبت مجوز رخ داده است');
         }
     }
@@ -61,24 +62,47 @@ class PermissionController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Permission $permission)
     {
-        //
+        return view('admin.permissions.edit', compact('permission'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Permission $permission)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255|unique:permissions,name,'.$permission->id,
+            'display_name' => 'required|string|max:255',
+        ]);
+
+        try {
+            $permission->update([
+                'name' => $request->name,
+                'display_name' => $request->display_name,
+                'guard_name' => 'web'
+            ]);
+
+            return redirect()->route('admin.permissions.index')->with('success', 'مجوز با موفقیت ویرایش شد');
+        } catch (\Exception $e) {
+            Log::error('Error editing permission: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'مشکلی در ویرایش مجوز رخ داده است، لطفا دوباره سعی کنید');
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Permission $permission)
     {
-        //
+        try {
+            $permission->delete();
+
+            return redirect()->route('admin.permissions.index')->with('success', 'مجوز با موفقیت حذف شد');
+        } catch (\Exception $e) {
+            Log::error('Error deleting permission: ' . $e->getMessage());
+            return redirect()->route('admin.permissions.index')->with('error', 'مشکلی در حذف مجوز رخ داده است، لطفا دوباره سعی کنید');
+        }
     }
 }
