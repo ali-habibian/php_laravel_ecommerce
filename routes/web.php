@@ -7,6 +7,7 @@ use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\CommentController;
 use App\Http\Controllers\Admin\CouponController;
 use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Admin\PermissionController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\Admin\TagController;
@@ -45,6 +46,7 @@ Route::prefix('admin-panel/management')->name('admin.')->group(function () {
     Route::resource('transactions', TransactionController::class);
     Route::resource('settings', SettingsController::class);
     Route::resource('users', UserController::class);
+    Route::resource('permissions', PermissionController::class);
 
     // Get category attributes
     Route::get('/category-attributes/{category}', [CategoryController::class, 'getCategoryAttributes'])->name('category.attributes');
