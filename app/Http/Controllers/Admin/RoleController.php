@@ -75,24 +75,61 @@ class RoleController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit(Role $role)
     {
-        //
+        $permissions = Permission::all();
+        return view('admin.roles.edit', compact('role', 'permissions'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, Role $role)
     {
-        //
+        $request->validate([
+            'name' => 'required|string|max:255|unique:roles,name,' . $role->id,
+            'display_name' => 'required|string|max:255',
+            'permissions' => 'nullable|array',
+            'permissions.*' => 'int|exists:permissions,id'
+        ], [], [
+            'permissions' => 'مجوز‌های دسترسی'
+        ]);
+
+        DB::beginTransaction();
+        try {
+            $role->update([
+                'name' => $request->name,
+                'display_name' => $request->display_name,
+                'guard_name' => 'web'
+            ]);
+
+            $permissions = Permission::whereIn('id', $request->permissions)->pluck('name');
+            $role->syncPermissions($permissions);
+
+            DB::commit();
+
+            return redirect()->route('admin.roles.index')->with('success', 'نقش با موفقیت ویرایش شد');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('Error updating role: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'مشکلی در ویرایش نقش رخ داده است، لطفا دوباره سعی کنید');
+        }
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Role $role)
     {
-        //
+        DB::beginTransaction();
+        try {
+            $role->delete();
+            DB::commit();
+            return redirect()->route('admin.roles.index')->with('success', 'نقش با موفقیت حذف شد');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error('Error deleting role: ' . $e->getMessage());
+            return redirect()->back()->with('error', 'مشکلی در حذف نقش رخ داده است، لطفا دوباره سعی کنید');
+        }
     }
 }
