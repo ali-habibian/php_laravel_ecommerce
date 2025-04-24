@@ -7,6 +7,7 @@ use App\Models\User;
 use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
@@ -43,6 +44,8 @@ class UserController extends Controller
     {
         //
     }
+//        $permissionIdsAssignedToUserRole = $user->roles->pluck('id')->toArray();
+//        $permissions = Permission::whereNotIn('id', $permissionIdsAssignedToUserRole)->get();
 
     /**
      * Show the form for editing the specified resource.
@@ -50,7 +53,9 @@ class UserController extends Controller
     public function edit(User $user)
     {
         $roles = Role::all();
-        return view('admin.users.edit', compact('user', 'roles'));
+        $permissions = Permission::all();
+
+        return view('admin.users.edit', compact('user', 'roles', 'permissions'));
     }
 
     /**
@@ -60,11 +65,14 @@ class UserController extends Controller
     {
         $request->validate([
             'name' => 'required|string|max:255',
-            'mobile' => 'required|ir_mobile:zero',
-            'role' => 'nullable|int|exists:roles,id'
+            'mobile' => 'nullable|ir_mobile:zero',
+            'role' => 'nullable|int|exists:roles,id',
+            'permissions' => 'nullable|array',
+            'permissions.*' => 'int|exists:permissions,id'
         ], [], [
             'mobile' => 'شماره تلفن همراه',
             'role' => 'نقش کاربری',
+            'permissions' => 'مجوز‌های دسترسی'
         ]);
 
         DB::beginTransaction();
@@ -76,6 +84,9 @@ class UserController extends Controller
 
             $roleName = Role::find($request->role)?->name;
             $user->syncRoles($roleName);
+
+            $permissions = filled($request->permissions) ? Permission::whereIn('id', $request->permissions)->pluck('name') : null;
+            $user->syncPermissions($permissions);
 
             DB::commit();
             return redirect()->route('admin.users.index')->with('success', 'کاربر با موفقیت ویرایش شد');
