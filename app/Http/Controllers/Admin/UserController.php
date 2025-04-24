@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use DB;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
+use Spatie\Permission\Models\Role;
 
 class UserController extends Controller
 {
@@ -47,7 +49,8 @@ class UserController extends Controller
      */
     public function edit(User $user)
     {
-        return view('admin.users.edit', compact('user'));
+        $roles = Role::all();
+        return view('admin.users.edit', compact('user', 'roles'));
     }
 
     /**
@@ -58,18 +61,26 @@ class UserController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'mobile' => 'required|ir_mobile:zero',
+            'role' => 'nullable|int|exists:roles,id'
         ], [], [
-            'mobile' => 'شماره تلفن همراه'
+            'mobile' => 'شماره تلفن همراه',
+            'role' => 'نقش کاربری',
         ]);
 
+        DB::beginTransaction();
         try {
             $user->update([
                 'name' => $request->name,
                 'mobile' => $request->mobile,
             ]);
 
+            $roleName = Role::find($request->role)?->name;
+            $user->syncRoles($roleName);
+
+            DB::commit();
             return redirect()->route('admin.users.index')->with('success', 'کاربر با موفقیت ویرایش شد');
         } catch (\Exception $e) {
+            DB::rollBack();
             Log::error('Error updating user: ' . $e->getMessage());
             return redirect()->back()->with('error', 'مشکلی در ویرایش کاربر رخ داده است، لطفا دوباره سعی کنید');
         }

@@ -28,6 +28,19 @@
                         <label for="mobile">شماره تلفن همراه</label>
                         <input class="form-control" id="mobile" name="mobile" type="text" value="{{ old('mobile', $user->mobile) }}">
                     </div>
+
+                    <div class="form-group col-md-3">
+                        <label for="role">نقش کاربری</label>
+                        <select class="form-control" id="role" name="role">
+                            <option value="">-- انتخاب --</option>
+                            @foreach($roles as $role)
+                                <option value="{{ $role->id }}"
+                                    @selected(in_array($role->id, $user->roles->pluck('id')->toArray()))>
+                                    {{ $role->display_name }}
+                                </option>
+                            @endforeach
+                        </select>
+                      </div>
                 </div>
 
                 <button class="btn btn-outline-primary mt-5" type="submit">ویرایش</button>
