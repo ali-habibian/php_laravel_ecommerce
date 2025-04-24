@@ -51,7 +51,7 @@ class RoleController extends Controller
                 'guard_name' => 'web'
             ]);
 
-            $permissions = Permission::whereIn('id', $request->permissions)->pluck('name');
+            $permissions = filled($request->permissions) ? Permission::whereIn('id', $request->permissions)->pluck('name') : null;
             $role->givePermissionTo($permissions);
 
             DB::commit();
@@ -103,7 +103,7 @@ class RoleController extends Controller
                 'guard_name' => 'web'
             ]);
 
-            $permissions = Permission::whereIn('id', $request->permissions)->pluck('name');
+            $permissions = filled($request->permissions) ? Permission::whereIn('id', $request->permissions)->pluck('name') : null;
             $role->syncPermissions($permissions);
 
             DB::commit();
