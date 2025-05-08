@@ -31,10 +31,10 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/admin-panel/dashboard', function () {
     return view('admin.dashboard');
-})->name('admin.dashboard');
+})->name('admin.dashboard')->middleware(['role:admin']);
 
 // ---------------- Admin Routs ----------------
-Route::prefix('admin-panel/management')->name('admin.')->group(function () {
+Route::prefix('admin-panel/management')->name('admin.')->middleware(['role:admin'])->group(function () {
     Route::resource('brands', BrandController::class);
     Route::resource('attributes', AttributeController::class);
     Route::resource('categories', CategoryController::class);
