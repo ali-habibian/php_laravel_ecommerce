@@ -110,21 +110,21 @@
             <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary"> لورم ایپسوم </h6>
-                    <div class="dropdown no-arrow">
-                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
-                           aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in text-right"
-                             aria-labelledby="dropdownMenuLink">
-                            <div class="dropdown-header"> لورم ایپسوم :</div>
-                            <a class="dropdown-item" href="#"> لورم </a>
-                            <a class="dropdown-item" href="#"> لورم ایپسوم </a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#"> لورم ایپسوم متن ساختگی </a>
-                        </div>
-                    </div>
+                    <h6 class="m-0 font-weight-bold text-primary"> تراکنش‌های یک سال اخیر </h6>
+{{--                    <div class="dropdown no-arrow">--}}
+{{--                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"--}}
+{{--                           aria-haspopup="true" aria-expanded="false">--}}
+{{--                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>--}}
+{{--                        </a>--}}
+{{--                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in text-right"--}}
+{{--                             aria-labelledby="dropdownMenuLink">--}}
+{{--                            <div class="dropdown-header"> لورم ایپسوم :</div>--}}
+{{--                            <a class="dropdown-item" href="#"> لورم </a>--}}
+{{--                            <a class="dropdown-item" href="#"> لورم ایپسوم </a>--}}
+{{--                            <div class="dropdown-divider"></div>--}}
+{{--                            <a class="dropdown-item" href="#"> لورم ایپسوم متن ساختگی </a>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
                 </div>
                 <!-- Card Body -->
                 <div class="card-body">
@@ -140,21 +140,21 @@
             <div class="card shadow mb-4">
                 <!-- Card Header - Dropdown -->
                 <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                    <h6 class="m-0 font-weight-bold text-primary"> لورم ایپسوم </h6>
-                    <div class="dropdown no-arrow">
-                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"
-                           aria-haspopup="true" aria-expanded="false">
-                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in text-right"
-                             aria-labelledby="dropdownMenuLink">
-                            <div class="dropdown-header"> لورم ایپسوم :</div>
-                            <a class="dropdown-item" href="#"> لورم </a>
-                            <a class="dropdown-item" href="#"> لورم ایپسوم </a>
-                            <div class="dropdown-divider"></div>
-                            <a class="dropdown-item" href="#"> لورم ایپسوم متن ساختگی </a>
-                        </div>
-                    </div>
+                    <h6 class="m-0 font-weight-bold text-primary"> تعداد تراکنش‌های یک سال اخیر </h6>
+{{--                    <div class="dropdown no-arrow">--}}
+{{--                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-toggle="dropdown"--}}
+{{--                           aria-haspopup="true" aria-expanded="false">--}}
+{{--                            <i class="fas fa-ellipsis-v fa-sm fa-fw text-gray-400"></i>--}}
+{{--                        </a>--}}
+{{--                        <div class="dropdown-menu dropdown-menu-right shadow animated--fade-in text-right"--}}
+{{--                             aria-labelledby="dropdownMenuLink">--}}
+{{--                            <div class="dropdown-header"> لورم ایپسوم :</div>--}}
+{{--                            <a class="dropdown-item" href="#"> لورم </a>--}}
+{{--                            <a class="dropdown-item" href="#"> لورم ایپسوم </a>--}}
+{{--                            <div class="dropdown-divider"></div>--}}
+{{--                            <a class="dropdown-item" href="#"> لورم ایپسوم متن ساختگی </a>--}}
+{{--                        </div>--}}
+{{--                    </div>--}}
                 </div>
                 <!-- Card Body -->
                 <div class="card-body">
@@ -163,13 +163,10 @@
                     </div>
                     <div class="mt-4 text-center small">
                     <span class="mr-2">
-                      <i class="fas fa-circle text-primary"></i> Direct
+                        <i class="fas fa-circle text-success"></i> تراکنش موفق
                     </span>
-                        <span class="mr-2">
-                      <i class="fas fa-circle text-success"></i> Social
-                    </span>
-                        <span class="mr-2">
-                      <i class="fas fa-circle text-info"></i> Referral
+                    <span class="mr-2">
+                        <i class="fas fa-circle text-danger"></i> تراکنش ناموفق
                     </span>
                     </div>
                 </div>
@@ -335,164 +332,137 @@
 @push('scripts')
     {{-- Area Chart Demo --}}
     <script type="module">
-        // // Set new default font family and font color to mimic Bootstrap's default styling
-        // Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
-        // Chart.defaults.global.defaultFontColor = '#858796';
+        function toPersianDigits(num) {
+            const persianDigits = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
+            return num.toString().replace(/\d/g, d => persianDigits[d]);
+        }
 
-        function number_format(number, decimals, dec_point, thousands_sep) {
-            // *     example: number_format(1234.56, 2, ',', ' ');
-            // *     return: '1 234,56'
-            number = (number + '').replace(',', '').replace(' ', '');
-            var n = !isFinite(+number) ? 0 : +number,
-                prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
-                sep = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep,
-                dec = (typeof dec_point === 'undefined') ? '.' : dec_point,
-                s = '',
-                toFixedFix = function (n, prec) {
-                    var k = Math.pow(10, prec);
-                    return '' + Math.round(n * k) / k;
-                };
-            // Fix for IE parseFloat(0.55).toFixed(0) = 0;
-            s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.');
-            if (s[0].length > 3) {
-                s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
-            }
-            if ((s[1] || '').length < prec) {
-                s[1] = s[1] || '';
-                s[1] += new Array(prec - s[1].length + 1).join('0');
-            }
-            return s.join(dec);
+        function priceToPersianDigits(num) {
+            const persianDigits = ['۰','۱','۲','۳','۴','۵','۶','۷','۸','۹'];
+            const withCommas = Number(num).toLocaleString('en-US'); // adds comma separators
+            return withCommas.replace(/\d/g, d => persianDigits[d]);
         }
 
         // Area Chart Example
-        var ctx = document.getElementById("myAreaChart");
-        var myLineChart = new Chart(ctx, {
+        const ctx = document.getElementById("myAreaChart");
+        const successTransactionsLineChart = new Chart(ctx, {
             type: 'line',
             data: {
-                labels: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
-                datasets: [{
-                    label: "Earnings",
-                    lineTension: 0.3,
-                    backgroundColor: "rgba(78, 115, 223, 0.05)",
-                    borderColor: "rgba(78, 115, 223, 1)",
-                    pointRadius: 3,
-                    pointBackgroundColor: "rgba(78, 115, 223, 1)",
-                    pointBorderColor: "rgba(78, 115, 223, 1)",
-                    pointHoverRadius: 3,
-                    pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
-                    pointHoverBorderColor: "rgba(78, 115, 223, 1)",
-                    pointHitRadius: 10,
-                    pointBorderWidth: 2,
-                    data: [0, 10000, 5000, 15000, 10000, 20000, 15000, 25000, 20000, 30000, 25000, 40000],
-                }],
+                labels: @json($monthNames),
+                datasets: [
+                    {
+                        label: "تراکنش‌های موفق",
+                        lineTension: 0.3,
+                        backgroundColor: "rgba(78, 115, 223, 0.05)",
+                        borderColor: "rgba(78, 115, 223, 1)",
+                        pointRadius: 3,
+                        pointBackgroundColor: "rgba(78, 115, 223, 1)",
+                        pointBorderColor: "rgba(78, 115, 223, 1)",
+                        pointHoverRadius: 3,
+                        pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
+                        pointHoverBorderColor: "rgba(78, 115, 223, 1)",
+                        pointHitRadius: 10,
+                        pointBorderWidth: 2,
+                        data: @json($successTransactions),
+                    },
+                    {
+                        label: "تراکنش‌های ناموفق",
+                        lineTension: 0.3,
+                        backgroundColor: "rgba(78, 115, 223, 0.05)",
+                        borderColor: "rgb(234,46,81)",
+                        pointRadius: 3,
+                        pointBackgroundColor: "rgb(234,46,81)",
+                        pointBorderColor: "rgb(234,46,81)",
+                        pointHoverRadius: 3,
+                        pointHoverBackgroundColor: "rgb(234,46,81)",
+                        pointHoverBorderColor: "rgb(234,46,81)",
+                        pointHitRadius: 10,
+                        pointBorderWidth: 2,
+                        data: @json($failedTransactions),
+                    }
+                ],
             },
             options: {
                 maintainAspectRatio: false,
                 layout: {
-                    padding: {
-                        left: 10,
-                        right: 25,
-                        top: 25,
-                        bottom: 0
-                    }
+                    padding: 10
                 },
                 scales: {
-                    xAxes: [{
-                        time: {
-                            unit: 'date'
-                        },
-                        gridLines: {
-                            display: false,
-                            drawBorder: false
-                        },
+                    y: {
                         ticks: {
-                            maxTicksLimit: 7
-                        }
-                    }],
-                    yAxes: [{
-                        ticks: {
-                            maxTicksLimit: 5,
-                            padding: 10,
-                            // Include a dollar sign in the ticks
-                            callback: function (value, index, values) {
-                                return '$' + number_format(value);
+                            callback: function(value) {
+                                return priceToPersianDigits(value) + ' تومان';
                             }
-                        },
-                        gridLines: {
-                            color: "rgb(234, 236, 244)",
-                            zeroLineColor: "rgb(234, 236, 244)",
-                            drawBorder: false,
-                            borderDash: [2],
-                            zeroLineBorderDash: [2]
                         }
-                    }],
+                    },
+                    x: {
+                        ticks: {
+                            callback: function(value, index, ticks) {
+                                return toPersianDigits(this.getLabelForValue(value));
+                            }
+                        }
+                    }
                 },
-                legend: {
-                    display: false
-                },
-                tooltips: {
-                    backgroundColor: "rgb(255,255,255)",
-                    bodyFontColor: "#858796",
-                    titleMarginBottom: 10,
-                    titleFontColor: '#6e707e',
-                    titleFontSize: 14,
-                    borderColor: '#dddfeb',
-                    borderWidth: 1,
-                    xPadding: 15,
-                    yPadding: 15,
-                    displayColors: false,
-                    intersect: false,
-                    mode: 'index',
-                    caretPadding: 10,
-                    callbacks: {
-                        label: function (tooltipItem, chart) {
-                            var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
-                            return datasetLabel + ': $' + number_format(tooltipItem.yLabel);
+                plugins: {
+                    tooltip: {
+                        bodyFont: {
+                            family: 'Tahoma',
+                            size: 13
+                        },
+                        callbacks: {
+                            label: function(context) {
+                                const label = context.dataset.label || '';
+                                const value = priceToPersianDigits(context.parsed.y) + ' تومان ';
+                                return label + ': ' + value;
+                            }
+                        }
+                    },
+                    legend: {
+                        labels: {
+                            font: {
+                                family: 'Tahoma',
+                                size: 13
+                            }
                         }
                     }
                 }
             }
         });
 
-    </script>
-
-    {{-- Pie Chart Demo --}}
-    <script type="module">
-        // // Set new default font family and font color to mimic Bootstrap's default styling
-        // Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
-        // Chart.defaults.global.defaultFontColor = '#858796';
-
         // Pie Chart Example
-        var ctx = document.getElementById("myPieChart");
-        var myPieChart = new Chart(ctx, {
+        const ctxPie = document.getElementById("myPieChart");
+        const myPieChart = new Chart(ctxPie, {
             type: 'doughnut',
             data: {
-                labels: ["Direct", "Referral", "Social"],
+                labels: ["تراکنش موفق", "تراکنش ناموفق"],
                 datasets: [{
-                    data: [55, 30, 15],
-                    backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc'],
-                    hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf'],
+                    data: @json($transactionsCount),
+                    backgroundColor: ['#1cc88a', '#ea2e51'],
+                    hoverBackgroundColor: ['#127855', '#97152d'],
                     hoverBorderColor: "rgba(234, 236, 244, 1)",
                 }],
             },
             options: {
                 maintainAspectRatio: false,
-                tooltips: {
-                    backgroundColor: "rgb(255,255,255)",
-                    bodyFontColor: "#858796",
-                    borderColor: '#dddfeb',
-                    borderWidth: 1,
-                    xPadding: 15,
-                    yPadding: 15,
-                    displayColors: false,
-                    caretPadding: 10,
-                },
-                legend: {
-                    display: false
-                },
-                cutoutPercentage: 80,
+                plugins: {
+                    legend: {
+                        display: false
+                    },
+                    tooltip: {
+                        bodyFont: {
+                            family: 'Tahoma',
+                            size: 14,
+                            // weight: 'bold'
+                        },
+                        callbacks: {
+                            label: function(context) {
+                                const value = toPersianDigits(context.parsed);
+                                return ' ' + value + ' عدد ';
+                            }
+                        }
+                    }
+                }
             },
         });
-
     </script>
 @endpush

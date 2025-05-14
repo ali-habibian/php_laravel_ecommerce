@@ -143,3 +143,38 @@ function cartTotalAmount()
         return $totalAmount;
     }
 }
+
+/**
+ * Sort an array by Shamsi month order
+ *
+ * @param array $data Array with Shamsi month names as keys (format: "month year" => "دی 03")
+ * @return array Sorted array according to Shamsi calendar order
+ */
+function sortByShamsiMonthOrder(array $data): array
+{
+    // Sort the array based on Shamsi month order and year
+    uksort($data, function($a, $b) {
+        // Define the order of Shamsi months
+        $shamsiMonthsOrder = [
+            'فروردین', 'اردیبهشت', 'خرداد', 'تیر', 'مرداد', 'شهریور',
+            'مهر', 'آبان', 'آذر', 'دی', 'بهمن', 'اسفند'
+        ];
+
+        // Extract month and year parts
+        list($monthA, $yearA) = explode(' ', $a);
+        list($monthB, $yearB) = explode(' ', $b);
+
+        // Compare years first
+        if ($yearA != $yearB) {
+            return $yearA <=> $yearB;
+        }
+
+        // If years are the same, compare months based on their position in the Shamsi order
+        $monthAIndex = array_search($monthA, $shamsiMonthsOrder);
+        $monthBIndex = array_search($monthB, $shamsiMonthsOrder);
+
+        return $monthAIndex <=> $monthBIndex;
+    });
+
+    return $data;
+}
